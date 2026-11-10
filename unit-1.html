@@ -1,0 +1,1664 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>23CSE301 Unit I Topics</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: textbook chapter — sticky unit nav, topic index, one reading column of topic articles with worked-example boxes */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef1f6; --line:#d9dee7; --grid:#e4e8ef;
+  --ink:#18202e; --ink-2:#4a5466; --ink-3:#6b7486;
+  --accent:#4b3fb5; --accent-soft:#e9e7fb;
+  --u1:#2a78d6; --u2:#eb6834; --u3:#1baf7a;
+  --p-high:#d03b3b; --p-mid:#ec835a; --p-low:#fab219;
+  --ans-bg:#e8f4ec; --ans-line:#2f8f4e;
+  --pos:#4b3fb5; --neg:#4a5466;
+  --f-display:"Zilla Slab", "Rockwell", Georgia, serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+    --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+    --accent:#9d93f0; --accent-soft:#2a2650;
+    --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+    --ans-bg:#17301f; --ans-line:#4cb36c;
+    --pos:#9d93f0; --neg:#b4bccb;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+  --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+  --accent:#9d93f0; --accent-soft:#2a2650;
+  --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+  --ans-bg:#17301f; --ans-line:#4cb36c;
+  --pos:#9d93f0; --neg:#b4bccb;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 72px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--surface)}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(1.9rem,4.6vw,2.7rem);font-weight:700}
+h2{font-size:1.6rem;font-weight:700}
+h3{font-size:1.12rem;font-weight:600;margin-top:6px}
+p{margin:0}
+a{color:var(--accent)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.topnav{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)))}
+.topnav .wrap{display:flex;gap:4px 18px;flex-wrap:wrap;align-items:center;padding:10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px))}
+.topnav strong{font-family:var(--f-mono);font-size:.82rem;margin-right:auto}
+.topnav a{font-size:.92rem;text-decoration:none;color:var(--ink-2)}
+.topnav a[aria-current="page"]{color:var(--accent);font-weight:600}
+header.hero{padding-block:36px 18px;display:grid;gap:12px}
+.lede{color:var(--ink-2);max-width:66ch}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.toc ol{margin:0;padding:0;list-style:none;columns:2 300px;column-gap:28px}
+.toc li{break-inside:avoid;padding:3px 0;font-size:.94rem;display:flex;gap:8px;align-items:baseline}
+.toc li .n{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-3);min-width:22px}
+.toc a{text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.86rem;color:var(--ink-2)}
+.subhead{margin-top:44px;padding-bottom:6px;border-bottom:2px solid var(--ink);font-family:var(--f-mono);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+article.topic{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 22px 18px;display:grid;gap:14px;scroll-margin-top:64px;min-width:0}
+.th{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.tno{font-family:var(--f-display);font-size:2.2rem;font-weight:700;line-height:1;color:var(--ink-3)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:6px}
+.pr{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:1px 9px 1px 7px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.pr::before{content:"";width:9px;height:9px;border-radius:50%}
+.pr.h::before{background:var(--p-high)} .pr.m::before{background:var(--p-mid)} .pr.l::before{background:var(--p-low)}
+.sr{font-family:var(--f-mono);font-size:.72rem;font-weight:600;border-radius:4px;padding:1px 6px;white-space:nowrap}
+.sr.M{background:var(--accent-soft);color:var(--accent)} .sr.P{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--ink-3)} .sr.X{color:var(--p-high);border:1px solid var(--p-high)}
+.files{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-3)}
+.why{font-size:.92rem;color:var(--ink-2);border-left:3px solid var(--line);padding-left:10px}
+.topic p,.topic li{max-width:72ch}
+.topic ul,.topic ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+.fx{background:var(--surface-2);border-radius:8px;padding:12px 14px;display:grid;gap:8px;overflow-x:auto}
+.fx .f{font-family:var(--f-mono);font-size:.92rem;white-space:nowrap;color:var(--ink)}
+.fx .d{font-size:.9rem;color:var(--ink-2)}
+.tw{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:.9rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);font-weight:600;background:var(--surface-2)}
+td.num,th.num{text-align:right}
+tr.hl td{background:var(--accent-soft)}
+figure.fig{margin:0;display:grid;gap:6px;justify-items:center;background:var(--surface-2);border-radius:8px;padding:12px}
+figure.fig figcaption{font-size:.84rem;color:var(--ink-2);max-width:62ch;text-align:center}
+svg{display:block;max-width:100%;height:auto}
+svg text{font-family:var(--f-mono);fill:var(--ink-2)}
+section.ex{border:1px solid var(--line);border-radius:10px;overflow:hidden;display:grid}
+.exh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;padding:9px 14px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.lvl{font-family:var(--f-mono);font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.lvl.b{color:var(--u3)} .lvl.i{color:var(--u1)} .lvl.e{color:var(--p-high)}
+.src{font-size:.82rem;color:var(--ink-2)}
+.ex .body{padding:14px;display:grid;gap:10px;min-width:0}
+.q{font-weight:600}
+.gf{display:grid;gap:4px;font-size:.94rem}
+.gf div{display:grid;grid-template-columns:78px 1fr;gap:10px}
+.gf b{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);padding-top:3px;font-weight:600}
+.calc{font-family:var(--f-mono);font-size:.88rem;background:var(--surface-2);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre;line-height:1.55}
+.ans{background:var(--ans-bg);border-left:4px solid var(--ans-line);border-radius:6px;padding:9px 12px;font-weight:600}
+.mean{font-size:.94rem;color:var(--ink-2)}
+.pit,.rev{border-radius:8px;padding:12px 14px;display:grid;gap:6px;font-size:.94rem}
+.pit{border:1.5px solid var(--p-high)}
+.pit > b{color:var(--p-high);font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.rev{background:var(--accent-soft)}
+.rev > b{color:var(--accent);font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.note{font-size:.88rem;color:var(--ink-2)}
+.toplink{font-size:.84rem;justify-self:end}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-3);display:grid;gap:6px}
+@media (max-width:640px){ article.topic{padding:16px 14px} .gf div{grid-template-columns:1fr;gap:0} .tno{font-size:1.7rem} body{font-size:16px} }
+
+/* navigation panel */
+[hidden]{display:none!important}
+.topnav .wrap{max-width:1320px}
+.layout{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:36px}
+.layout > main{min-width:0}
+.sn-toggle{display:inline-flex;align-items:center;gap:6px;font:600 .86rem var(--f-body);color:var(--surface);background:var(--accent);border:0;border-radius:6px;padding:5px 11px;cursor:pointer}
+.sn-toggle:focus-visible,.sn-close:focus-visible,.sn-link:focus-visible,#navfilter:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sidenav{background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;padding:14px 12px 18px;overflow-y:auto;overscroll-behavior:contain;
+  position:fixed;z-index:30;top:0;bottom:0;left:0;width:min(330px,88vw);
+  padding-top:calc(14px + env(safe-area-inset-top, 0px));padding-bottom:calc(18px + env(safe-area-inset-bottom, 0px));padding-left:calc(12px + env(safe-area-inset-left, 0px));
+  transform:translateX(-105%);transition:transform .2s ease;visibility:hidden}
+.sidenav.open{transform:none;visibility:visible;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.sn-backdrop{position:fixed;inset:0;z-index:25;background:rgba(10,12,20,.45)}
+.sn-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sn-close{background:none;border:1px solid var(--line);border-radius:6px;color:var(--ink-2);font-size:.9rem;padding:3px 9px;cursor:pointer}
+#navfilter{width:100%;font:.92rem var(--f-body);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 10px}
+.sn-unit{border-top:1px solid var(--line);padding-top:6px}
+.sn-unit > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:700;font-size:1.02rem;padding:4px 2px}
+.sn-unit > summary::-webkit-details-marker{display:none}
+.sn-unit > summary::after{content:"▸";margin-left:auto;color:var(--ink-3);font-size:.8rem;transition:transform .15s}
+.sn-unit[open] > summary::after{transform:rotate(90deg)}
+.sn-unit small{font-family:var(--f-body);font-weight:400;font-size:.78rem;color:var(--ink-3)}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block;flex:none}
+.sn-sec{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:9px 4px 3px}
+.sn-link{display:grid;grid-template-columns:20px 9px 1fr;gap:6px;align-items:baseline;padding:4px 6px;border-radius:5px;text-decoration:none;color:var(--ink-2);font-size:.86rem;line-height:1.35}
+.sn-link .n{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.sn-link .pd{width:7px;height:7px;border-radius:50%;align-self:center}
+.pd.h{background:var(--p-high)} .pd.m{background:var(--p-mid)} .pd.l{background:var(--p-low)}
+.sn-link:hover{background:var(--surface-2);color:var(--ink)}
+.sn-link[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.sn-link.other{color:var(--ink-3)}
+.sn-empty{font-size:.86rem;color:var(--ink-3);padding:4px}
+.sn-home{font-size:.86rem;font-weight:600;text-decoration:none;margin-top:4px}
+nav.pn{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px;font-size:.88rem}
+nav.pn a{text-decoration:none;font-weight:600;max-width:48%}
+nav.pn a.next{margin-left:auto;text-align:right}
+nav.pn span{display:block;font-family:var(--f-mono);font-size:.68rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+@media (min-width:1100px){
+  .layout{grid-template-columns:280px minmax(0,1fr)}
+  .sidenav{position:sticky;z-index:auto;top:calc(env(safe-area-inset-top, 0px) + 50px);bottom:auto;align-self:start;width:auto;max-height:calc(100vh - 66px);transform:none;visibility:visible;
+    border:1px solid var(--line);border-radius:10px;margin-top:20px;padding:14px 12px 18px;box-shadow:none}
+  .sn-close,.sn-toggle,.sn-backdrop{display:none!important}
+  .toc{display:none}
+  .wrap.main{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} .sidenav,.sn-unit > summary::after{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Pages"><div class="wrap"><button class="sn-toggle" id="sn-toggle" type="button" aria-controls="sidenav" aria-expanded="false">☰ Topics</button><strong>23CSE301 · ML</strong><a href="index.html">Study guide</a><a href="unit-1.html" aria-current="page">Unit I</a><a href="unit-2.html">Unit II</a><a href="unit-3.html">Unit III</a><a href="lab.html">Simulator Lab</a></div></nav><div class="layout">
+<aside class="sidenav" id="sidenav" aria-label="All topics"><div class="sn-head"><span class="eyebrow">All 52 topics</span><button class="sn-close" id="sn-close" type="button" aria-label="Close topics">✕</button></div><input id="navfilter" type="search" placeholder="Find a topic…" aria-label="Find a topic" autocomplete="off"><details class="sn-unit" open><summary><span class="sw" style="background:var(--u1)"></span>Unit I <small>Introduction and Fundamentals</small></summary><div class="sn-sec">A · Introduction to Machine Learning</div><a class="sn-link" href="#t01" data-t="t01" title="Important"><span class="n">01</span><span class="pd m"></span><span>What ML is and the types of machine learning</span></a><a class="sn-link" href="#t02" data-t="t02" title="Important"><span class="n">02</span><span class="pd m"></span><span>Features and feature representation</span></a><a class="sn-link" href="#t03" data-t="t03" title="Important"><span class="n">03</span><span class="pd m"></span><span>Class boundaries and decision boundaries</span></a><a class="sn-link" href="#t04" data-t="t04" title="Important"><span class="n">04</span><span class="pd m"></span><span>Training, validation and testing; cross-validation</span></a><a class="sn-link" href="#t05" data-t="t05" title="Very important"><span class="n">05</span><span class="pd h"></span><span>Generalization; underfitting, good fit and overfitting  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t06" data-t="t06" title="Important"><span class="n">06</span><span class="pd m"></span><span>Loss functions and cost functions</span></a><a class="sn-link" href="#t07" data-t="t07" title="Additional"><span class="n">07</span><span class="pd l"></span><span>Explainability in machine learning</span></a><a class="sn-link" href="#t08" data-t="t08" title="Additional"><span class="n">08</span><span class="pd l"></span><span>Algorithmic bias</span></a><a class="sn-link" href="#t09" data-t="t09" title="Additional"><span class="n">09</span><span class="pd l"></span><span>Data privacy and algorithmic privacy</span></a><div class="sn-sec">B · Dimensionality Reduction</div><a class="sn-link" href="#t10" data-t="t10" title="Important"><span class="n">10</span><span class="pd m"></span><span>Curse of dimensionality  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t11" data-t="t11" title="Important"><span class="n">11</span><span class="pd m"></span><span>Principal Component Analysis (PCA)  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t12" data-t="t12" title="Important"><span class="n">12</span><span class="pd m"></span><span>Linear Discriminant Analysis (LDA)</span></a><a class="sn-link" href="#t13" data-t="t13" title="Important"><span class="n">13</span><span class="pd m"></span><span>Feature selection: forward, backward and bidirectional</span></a><div class="sn-sec">C · Classification: K-Nearest Neighbour</div><a class="sn-link" href="#t14" data-t="t14" title="Very important"><span class="n">14</span><span class="pd h"></span><span>KNN algorithm, choosing K and the effect of K  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t15" data-t="t15" title="Very important"><span class="n">15</span><span class="pd h"></span><span>Distance metrics: Euclidean, Manhattan, Minkowski  <span class="simtag">sim</span></span></a><div class="sn-sec">D · Regression</div><a class="sn-link" href="#t16" data-t="t16" title="Important"><span class="n">16</span><span class="pd m"></span><span>Linear regression: least squares and gradient descent  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t17" data-t="t17" title="Very important"><span class="n">17</span><span class="pd h"></span><span>Logistic regression: sigmoid, odds, log-odds and odds ratio  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t18" data-t="t18" title="Very important"><span class="n">18</span><span class="pd h"></span><span>Regularization: LASSO (L1), Ridge (L2) and the effect of λ  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t19" data-t="t19" title="Very important"><span class="n">19</span><span class="pd h"></span><span>Bias–variance trade-off  <span class="simtag">sim</span></span></a><div class="sn-sec">E · Performance Metrics</div><a class="sn-link" href="#t20" data-t="t20" title="Important"><span class="n">20</span><span class="pd m"></span><span>Confusion matrix, accuracy, precision, recall, F1, specificity</span></a><a class="sn-link" href="#t21" data-t="t21" title="Important"><span class="n">21</span><span class="pd m"></span><span>ROC curve and AUC  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t22" data-t="t22" title="Important"><span class="n">22</span><span class="pd m"></span><span>Regression metrics: RMSE, MAPE, R² (with MAE and MSE)</span></a></details><details class="sn-unit"><summary><span class="sw" style="background:var(--u2)"></span>Unit II <small>Supervised Learning</small></summary><div class="sn-sec">A · Decision Trees</div><a class="sn-link other" href="unit-2.html#t23" data-t="t23" title="Very important"><span class="n">23</span><span class="pd h"></span><span>Tree structure, entropy, information gain and ID3  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t24" data-t="t24" title="Important"><span class="n">24</span><span class="pd m"></span><span>Gini index (CART) and gain ratio (C4.5)  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t25" data-t="t25" title="Important"><span class="n">25</span><span class="pd m"></span><span>Tree construction and pruning</span></a><div class="sn-sec">B · Support Vector Machines</div><a class="sn-link other" href="unit-2.html#t26" data-t="t26" title="Very important"><span class="n">26</span><span class="pd h"></span><span>Hyperplane, maximum marginal hyperplane, margin and support vectors  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t27" data-t="t27" title="Very important"><span class="n">27</span><span class="pd h"></span><span>SVM numerical: the augmented-vector (α) method</span></a><a class="sn-link other" href="unit-2.html#t28" data-t="t28" title="Important"><span class="n">28</span><span class="pd m"></span><span>Hard margin vs soft margin (C and slack ξ)  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t29" data-t="t29" title="Important"><span class="n">29</span><span class="pd m"></span><span>Non-linear SVM and the kernel trick: linear, polynomial, RBF, sigmoid</span></a><div class="sn-sec">C · Naive Bayes</div><a class="sn-link other" href="unit-2.html#t30" data-t="t30" title="Important"><span class="n">30</span><span class="pd m"></span><span>Bayes theorem: prior, likelihood, posterior, conditional independence  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t31" data-t="t31" title="Important"><span class="n">31</span><span class="pd m"></span><span>Gaussian, Multinomial and Bernoulli Naive Bayes; Laplace smoothing</span></a><div class="sn-sec">D · Markov Models</div><a class="sn-link other" href="unit-2.html#t32" data-t="t32" title="Very important"><span class="n">32</span><span class="pd h"></span><span>Markov property, states, initial and transition probabilities, sequence probability  <span class="simtag">sim</span></span></a><div class="sn-sec">E · Hidden Markov Models</div><a class="sn-link other" href="unit-2.html#t33" data-t="t33" title="Very important"><span class="n">33</span><span class="pd h"></span><span>HMM: hidden states, observations, A, B, π; Markov model vs HMM; applications</span></a><a class="sn-link other" href="unit-2.html#t34" data-t="t34" title="Important"><span class="n">34</span><span class="pd m"></span><span>Evaluation problem: the Forward algorithm  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t35" data-t="t35" title="Important"><span class="n">35</span><span class="pd m"></span><span>Decoding problem: the Viterbi algorithm  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t36" data-t="t36" title="Additional"><span class="n">36</span><span class="pd l"></span><span>Learning problem: the Baum–Welch algorithm</span></a><div class="sn-sec">F · Artificial Neural Networks</div><a class="sn-link other" href="unit-2.html#t37" data-t="t37" title="Very important"><span class="n">37</span><span class="pd h"></span><span>Perceptron: neuron model, step function, learning rule and logic gates  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t38" data-t="t38" title="Important"><span class="n">38</span><span class="pd m"></span><span>Linear separability and the limitations of the perceptron (XOR)  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t39" data-t="t39" title="Important"><span class="n">39</span><span class="pd m"></span><span>Multi-layer perceptron: architecture, forward propagation, backpropagation, activations  <span class="simtag">sim</span></span></a><div class="sn-sec">G · Parameter Estimation</div><a class="sn-link other" href="unit-2.html#t40" data-t="t40" title="Important"><span class="n">40</span><span class="pd m"></span><span>Maximum likelihood estimation: likelihood and log-likelihood</span></a><a class="sn-link other" href="unit-2.html#t41" data-t="t41" title="Important"><span class="n">41</span><span class="pd m"></span><span>Bayesian estimation: prior and posterior; MLE vs Bayesian</span></a><a class="sn-link other" href="unit-2.html#t42" data-t="t42" title="Important"><span class="n">42</span><span class="pd m"></span><span>Expectation–Maximization (EM): E-step, M-step, applications  <span class="simtag">sim</span></span></a></details><details class="sn-unit"><summary><span class="sw" style="background:var(--u3)"></span>Unit III <small>Unsupervised and Ensemble Learning</small></summary><div class="sn-sec">A · Clustering</div><a class="sn-link other" href="unit-3.html#t43" data-t="t43" title="Very important"><span class="n">43</span><span class="pd h"></span><span>K-means: initial centroids, assignment, update, convergence  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t44" data-t="t44" title="Important"><span class="n">44</span><span class="pd m"></span><span>Elbow method, WCSS and cluster evaluation</span></a><a class="sn-link other" href="unit-3.html#t45" data-t="t45" title="Very important"><span class="n">45</span><span class="pd h"></span><span>Hierarchical clustering: agglomerative, divisive, linkages, dendrograms  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t46" data-t="t46" title="Additional"><span class="n">46</span><span class="pd l"></span><span>Ward&#x27;s method</span></a><div class="sn-sec">B · Ensemble Learning</div><a class="sn-link other" href="unit-3.html#t47" data-t="t47" title="Very important"><span class="n">47</span><span class="pd h"></span><span>Base, weak and strong learners; meta-model; voting and averaging  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t48" data-t="t48" title="Important"><span class="n">48</span><span class="pd m"></span><span>Bagging: bootstrap sampling, parallel training, aggregation, variance  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t49" data-t="t49" title="Very important"><span class="n">49</span><span class="pd h"></span><span>Random Forest: bootstrap rows, random features, majority vote</span></a><a class="sn-link other" href="unit-3.html#t50" data-t="t50" title="Very important"><span class="n">50</span><span class="pd h"></span><span>Boosting and AdaBoost: error, α, weight update, normalization, final prediction  <span class="simtag">sim</span></span></a><div class="sn-sec">C · Reinforcement Learning</div><a class="sn-link other" href="unit-3.html#t51" data-t="t51" title="Important"><span class="n">51</span><span class="pd m"></span><span>Agent, environment, state, action, reward, policy, value function, Q-value  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t52" data-t="t52" title="Important"><span class="n">52</span><span class="pd m"></span><span>Exploration vs exploitation; applications  <span class="simtag">sim</span></span></a></details><p class="sn-empty" id="sn-empty" hidden>No topic matches.</p><a class="sn-home" href="index.html">← Back to the study guide</a></aside><div class="sn-backdrop" id="sn-backdrop" hidden></div>
+<main class="wrap main">
+<header class="hero"><span class="eyebrow">23CSE301 Machine Learning · Unit I</span>
+<h1>Unit I: Introduction and Fundamentals</h1>
+<p class="lede">Every Unit I topic from the syllabus, taught from the basics: concept, formulas, how it works, then three fully solved examples (basic, intermediate, exam level) with the source of each problem. Theory and hand calculation only. Topics tagged  include an interactive simulator.</p>
+<div class="legend"><span class="pr h">Very important</span><span class="pr m">Important</span><span class="pr l">Additional</span><span class="sr M">In your materials</span><span class="sr P">Partial</span><span class="sr X">From outside sources</span></div>
+</header>
+<nav class="toc" aria-label="Topics in this unit"><span class="eyebrow">22 topics · 66 solved examples</span><ol><li><span class="n">01</span><a href="#t01">What ML is and the types of machine learning</a></li><li><span class="n">02</span><a href="#t02">Features and feature representation</a></li><li><span class="n">03</span><a href="#t03">Class boundaries and decision boundaries</a></li><li><span class="n">04</span><a href="#t04">Training, validation and testing; cross-validation</a></li><li><span class="n">05</span><a href="#t05">Generalization; underfitting, good fit and overfitting</a></li><li><span class="n">06</span><a href="#t06">Loss functions and cost functions</a></li><li><span class="n">07</span><a href="#t07">Explainability in machine learning</a></li><li><span class="n">08</span><a href="#t08">Algorithmic bias</a></li><li><span class="n">09</span><a href="#t09">Data privacy and algorithmic privacy</a></li><li><span class="n">10</span><a href="#t10">Curse of dimensionality</a></li><li><span class="n">11</span><a href="#t11">Principal Component Analysis (PCA)</a></li><li><span class="n">12</span><a href="#t12">Linear Discriminant Analysis (LDA)</a></li><li><span class="n">13</span><a href="#t13">Feature selection: forward, backward and bidirectional</a></li><li><span class="n">14</span><a href="#t14">KNN algorithm, choosing K and the effect of K</a></li><li><span class="n">15</span><a href="#t15">Distance metrics: Euclidean, Manhattan, Minkowski</a></li><li><span class="n">16</span><a href="#t16">Linear regression: least squares and gradient descent</a></li><li><span class="n">17</span><a href="#t17">Logistic regression: sigmoid, odds, log-odds and odds ratio</a></li><li><span class="n">18</span><a href="#t18">Regularization: LASSO (L1), Ridge (L2) and the effect of λ</a></li><li><span class="n">19</span><a href="#t19">Bias–variance trade-off</a></li><li><span class="n">20</span><a href="#t20">Confusion matrix, accuracy, precision, recall, F1, specificity</a></li><li><span class="n">21</span><a href="#t21">ROC curve and AUC</a></li><li><span class="n">22</span><a href="#t22">Regression metrics: RMSE, MAPE, R² (with MAE and MSE)</a></li></ol></nav>
+<h2 class="subhead">A · Introduction to Machine Learning</h2>
+
+<article class="topic" id="t01">
+<div class="th"><span class="tno">01</span><div><h2>What ML is and the types of machine learning</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Intro_ML.pdf · entire_Machine Learning.pptx</span></div></div></div>
+<p class="why">Standard 2–4 mark definition and comparison question. It did not appear in October 2025, so it is due.</p>
+
+<h3>Concept</h3>
+<p>Traditional programming takes <b>rules + data → answers</b>: a programmer writes the rules. Machine learning reverses this: it takes <b>data + answers → rules</b>. The computer finds the rule (the <i>model</i>) itself from examples. Arthur Samuel (1959) defined it as the field that gives computers "the ability to learn without being explicitly programmed". Tom Mitchell's operational definition is the one examiners like: a program learns from experience <b>E</b> with respect to task <b>T</b> and performance measure <b>P</b> if its performance at T, measured by P, improves with E.</p>
+<p>Your course notes give three reasons ML took off: <b>voluminous data</b>, <b>computational power</b> and <b>powerful algorithms</b>.</p>
+
+<h3>The four types</h3>
+<div class="tw"><table>
+<thead><tr><th>Type</th><th>What the data looks like</th><th>Goal</th><th>Algorithms in your syllabus</th><th>Everyday example</th></tr></thead>
+<tbody>
+<tr><td><b>Supervised</b></td><td>Inputs X with known labels y</td><td>Learn f: X → y to predict labels of new inputs</td><td>KNN, linear/logistic regression, decision trees, SVM, Naive Bayes, perceptron/MLP</td><td>Spam filter trained on emails marked spam/ham</td></tr>
+<tr><td><b>Unsupervised</b></td><td>Inputs X only, no labels</td><td>Find structure: groups, fewer dimensions, rules</td><td>K-means, hierarchical clustering, PCA</td><td>Grouping customers by buying habits</td></tr>
+<tr><td><b>Semi-supervised</b></td><td>Few labelled + many unlabelled examples</td><td>Use the unlabelled data to improve a supervised model</td><td>Self-training, label propagation</td><td>Labelling a few medical scans, using thousands of unlabelled ones</td></tr>
+<tr><td><b>Reinforcement</b></td><td>No fixed dataset; an agent acts and receives rewards</td><td>Learn a policy that maximises long-term reward</td><td>Q-learning, value iteration</td><td>A game-playing agent, a robot learning to walk</td></tr>
+</tbody></table></div>
+<p>Supervised learning splits by the type of output: <b>classification</b> (output is a category: "disease"/"no disease") and <b>regression</b> (output is a real number: price, weight). Unsupervised learning, in your notes, has three jobs: <b>clustering</b>, <b>dimensionality reduction</b> and <b>association rules</b> (market-basket analysis).</p>
+
+<figure class="fig">
+<svg viewBox="0 0 620 170" role="img" aria-label="Machine learning workflow: collect data, preprocess, train, evaluate, deploy, with a feedback loop">
+<defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>
+<g font-size="12" text-anchor="middle">
+<rect x="8" y="50" width="96" height="44" rx="8" fill="var(--surface)" stroke="var(--ink-2)"/><text x="56" y="76">Collect data</text>
+<rect x="128" y="50" width="104" height="44" rx="8" fill="var(--surface)" stroke="var(--ink-2)"/><text x="180" y="70">EDA +</text><text x="180" y="86">preprocess</text>
+<rect x="256" y="50" width="100" height="44" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="306" y="70">Train model</text><text x="306" y="86">(training set)</text>
+<rect x="380" y="50" width="104" height="44" rx="8" fill="var(--surface)" stroke="var(--ink-2)"/><text x="432" y="70">Evaluate</text><text x="432" y="86">(val / test)</text>
+<rect x="508" y="50" width="100" height="44" rx="8" fill="var(--surface)" stroke="var(--ink-2)"/><text x="558" y="70">Deploy +</text><text x="558" y="86">monitor</text>
+</g>
+<g stroke="var(--ink-2)" stroke-width="1.5" fill="none" marker-end="url(#a1)"><path d="M104 72H126"/><path d="M232 72H254"/><path d="M356 72H378"/><path d="M484 72H506"/><path d="M432 96V134H180V98"/></g>
+<text x="306" y="150" font-size="11" text-anchor="middle">poor results → revisit preprocessing, features, hyperparameters</text>
+</svg>
+<figcaption>The ML lifecycle from ML_pipeline.pptx, condensed. The loop back is why ML is iterative.</figcaption>
+</figure>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Classify each task as supervised (classification or regression), unsupervised, or reinforcement learning: (a) predicting tomorrow's temperature in °C from past readings; (b) grouping news articles into topics with no topic labels; (c) deciding whether a loan applicant will default, using past applicants whose outcome is known; (d) a program learning to play chess by playing against itself; (e) reducing 500 sensor readings to 10 summary features.</p>
+<div class="gf"><div><b>Method</b><span>Ask two questions. Are correct answers (labels) given? If yes, is the answer a number or a category? If there are no labels but there is a reward signal from acting, it is reinforcement learning.</span></div></div>
+<ol>
+<li>(a) Labels exist (past temperatures), and the output is a real number → <b>supervised regression</b>.</li>
+<li>(b) No labels; we want natural groups → <b>unsupervised clustering</b>.</li>
+<li>(c) Labels exist (default / no default), output is a category → <b>supervised classification</b> (binary).</li>
+<li>(d) No labelled moves; the program gets a win/loss reward after acting → <b>reinforcement learning</b>.</li>
+<li>(e) No labels; we want fewer variables → <b>unsupervised dimensionality reduction</b> (for example PCA).</li>
+</ol>
+<p class="ans">(a) supervised regression · (b) unsupervised clustering · (c) supervised classification · (d) reinforcement · (e) unsupervised dimensionality reduction</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem, built on the T/P/E definition (Mitchell, <i>Machine Learning</i>, 1997, Ch. 1)</span></div><div class="body">
+<p class="q">A hospital wants a system that flags chest X-rays showing pneumonia. It has 200 X-rays labelled by radiologists and 20,000 unlabelled X-rays. (i) State T, P and E. (ii) Which learning type fits best and why? (iii) Is it classification or regression?</p>
+<ol>
+<li><b>Task T:</b> decide for each X-ray whether pneumonia is present.</li>
+<li><b>Performance P:</b> for example recall on pneumonia cases (missing a sick patient is costly) together with precision.</li>
+<li><b>Experience E:</b> the labelled and unlabelled X-rays.</li>
+<li>Only 1% of the images are labelled because labelling needs an expert. That is the exact situation your notes give for <b>semi-supervised learning</b>: "labelling instances is challenging or expensive". Train on the 200, use the model to pseudo-label confident unlabelled images, retrain.</li>
+<li>The output is a category (pneumonia / normal) → <b>binary classification</b>.</li>
+</ol>
+<p class="ans">T = pneumonia detection, P = recall/precision, E = 200 labelled + 20,000 unlabelled X-rays; semi-supervised binary classification.</p>
+<p class="mean">Interpretation: the type of learning is decided by the data you have, not by the problem alone. With 20,000 labelled X-rays this would be plain supervised learning.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level (8 marks)</span><span class="src">Source: practice problem in end-semester format</span></div><div class="body">
+<p class="q">Compare supervised, unsupervised and reinforcement learning under the headings: input data, feedback, goal, evaluation, typical algorithms and one application each.</p>
+<div class="tw"><table>
+<thead><tr><th>Heading</th><th>Supervised</th><th>Unsupervised</th><th>Reinforcement</th></tr></thead>
+<tbody>
+<tr><td>Input data</td><td>Labelled pairs (x, y)</td><td>Unlabelled x</td><td>States observed while acting</td></tr>
+<tr><td>Feedback</td><td>Correct answer for every example</td><td>None</td><td>Delayed scalar reward</td></tr>
+<tr><td>Goal</td><td>Predict y for new x</td><td>Discover hidden structure</td><td>Maximise cumulative reward</td></tr>
+<tr><td>Evaluation</td><td>Accuracy, F1, RMSE on test data</td><td>WCSS, silhouette, interpretability</td><td>Total / average reward per episode</td></tr>
+<tr><td>Algorithms</td><td>KNN, SVM, decision tree, regression</td><td>K-means, hierarchical, PCA</td><td>Q-learning, value iteration</td></tr>
+<tr><td>Application</td><td>Spam detection</td><td>Customer segmentation</td><td>Game playing, robotics</td></tr>
+</tbody></table></div>
+<p class="ans">Write the table, then one line each: supervised learns a mapping from labelled examples; unsupervised finds structure without labels; reinforcement learns behaviour from rewards through trial and error.</p>
+<p class="mean">Marking tip: 8 marks usually means 6 headings × 3 types plus a one-line definition of each. A table earns these marks faster than paragraphs.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Calling clustering "classification". Classification needs labels; clustering does not.</li><li>Calling reinforcement learning "unsupervised". It has feedback, just not labels.</li><li>Saying regression means "linear regression only". Regression is any task with a numeric output.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>ML = learn rules from data. Supervised (labels; classification/regression) · Unsupervised (no labels; clustering, dimensionality reduction, association) · Semi-supervised (few labels) · Reinforcement (rewards). Mitchell: improve at T, measured by P, with experience E.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="next" href="#t02"><span>Next → · 02</span>Features and feature representation</a></nav></article>
+
+<article class="topic" id="t02">
+<div class="th"><span class="tno">02</span><div><h2>Features and feature representation</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">ML_model_from_scratch.pdf · ML_pipeline.pptx · Intro_ML.pdf</span></div></div></div>
+<p class="why">Every numerical in this course starts from feature vectors, and scaling decides KNN, K-means and SVM answers.</p>
+
+<h3>Concept</h3>
+<p>A <b>feature</b> (attribute, independent variable) is one measurable property of an object. An object is represented as a <b>feature vector</b> x = (x₁, x₂, …, x_d), a point in d-dimensional space. Your notes call this the <b>vector space model</b>. Once objects are points, "similar objects" means "nearby points", and every distance-based algorithm can work.</p>
+<p>A <b>good feature</b> takes different values for different classes (height separates cars from bikes). A <b>bad feature</b> takes the same value for every class (number of eyes of cats and dogs is always 2), so it carries no information. ML_pipeline.pptx makes exactly this point with legs and eyes.</p>
+<h3>Turning raw data into numbers</h3>
+<ul>
+<li><b>Data types</b> (Stevens): nominal (no order: colour), ordinal (order: low/medium/high), interval (equal steps, no true zero: °C), ratio (true zero: weight).</li>
+<li><b>Encoding</b> categorical features: label encoding (0, 1, 2 — mainly for the target), ordinal encoding (keeps the order), one-hot encoding (one 0/1 column per category, for nominal features).</li>
+<li><b>Scaling</b> numeric features so no feature dominates a distance:</li>
+</ul>
+<div class="fx">
+<div class="f">Min–max normalisation:  x' = (x − min) / (max − min)       → range [0, 1]</div>
+<div class="f">Standardisation (z-score):  z = (x − μ) / σ                → mean 0, std 1</div>
+<div class="d">μ = mean of the feature, σ = its standard deviation. Use min–max when you need a bounded range; use z-scores when the data are roughly Gaussian or have outliers that would squash min–max.</div>
+</div>
+<p>From your notes: distance-based methods (KNN, K-means, SVM) and gradient-descent methods need scaling; tree-based methods do not, because a tree splits one feature at a time.</p>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: course material, ML_model_from_scratch.pdf (vehicle example)</span></div><div class="body">
+<p class="q">Vehicles are described by {#Wheels, Height, Weight, Colour}. Samples: (4, 6, 500, Red) Car, (4, 5.5, 600, Blue) Car, (2, 3, 200, Red) Bike, (2, 3.5, 150, Blue) Bike. Which features are good and which is bad for telling cars from bikes? Write the feature vector of the first sample with colour one-hot encoded over {Red, Blue, Yellow}.</p>
+<ol>
+<li>#Wheels: cars 4, bikes 2 → values differ by class → <b>good</b>.</li>
+<li>Height: cars 5.5–6, bikes 3–3.5 → no overlap → <b>good</b>.</li>
+<li>Weight: cars 500–600, bikes 150–200 → <b>good</b>.</li>
+<li>Colour: Red and Blue appear in both classes → tells nothing about the class → <b>bad</b>.</li>
+<li>One-hot colour: Red → (1, 0, 0). Feature vector: x = (4, 6, 500, 1, 0, 0).</li>
+</ol>
+<p class="ans">Good: wheels, height, weight. Bad: colour. x₁ = (4, 6, 500, 1, 0, 0).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Heights (cm) of five students: 150, 160, 170, 180, 190. Find the min–max value and the z-score (use population σ) for each.</p>
+<div class="gf"><div><b>Given</b><span>min = 150, max = 190</span></div><div><b>Formula</b><span>x' = (x − 150)/40; z = (x − μ)/σ</span></div></div>
+<div class="calc">μ = (150+160+170+180+190)/5 = 850/5 = 170
+σ² = [(−20)² + (−10)² + 0² + 10² + 20²] / 5 = 1000/5 = 200  →  σ = √200 = 14.142
+min–max: 0/40=0, 10/40=0.25, 20/40=0.5, 30/40=0.75, 40/40=1
+z:       −20/14.142=−1.414, −0.707, 0, 0.707, 1.414</div>
+<p class="ans">Min–max: 0, 0.25, 0.5, 0.75, 1. z-scores: −1.414, −0.707, 0, 0.707, 1.414.</p>
+<p class="mean">Both keep the order of the values; only the scale changes.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Customers are described by (age in years, income in ₹). A = (25, 50000), B = (35, 52000), C = (26, 60000). Ages range 25–35 and incomes 50000–60000. Which customer is nearest to A by Euclidean distance (i) before scaling, (ii) after min–max scaling? Explain the difference.</p>
+<div class="calc">(i) Raw:
+d(A,B) = √[(35−25)² + (52000−50000)²] = √(100 + 4,000,000) = 2000.02
+d(A,C) = √[(26−25)² + (60000−50000)²] = √(1 + 100,000,000) = 10000.00
+(ii) Scaled: age' = (age−25)/10, income' = (income−50000)/10000
+A = (0, 0), B = (1, 0.2), C = (0.1, 1)
+d(A,B) = √(1² + 0.2²) = √1.04 = 1.020
+d(A,C) = √(0.1² + 1²) = √1.01 = 1.005</div>
+<p class="ans">Before scaling B is nearest (2000 vs 10000). After scaling C is nearest (1.005 vs 1.020).</p>
+<p class="mean">Before scaling, income differences are thousands while age differences are tens, so income alone decides the distance and age is ignored. B is 10 years older than A; C is only 1 year older. Scaling lets both features count. This is why your lab note says "always scale before KNN".</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Using label encoding (0, 1, 2) for a nominal feature such as colour: it invents an order Red &lt; Blue &lt; Yellow.</li><li>Computing min, max, μ, σ on the whole dataset. Compute them on the training set only and reuse them for test data.</li><li>Forgetting to scale before a distance-based algorithm.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Feature = measurable property; object = feature vector. Good feature separates classes. Nominal → one-hot; ordinal → ordinal encoding. Min–max (x−min)/(max−min); z = (x−μ)/σ. Scale for KNN, K-means, SVM, gradient descent; not needed for trees.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t01"><span>← Previous · 01</span>What ML is and the types of machine learning</a><a class="next" href="#t03"><span>Next → · 03</span>Class boundaries and decision boundaries</a></nav></article>
+
+<article class="topic" id="t03">
+<div class="th"><span class="tno">03</span><div><h2>Class boundaries and decision boundaries</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr P">Partial</span><span class="files">Classification.pdf · SVM ML.pdf</span></div></div></div>
+<p class="why">Needed to explain the effect of K in KNN and the SVM hyperplane; the notes only draw it in passing.</p>
+
+<h3>Concept</h3>
+<p>A classifier divides the feature space into regions, one per class. The <b>decision boundary</b> is the surface where the classifier is exactly undecided between two classes; points on one side get one label, points on the other side the other. A <b>class boundary</b> is the true separation between classes in the data; the decision boundary is the model's estimate of it.</p>
+<ul>
+<li><b>Linear boundary</b>: a straight line in 2D, a plane in 3D, a hyperplane in d dimensions: w·x + b = 0. Produced by the perceptron, logistic regression, linear SVM and LDA.</li>
+<li><b>Non-linear boundary</b>: curved. Produced by KNN, decision trees (axis-parallel staircase), kernel SVM and MLPs.</li>
+</ul>
+<div class="fx">
+<div class="f">Linear classifier:  predict class +1 if w·x + b ≥ 0, else class −1</div>
+<div class="f">Boundary:  w₁x₁ + w₂x₂ + b = 0   ⇔   x₂ = −(w₁/w₂)x₁ − b/w₂</div>
+<div class="f">Logistic regression boundary:  p = 0.5  ⇔  z = β₀ + β·x = 0</div>
+<div class="d">w is perpendicular (normal) to the boundary; b shifts it away from the origin.</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 0 520 200" role="img" aria-label="Left: a straight decision boundary separating two classes. Right: a curved boundary from KNN.">
+<g transform="translate(10,10)"><rect width="230" height="170" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M20 170L210 0" stroke="var(--accent)" stroke-width="2.5"/>
+<g fill="var(--pos)"><circle cx="40" cy="40" r="5"/><circle cx="70" cy="30" r="5"/><circle cx="55" cy="80" r="5"/><circle cx="100" cy="50" r="5"/><circle cx="35" cy="110" r="5"/></g>
+<g fill="var(--surface)" stroke="var(--neg)" stroke-width="2"><rect x="150" y="110" width="10" height="10"/><rect x="180" y="80" width="10" height="10"/><rect x="130" y="150" width="10" height="10"/><rect x="190" y="140" width="10" height="10"/><rect x="160" y="60" width="10" height="10"/></g>
+<text x="115" y="190" text-anchor="middle" font-size="11">linear: w·x + b = 0</text></g>
+<g transform="translate(280,10)"><rect width="230" height="170" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M30 170C40 120 90 130 100 90S70 30 120 20S190 70 230 40" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<g fill="var(--pos)"><circle cx="40" cy="40" r="5"/><circle cx="70" cy="60" r="5"/><circle cx="60" cy="100" r="5"/><circle cx="140" cy="10" r="5"/><circle cx="200" cy="20" r="5"/></g>
+<g fill="var(--surface)" stroke="var(--neg)" stroke-width="2"><rect x="120" y="80" width="10" height="10"/><rect x="160" y="110" width="10" height="10"/><rect x="100" y="140" width="10" height="10"/><rect x="190" y="90" width="10" height="10"/><rect x="140" y="50" width="10" height="10"/></g>
+<text x="115" y="190" text-anchor="middle" font-size="11">non-linear (e.g. KNN, kernel SVM)</text></g>
+</svg>
+<figcaption>Filled circles: class +1. Open squares: class −1. The line or curve is the decision boundary.</figcaption>
+</figure>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A linear classifier has w = (2, −1) and b = −4. Find its decision boundary and classify P = (3, 1) and Q = (1, 3).</p>
+<div class="calc">Boundary: 2x₁ − x₂ − 4 = 0  →  x₂ = 2x₁ − 4
+P: 2(3) − 1 − 4 = 1  ≥ 0  → class +1
+Q: 2(1) − 3 − 4 = −5 < 0  → class −1</div>
+<p class="ans">Boundary x₂ = 2x₁ − 4 (slope 2, intercept −4). P → +1, Q → −1.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A 1-nearest-neighbour classifier has two training points: A = (1, 1) of class + and B = (5, 3) of class −. Find the equation of its decision boundary.</p>
+<div class="gf"><div><b>Idea</b><span>1-NN assigns each point to the nearer training point, so the boundary is the set of points equidistant from A and B: the perpendicular bisector of AB.</span></div></div>
+<div class="calc">Midpoint M = ((1+5)/2, (1+3)/2) = (3, 2)
+Slope of AB = (3−1)/(5−1) = 0.5   →  perpendicular slope = −1/0.5 = −2
+Line through M: x₂ − 2 = −2(x₁ − 3)  →  2x₁ + x₂ = 8
+Check (3,2): 6 + 2 = 8 ✓</div>
+<p class="ans">Decision boundary: 2x₁ + x₂ = 8. Points with 2x₁ + x₂ &lt; 8 are class +.</p>
+<p class="mean">With many training points, 1-NN's boundary is made of many such bisector pieces, which is why it looks jagged.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A logistic regression model for admission uses exam score x₁ and interview score x₂: z = −10 + 0.1x₁ + 0.2x₂, P(admit) = σ(z). (i) Write the decision boundary at threshold 0.5. (ii) Classify a student with x₁ = 60, x₂ = 15. (iii) What interview score does a student with x₁ = 40 need?</p>
+<div class="calc">(i) σ(z) = 0.5 ⇔ z = 0 → 0.1x₁ + 0.2x₂ = 10  ⇔  x₁ + 2x₂ = 100
+(ii) z = −10 + 6 + 3 = −1 → σ(−1) = 1/(1+e¹) = 0.269 < 0.5 → not admitted
+(iii) 40 + 2x₂ ≥ 100 → x₂ ≥ 30</div>
+<p class="ans">Boundary x₁ + 2x₂ = 100; the student is rejected (p = 0.269); an interview score of at least 30 is needed.</p>
+<p class="mean">Logistic regression has a linear boundary even though its output curve is an S-shape: the S-curve only converts distance from the line into a probability.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Thinking logistic regression has a curved boundary. Its boundary is linear in the features.</li><li>Forgetting that w points toward the positive class and is perpendicular to the boundary.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Decision boundary = where the classifier switches label. Linear: w·x + b = 0. 1-NN boundary = perpendicular bisectors. Logistic: z = 0. Larger K in KNN → smoother boundary.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t02"><span>← Previous · 02</span>Features and feature representation</a><a class="next" href="#t04"><span>Next → · 04</span>Training, validation and testing; cross-validation</a></nav></article>
+
+<article class="topic" id="t04">
+<div class="th"><span class="tno">04</span><div><h2>Training, validation and testing; cross-validation</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Intro_ML.pdf · Bias_variance.pptx</span></div></div></div>
+<p class="why">A common 2-mark comparison, plus the "why not test on training data" question.</p>
+
+<h3>Concept</h3>
+<p>A model is judged on how well it handles <b>new</b> data. So the available data is split into three disjoint parts:</p>
+<div class="tw"><table>
+<thead><tr><th>Set</th><th>Used for</th><th>Changes model weights?</th><th>Typical share</th></tr></thead>
+<tbody>
+<tr><td><b>Training</b></td><td>Fitting the model parameters (weights)</td><td>Yes</td><td>60–80%</td></tr>
+<tr><td><b>Validation</b></td><td>Choosing hyperparameters (K, λ, depth), model selection, early stopping</td><td>No</td><td>10–20%</td></tr>
+<tr><td><b>Test</b></td><td>One final, unbiased estimate of performance on unseen data</td><td>No — used once at the very end</td><td>10–20%</td></tr>
+</tbody></table></div>
+<p><b>Why not train and test on the same data?</b> A model can memorise the training examples and score perfectly without learning a general pattern (your notes: "memorizing examples rather than learning general patterns"). Only unseen data reveals that.</p>
+<h3>k-fold cross-validation</h3>
+<ol>
+<li>Split the training data into k equal folds (commonly k = 5 or 10).</li>
+<li>For i = 1 … k: train on the other k − 1 folds, validate on fold i, record the score.</li>
+<li>Report the mean (and standard deviation) of the k scores. Repeat for each hyperparameter value and keep the best mean.</li>
+</ol>
+<div class="fx"><div class="f">CV score = (1/k) Σᵢ scoreᵢ</div><div class="d">Every example is used for validation exactly once, so an unlucky single split matters less (Bias_variance.pptx: "If you fear an unlucky split, try multiple splits"). Leave-one-out CV is the case k = n.</div></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A dataset has 1,000 samples. Split it 70 : 15 : 15. How many samples go to each set, and which set is used to choose K for KNN?</p>
+<div class="calc">Train = 0.70 × 1000 = 700;  Validation = 0.15 × 1000 = 150;  Test = 0.15 × 1000 = 150</div>
+<p class="ans">700 / 150 / 150. K is chosen on the validation set; the test set is touched only once, for the final report.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">5-fold cross-validation gives fold accuracies 0.82, 0.85, 0.80, 0.88, 0.85. Find the CV accuracy and its (population) standard deviation.</p>
+<div class="calc">Mean = (0.82+0.85+0.80+0.88+0.85)/5 = 4.20/5 = 0.84
+Deviations: −0.02, 0.01, −0.04, 0.04, 0.01
+Squares:  0.0004, 0.0001, 0.0016, 0.0016, 0.0001 → sum 0.0038
+σ = √(0.0038/5) = √0.00076 = 0.0276</div>
+<p class="ans">CV accuracy = 0.84 ± 0.028.</p>
+<p class="mean">The small spread says the model's performance does not depend much on which data it sees: low variance.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">KNN is tuned on a validation set. Results: K = 1: train 100%, val 78%; K = 5: train 91%, val 88%; K = 25: train 80%, val 79%. The chosen model then scores 87% on the test set. (i) Which K is chosen and why? (ii) Explain the K = 1 and K = 25 results. (iii) A student reports "best test accuracy over all K" instead. What is wrong?</p>
+<ol>
+<li>Choose the K with the best <b>validation</b> accuracy: K = 5 (88%).</li>
+<li>K = 1 memorises the training set (100% train) but generalises poorly (78% val): <b>overfitting</b>, high variance. K = 25 averages over too many neighbours, so even training accuracy drops (80%): <b>underfitting</b>, high bias.</li>
+<li>Picking K by test accuracy turns the test set into a second validation set. The reported number is then optimistically biased, because K was chosen to suit that particular test data. The test set must be used once, after all choices are made.</li>
+</ol>
+<p class="ans">K = 5; K = 1 overfits, K = 25 underfits; choosing by test accuracy leaks test information and inflates the result.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Tuning hyperparameters on the test set (data leakage).</li><li>Scaling or selecting features using all the data before splitting — another form of leakage.</li><li>Saying the validation set "trains" the model. It only guides choices.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Train → fit weights. Validation → pick hyperparameters/model. Test → final unbiased score, once. k-fold CV: average of k train/validate rounds; each sample validated once.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t03"><span>← Previous · 03</span>Class boundaries and decision boundaries</a><a class="next" href="#t05"><span>Next → · 05</span>Generalization; underfitting, good fit and overfitting</a></nav></article>
+
+<article class="topic" id="t05">
+<div class="th"><span class="tno">05</span><div><h2>Generalization; underfitting, good fit and overfitting</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Overfitting-and-Underfitting.pdf · Intro_ML.pdf · Bias_variance.pptx</span></div></div></div>
+<p class="why">Q2(a) of October 2025 asks how λ moves a model between underfitting and overfitting; you need this vocabulary to answer it.</p>
+
+<h3>Concept</h3>
+<p><b>Generalization</b> is a model's ability to make accurate predictions on new data it was not trained on. Your notes use three students: A ignores the lectures (≈50% on every test — <b>underfits</b>), B memorises every solved question (98% on the class test, collapses on new questions — <b>overfits</b>), C learns the method (92% on both — <b>good fit</b>).</p>
+<div class="tw"><table>
+<thead><tr><th></th><th>Underfitting</th><th>Good fit</th><th>Overfitting</th></tr></thead>
+<tbody>
+<tr><td>Model</td><td>Too simple</td><td>Right complexity</td><td>Too complex</td></tr>
+<tr><td>Training error</td><td>High</td><td>Low</td><td>Very low (≈ 0)</td></tr>
+<tr><td>Test error</td><td>High</td><td>Low, close to training</td><td>High — large gap</td></tr>
+<tr><td>Bias / variance</td><td>High bias, low variance</td><td>Balanced</td><td>Low bias, high variance</td></tr>
+<tr><td>Example</td><td>Straight line on curved data</td><td>Quadratic on quadratic data</td><td>Degree-9 polynomial through 10 noisy points; unpruned tree; KNN with K = 1</td></tr>
+<tr><td>Fix</td><td>More features, more complex model, less regularization, train longer</td><td>—</td><td>More data, regularization (larger λ), pruning, larger K, fewer features, early stopping, cross-validation</td></tr>
+</tbody></table></div>
+<figure class="fig">
+<svg viewBox="0 0 600 180" role="img" aria-label="Three panels: a straight line underfitting curved data, a smooth curve fitting well, and a wiggly curve passing through every point">
+<g font-size="11" text-anchor="middle">
+<g transform="translate(8,8)"><rect width="185" height="140" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M10 120L175 40" stroke="var(--accent)" stroke-width="2.5"/>
+<g fill="var(--ink)"><circle cx="20" cy="110" r="4"/><circle cx="40" cy="80" r="4"/><circle cx="60" cy="62" r="4"/><circle cx="85" cy="50" r="4"/><circle cx="110" cy="48" r="4"/><circle cx="135" cy="58" r="4"/><circle cx="155" cy="78" r="4"/><circle cx="172" cy="104" r="4"/></g>
+<text x="92" y="160">Underfit (high bias)</text></g>
+<g transform="translate(206,8)"><rect width="185" height="140" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M12 118Q92 -10 175 112" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<g fill="var(--ink)"><circle cx="20" cy="110" r="4"/><circle cx="40" cy="80" r="4"/><circle cx="60" cy="62" r="4"/><circle cx="85" cy="50" r="4"/><circle cx="110" cy="48" r="4"/><circle cx="135" cy="58" r="4"/><circle cx="155" cy="78" r="4"/><circle cx="172" cy="104" r="4"/></g>
+<text x="92" y="160">Good fit</text></g>
+<g transform="translate(404,8)"><rect width="185" height="140" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M20 110C28 60 34 120 40 80S52 40 60 62S78 20 85 50S100 70 110 48S128 90 135 58S150 40 155 78S168 130 172 104" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<g fill="var(--ink)"><circle cx="20" cy="110" r="4"/><circle cx="40" cy="80" r="4"/><circle cx="60" cy="62" r="4"/><circle cx="85" cy="50" r="4"/><circle cx="110" cy="48" r="4"/><circle cx="135" cy="58" r="4"/><circle cx="155" cy="78" r="4"/><circle cx="172" cy="104" r="4"/></g>
+<text x="92" y="160">Overfit (high variance)</text></g>
+</g></svg>
+<figcaption>The same eight noisy points fitted by models of increasing complexity.</figcaption>
+</figure>
+
+<div class="sim" id="sim-t05-1" data-sim="fit" data-title="Underfitting vs overfitting" data-desc="Fit polynomials of degree 1 to 9 to the same 12 noisy points. Training error keeps falling while test error traces a U." data-opts='{"mode": "fit"}'><p class="sim-desc">Interactive simulator: Underfitting vs overfitting (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Diagnose each model: M1 train error 25%, test error 27%; M2 train 2%, test 30%; M3 train 6%, test 8%.</p>
+<ol><li>M1: both errors high and close → <b>underfitting</b>.</li><li>M2: tiny training error, large test error, big gap → <b>overfitting</b>.</li><li>M3: both low and close → <b>good fit</b>.</li></ol>
+<p class="ans">M1 underfits, M2 overfits, M3 fits well.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Polynomials of degree 1, 3 and 9 are fitted to the same data. Mean squared errors: degree 1 — train 12.4, test 13.1; degree 3 — train 3.2, test 3.9; degree 9 — train 0.1, test 25.7. Which degree should be used? Explain each.</p>
+<ol>
+<li>Degree 1: errors high on both sets → the line cannot follow the curve → underfit.</li>
+<li>Degree 9: training error almost zero but test error is the worst → it has fitted the noise → overfit.</li>
+<li>Degree 3: lowest test error (3.9) and a small train–test gap (0.7) → best generalization.</li>
+</ol>
+<p class="ans">Use degree 3: it has the lowest test error.</p>
+<p class="mean">Always choose by validation/test error, never by training error — training error only ever goes down as complexity rises.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level (6 marks)</span><span class="src">Source: practice problem in end-semester format</span></div><div class="body">
+<p class="q">A decision tree reaches 100% training accuracy but 70% test accuracy. (i) Name the problem. (ii) Why are trees, KNN and other non-parametric models prone to it? (iii) Give four remedies and say which knob each turns.</p>
+<ol>
+<li><b>Overfitting</b> (low bias, high variance): the 30-point gap is the signature.</li>
+<li>Non-parametric models have no fixed form; their complexity grows with the data. A tree can keep splitting until every leaf holds one training example, so it memorises noise (your Overfitting notes make exactly this point about trees and KNN).</li>
+<li>Remedies:
+<ul><li><b>Pruning</b> or a maximum depth — reduces tree complexity.</li>
+<li><b>More training data</b> — noise averages out.</li>
+<li><b>Ensembles</b> such as Random Forest — averaging many trees cuts variance.</li>
+<li><b>Cross-validation</b> to choose depth / minimum samples per leaf.</li></ul></li>
+</ol>
+<p class="ans">Overfitting; caused by unlimited model flexibility; fix with pruning/depth limits, more data, ensembles and cross-validated hyperparameters.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Saying underfitting means "high variance". Underfitting = high bias.</li><li>Judging a model by training accuracy.</li><li>Thinking more complexity always helps.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Generalization = performance on unseen data. Underfit: high train + high test error (high bias). Overfit: low train, high test error (high variance). Good fit: both low and close. Fix overfitting with data, regularization, pruning, larger K, ensembles.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t04"><span>← Previous · 04</span>Training, validation and testing; cross-validation</a><a class="next" href="#t06"><span>Next → · 06</span>Loss functions and cost functions</a></nav></article>
+
+<article class="topic" id="t06">
+<div class="th"><span class="tno">06</span><div><h2>Loss functions and cost functions</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr P">Partial</span><span class="files">Regression.pdf · Gradient-Descent.pdf · Intro_ML.pdf · Logistic_regression_Assignment.docx</span></div></div></div>
+<p class="why">Regression, logistic regression and backpropagation all minimise one; no single lecture lists them together.</p>
+
+<h3>Concept</h3>
+<p>A <b>loss function</b> L(y, ŷ) measures how wrong one prediction ŷ is for one example with true value y. A <b>cost function</b> J (objective) is the average (sometimes sum) of the losses over the whole training set, possibly plus a regularization penalty. Training = finding the parameters that minimise J (Regression.pdf: "a cost function is a measure of how wrong the model is").</p>
+<div class="fx">
+<div class="f">Squared error:   L = (y − ŷ)²            MSE  J = (1/n) Σ (yᵢ − ŷᵢ)²</div>
+<div class="f">Absolute error:  L = |y − ŷ|            MAE  J = (1/n) Σ |yᵢ − ŷᵢ|</div>
+<div class="f">Binary cross-entropy (log loss):  L = −[ y ln p + (1−y) ln(1−p) ]</div>
+<div class="f">Hinge loss (SVM):  L = max(0, 1 − y·f(x)),  y ∈ {−1, +1}</div>
+<div class="f">0–1 loss (classification error):  L = 0 if correct, 1 if wrong</div>
+<div class="d">Gradient-descent courses write J(θ₀, θ₁) = (1/2m) Σ (h(x) − y)²; the ½ only cancels the 2 when differentiating.</div>
+</div>
+<div class="tw"><table><thead><tr><th>Loss</th><th>Used by</th><th>Property</th></tr></thead><tbody>
+<tr><td>MSE</td><td>Linear regression, MLP regression</td><td>Smooth, easy gradient; squares magnify large errors, so sensitive to outliers</td></tr>
+<tr><td>MAE</td><td>Robust regression</td><td>Less sensitive to outliers; not differentiable at 0</td></tr>
+<tr><td>Cross-entropy</td><td>Logistic regression, neural network classifiers</td><td>Punishes confident wrong probabilities very heavily; convex for logistic regression</td></tr>
+<tr><td>Hinge</td><td>SVM</td><td>Zero once a point is beyond the margin</td></tr>
+</tbody></table></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">True values y = (3, 5, 2.5, 7), predictions ŷ = (2.5, 5, 4, 8). Compute MSE and MAE.</p>
+<div class="calc">errors y − ŷ = 0.5, 0, −1.5, −1
+MSE = (0.25 + 0 + 2.25 + 1)/4 = 3.5/4 = 0.875
+MAE = (0.5 + 0 + 1.5 + 1)/4 = 3/4 = 0.75</div>
+<p class="ans">MSE = 0.875, MAE = 0.75.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, Logistic_regression_Assignment.docx, Part D</span></div><div class="body">
+<p class="q">Pairs (actual, predicted probability): (1, 0.90), (1, 0.70), (0, 0.20), (0, 0.60). Which prediction is wrong at threshold 0.5? Compute the average log loss.</p>
+<div class="calc">(1,0.90): −ln 0.90 = 0.1054
+(1,0.70): −ln 0.70 = 0.3567
+(0,0.20): −ln(1−0.20) = −ln 0.80 = 0.2231
+(0,0.60): −ln(1−0.60) = −ln 0.40 = 0.9163   ← predicted 1, actual 0: wrong
+Average = (0.1054+0.3567+0.2231+0.9163)/4 = 1.6015/4 = 0.4004</div>
+<p class="ans">The fourth prediction is wrong. Log loss = 0.400.</p>
+<p class="mean">The single wrong prediction contributes more than half of the total loss: cross-entropy punishes confident mistakes hardest.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: course question (Logistic_regression_Assignment.docx: "Can MSE be used effectively for logistic regression?"), answered here</span></div><div class="body">
+<p class="q">Why is cross-entropy used instead of MSE to train logistic regression? Use the prediction p = 0.01 for a true label y = 1 to compare the two losses.</p>
+<div class="calc">MSE loss:  (1 − 0.01)² = 0.9801   (can never exceed 1)
+Log loss:  −ln(0.01) = 4.605          (grows without limit as p → 0)</div>
+<ol>
+<li><b>Penalty size</b>: a confidently wrong prediction costs at most 1 under MSE but 4.6 (and → ∞) under log loss, so log loss pushes much harder to correct it.</li>
+<li><b>Convexity</b>: MSE composed with the sigmoid gives a non-convex cost with flat regions and local minima; cross-entropy with the sigmoid is convex, so gradient descent reaches the global minimum.</li>
+<li><b>Probabilistic meaning</b>: minimising cross-entropy is the same as maximising the likelihood of the labels (see topic 40, MLE).</li>
+</ol>
+<p class="ans">Cross-entropy gives large gradients for confident errors, is convex for logistic regression, and equals maximum likelihood; MSE has none of these properties here.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Mixing up loss (one example) and cost (whole dataset).</li><li>Using ln(p) for a negative example; for y = 0 the term is ln(1 − p).</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Loss = error of one prediction; cost = average loss (+ penalty). MSE for regression, cross-entropy for probabilistic classifiers, hinge for SVM. Training minimises cost, usually by gradient descent.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t05"><span>← Previous · 05</span>Generalization; underfitting, good fit and overfitting</a><a class="next" href="#t07"><span>Next → · 07</span>Explainability in machine learning</a></nav></article>
+
+<article class="topic" id="t07">
+<div class="th"><span class="tno">07</span><div><h2>Explainability in machine learning</h2>
+<div class="meta"><span class="pr l">Additional</span><span class="sr X">From outside sources</span><span class="files">Not in your folder</span></div></div></div>
+<p class="why">On the syllabus but with no lecture material, so expect at most a short definition or case question.</p>
+
+<h3>Concept</h3>
+<p><b>Explainability</b> (explainable AI, XAI) is the ability to state, in human terms, why a model produced a given output. It matters when decisions affect people — loans, medical diagnosis, hiring — because users, regulators and developers must be able to check, contest and debug them.</p>
+<ul>
+<li><b>Interpretable (white-box) models</b>: the model itself is readable — linear/logistic regression (coefficients), decision trees (if–then rules), small rule lists.</li>
+<li><b>Black-box models</b>: deep networks, large ensembles, kernel SVMs — accurate but opaque. They need <b>post-hoc</b> explanation methods.</li>
+<li><b>Global</b> explanation: how the model behaves overall (feature importance). <b>Local</b> explanation: why it made one particular prediction.</li>
+<li>Common post-hoc tools: <b>feature importance</b>, <b>LIME</b> (fits a simple linear model around one prediction), <b>SHAP</b> (Shapley values from game theory: each feature's fair share of the prediction), partial dependence plots, counterfactuals ("you would be approved if income were ₹5,000 higher").</li>
+</ul>
+<div class="fx"><div class="f">Shapley value of feature i:  φᵢ = Σ over subsets S not containing i of [ |S|!(n−|S|−1)!/n! ] · [ v(S∪{i}) − v(S) ]</div><div class="d">v(S) = model output using only the features in S. Shapley values add up to v(all) − v(none). For n = 2 each feature's value is the average of its two marginal contributions.</div></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A linear credit-score model is: score = 300 + 2.0·(income in ₹1000s) − 1.5·(existing loans in ₹1000s) + 4·(years employed). For an applicant with income 50, loans 40, 5 years employed, explain the score feature by feature.</p>
+<div class="calc">Baseline 300
+income:   2.0 × 50 = +100
+loans:   −1.5 × 40 = −60
+years:    4 × 5   = +20
+score = 300 + 100 − 60 + 20 = 360</div>
+<p class="ans">Score 360: income added 100, employment added 20, existing loans removed 60.</p>
+<p class="mean">For a linear model the explanation is exact: coefficient × value is each feature's contribution. That is what "interpretable by design" means.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem on Shapley values (Lundberg &amp; Lee, "A Unified Approach to Interpreting Model Predictions", NeurIPS 2017, <a href="https://arxiv.org/abs/1705.07874">arXiv:1705.07874</a>, for the method)</span></div><div class="body">
+<p class="q">A model's output with no features is 50, with feature A alone 70, with feature B alone 60, and with both 90. Compute the Shapley values of A and B.</p>
+<div class="calc">A's marginal contributions: added to {} → 70 − 50 = 20 ; added to {B} → 90 − 60 = 30
+φ_A = (20 + 30)/2 = 25
+B's marginal contributions: added to {} → 60 − 50 = 10 ; added to {A} → 90 − 70 = 20
+φ_B = (10 + 20)/2 = 15
+Check: φ_A + φ_B = 40 = 90 − 50 ✓</div>
+<p class="ans">φ_A = 25, φ_B = 15.</p>
+<p class="mean">A is credited with more of the 40-point rise above the baseline. SHAP does this for every feature of a black-box model.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A bank must choose between a decision tree (accuracy 86%) and a deep neural network (accuracy 89%) for loan approval, and rejected applicants are entitled to a reason. Discuss the trade-off and recommend an approach.</p>
+<ol>
+<li>The tree is a white-box model: every rejection maps to a readable rule path ("income &lt; 30k and loans &gt; 50k → reject"), so reasons are exact and auditable.</li>
+<li>The network is 3 points more accurate but opaque; reasons would come from post-hoc tools (SHAP, LIME), which are approximations and can be unstable.</li>
+<li>Explainability also helps detect bias (topic 08) and debugging: a rule that rejects by pin code may be a proxy for a protected group.</li>
+<li>Recommendation: if the accuracy gain is small and decisions must be justified, use the tree (or a regularised logistic model); otherwise use the network and attach SHAP explanations plus human review of rejections.</li>
+</ol>
+<p class="ans">Accuracy vs interpretability trade-off; for high-stakes, regulated decisions prefer an interpretable model or add local explanations and human oversight.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Treating feature importance (global) as an explanation of one decision (local).</li><li>Claiming post-hoc explanations show exactly what the black box computes; they approximate it.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Explainability = human-understandable reasons. White-box (linear, tree) vs black-box (deep nets). Global vs local. Tools: feature importance, LIME, SHAP, counterfactuals. Needed for trust, regulation, debugging and fairness.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t06"><span>← Previous · 06</span>Loss functions and cost functions</a><a class="next" href="#t08"><span>Next → · 08</span>Algorithmic bias</a></nav></article>
+
+<article class="topic" id="t08">
+<div class="th"><span class="tno">08</span><div><h2>Algorithmic bias</h2>
+<div class="meta"><span class="pr l">Additional</span><span class="sr X">From outside sources</span><span class="files">Not in your folder</span></div></div></div>
+<p class="why">On the syllabus without lecture material; expect a definition plus one real case.</p>
+
+<h3>Concept</h3>
+<p><b>Algorithmic bias</b> is systematic, unfair difference in a model's outcomes for different groups of people (by gender, race, age, region…). It is not the statistical "bias" of the bias–variance trade-off. Models learn patterns from data, so they also learn the unfairness in that data.</p>
+<ul>
+<li><b>Historical bias</b>: the world the data records was unfair (past hiring favoured men).</li>
+<li><b>Representation / sampling bias</b>: some groups are under-represented in training data.</li>
+<li><b>Measurement bias</b>: the label is a poor proxy (arrests used as a stand-in for crime).</li>
+<li><b>Aggregation / evaluation bias</b>: one model or one overall accuracy figure hides poor performance on a subgroup.</li>
+</ul>
+<div class="fx">
+<div class="f">Disparate impact ratio = P(positive outcome | group B) / P(positive outcome | group A)</div>
+<div class="d">The US "four-fifths rule" flags a ratio below 0.8 as adverse impact.</div>
+<div class="f">Equal opportunity: TPR_A = TPR_B ;  equalised odds: TPR and FPR equal across groups</div>
+</div>
+<p>Mitigation: collect representative data, audit metrics per group, remove or reweight biased features and samples, add fairness constraints, keep humans in the loop.</p>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A hiring model shortlists 60 of 100 male applicants and 30 of 100 female applicants. Compute the disparate impact ratio and apply the four-fifths rule.</p>
+<div class="calc">Selection rate (male) = 60/100 = 0.60;  (female) = 30/100 = 0.30
+Ratio = 0.30 / 0.60 = 0.50 < 0.80</div>
+<p class="ans">Ratio 0.50: the model shows adverse impact against female applicants.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: ProPublica, "How We Analyzed the COMPAS Recidivism Algorithm" (2016), <a href="https://www.propublica.org/article/how-we-analyzed-the-compas-recidivism-algorithm">propublica.org</a></span></div><div class="body">
+<p class="q">ProPublica's analysis of the COMPAS risk score reported these error rates: false positive rate (labelled high risk but did not re-offend) 44.85% for Black defendants and 23.45% for white defendants; false negative rate 27.99% for Black and 47.72% for white defendants. Interpret these numbers as a fairness problem.</p>
+<div class="calc">FPR ratio = 44.85 / 23.45 = 1.91
+FNR ratio (white / Black) = 47.72 / 27.99 = 1.70</div>
+<ol>
+<li>Black defendants who did not re-offend were wrongly labelled high-risk about 1.9 times as often as white defendants.</li>
+<li>White defendants who did re-offend were wrongly labelled low-risk about 1.7 times as often.</li>
+<li>So the errors are not shared equally: the model violates <b>equalised odds</b>, even though the developer argued its scores were equally calibrated for both groups. Both cannot hold at once when base rates differ — a well-known result in fairness research.</li>
+</ol>
+<p class="ans">The model's mistakes harm one group (false alarms) and favour another (missed cases): an equalised-odds violation.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: Buolamwini &amp; Gebru, "Gender Shades", Proceedings of Machine Learning Research 81 (2018), <a href="https://proceedings.mlr.press/v81/buolamwini18a.html">proceedings.mlr.press</a></span></div><div class="body">
+<p class="q">The Gender Shades study tested three commercial gender classifiers. Error rates reached up to 34.7% for darker-skinned women but at most 0.8% for lighter-skinned men, and two popular face benchmarks were 79.6% and 86.2% lighter-skinned. Identify the type(s) of bias, explain why overall accuracy hid the problem, and suggest remedies.</p>
+<ol>
+<li><b>Representation bias</b>: training and benchmark data were dominated by lighter-skinned faces, so the models learned them best.</li>
+<li><b>Evaluation bias</b>: a single overall accuracy is a weighted average dominated by the majority group, so a high overall score can coexist with a 34.7% subgroup error.</li>
+<li>Remedies: build balanced datasets (the authors created one balanced by gender and skin type); report accuracy for every intersectional subgroup; set minimum per-group performance before release.</li>
+</ol>
+<p class="ans">Representation and evaluation bias; disaggregated (per-subgroup) evaluation and balanced data are the fixes.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Confusing algorithmic bias with the bias term b or with statistical bias.</li><li>Thinking that removing the protected attribute removes bias: proxies such as pin code or name carry the same information.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Algorithmic bias = unfair outcomes across groups. Sources: historical, representation, measurement, aggregation/evaluation. Measures: disparate impact (four-fifths rule), equal opportunity, equalised odds. Cases: COMPAS, Gender Shades.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t07"><span>← Previous · 07</span>Explainability in machine learning</a><a class="next" href="#t09"><span>Next → · 09</span>Data privacy and algorithmic privacy</a></nav></article>
+
+<article class="topic" id="t09">
+<div class="th"><span class="tno">09</span><div><h2>Data privacy and algorithmic privacy</h2>
+<div class="meta"><span class="pr l">Additional</span><span class="sr X">From outside sources</span><span class="files">Not in your folder</span></div></div></div>
+<p class="why">On the syllabus without lecture material; expect definitions and one technique.</p>
+
+<h3>Concept</h3>
+<p><b>Data privacy</b> is about protecting personal information in the datasets used to train models: who may collect it, store it, and for what purpose. <b>Algorithmic privacy</b> is about what a trained model or its outputs reveal: a model can leak whether a person was in its training data (membership inference) or even reconstruct records.</p>
+<ul>
+<li><b>Anonymisation is not enough</b>: removing names still leaves quasi-identifiers (pin code, birth date, gender) that can be linked with other datasets.</li>
+<li><b>k-anonymity</b>: every record is identical to at least k − 1 others on the quasi-identifiers (achieved by generalising, e.g. exact age → age range).</li>
+<li><b>Differential privacy (DP)</b>: add calibrated random noise so the output barely changes whether or not any one person's data is included. Privacy budget ε: smaller ε = more noise = more privacy.</li>
+<li><b>Federated learning</b>: train on users' devices and share only model updates, not raw data.</li>
+</ul>
+<div class="fx"><div class="f">Laplace mechanism:  output = true answer + Laplace(0, b),  b = Δf / ε</div><div class="d">Δf (sensitivity) = the most one person can change the answer (1 for a count). Laplace noise has variance 2b².</div></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A released table has quasi-identifiers (Pin code, Age, Gender) and a sensitive column (Disease). Rows: (641001, 21, F, Flu), (641002, 22, F, Diabetes), (641001, 23, F, Flu), (641112, 45, M, Asthma), (641115, 47, M, Flu), (641112, 49, M, Cancer). Generalise pin code to its first 4 digits and age to decades. What k-anonymity does the result satisfy?</p>
+<div class="calc">After generalising:
+(6410**, 20–29, F) × 3 rows
+(6411**, 40–49, M) × 3 rows
+Each quasi-identifier combination appears 3 times → 3-anonymous</div>
+<p class="ans">The generalised table is 3-anonymous: any individual hides among 3 identical records.</p>
+<p class="mean">Before generalising, every row was unique, so knowing someone's pin code and age revealed their disease.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Narayanan &amp; Shmatikov, "How To Break Anonymity of the Netflix Prize Dataset" (2006), <a href="https://arxiv.org/abs/cs/0610105">arXiv:cs/0610105</a></span></div><div class="body">
+<p class="q">Netflix released movie ratings with names replaced by random IDs for its recommendation competition. Explain how researchers re-identified users and what lesson it teaches about privacy in ML datasets.</p>
+<ol>
+<li>The researchers used public IMDb reviews as background knowledge.</li>
+<li>Matching a handful of (movie, rating, approximate date) triples between IMDb and the Netflix data was enough to single out a subscriber's full Netflix record, because individual rating histories are almost unique.</li>
+<li>Lesson: removing names is not anonymisation. High-dimensional behavioural data (ratings, locations, purchases) acts as a fingerprint. Protection needs techniques like differential privacy or not releasing the raw data.</li>
+</ol>
+<p class="ans">Linkage with public data re-identified "anonymous" users; sparse high-dimensional data is inherently identifying.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem on the Laplace mechanism (Dwork &amp; Roth, <i>The Algorithmic Foundations of Differential Privacy</i>, 2014, for the method)</span></div><div class="body">
+<p class="q">A hospital answers the query "how many patients have diabetes?" with differential privacy, ε = 0.5. (i) What is the sensitivity? (ii) Find the Laplace scale b, the noise variance and standard deviation. (iii) What happens with ε = 2?</p>
+<div class="calc">(i) Adding/removing one patient changes a count by at most 1 → Δf = 1
+(ii) b = Δf/ε = 1/0.5 = 2 ;  variance = 2b² = 8 ;  std = √8 = 2.83
+(iii) b = 1/2 = 0.5 ; variance = 0.5 ; std = 0.71</div>
+<p class="ans">Δf = 1; with ε = 0.5 the noise has std ≈ 2.83; with ε = 2 only ≈ 0.71 (less private, more accurate).</p>
+<p class="mean">ε is the privacy–accuracy dial: smaller ε hides each individual better but makes the published count noisier.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Equating "anonymised" with "private".</li><li>Thinking a larger ε means more privacy; it is the opposite.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Data privacy = protect personal data; algorithmic privacy = models must not leak it. Quasi-identifiers enable linkage attacks (Netflix). Defences: k-anonymity, differential privacy (noise scale Δf/ε), federated learning.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t08"><span>← Previous · 08</span>Algorithmic bias</a><a class="next" href="#t10"><span>Next → · 10</span>Curse of dimensionality</a></nav></article>
+<h2 class="subhead">B · Dimensionality Reduction</h2>
+
+<article class="topic" id="t10">
+<div class="th"><span class="tno">10</span><div><h2>Curse of dimensionality</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Curse_of_dimensionality.pptx · Dimensionality_Reduction.pdf</span></div></div></div>
+<p class="why">It has its own lecture deck and is a classic 4-mark theory question.</p>
+
+<h3>Concept</h3>
+<p>The <b>curse of dimensionality</b> (Richard Bellman's term) is the set of problems that appear when the number of features d grows: the volume of the feature space grows exponentially, so a fixed amount of data becomes extremely sparse. Your notes list the consequences:</p>
+<ul>
+<li><b>Sparsity</b>: to keep the same density of samples you need exponentially more data.</li>
+<li><b>Distances lose meaning</b>: in high dimensions the nearest and farthest neighbours are almost the same distance away, which breaks KNN and K-means.</li>
+<li><b>Overfitting</b>: more dimensions give a model more ways to fit noise.</li>
+<li><b>Redundancy</b>: many features are correlated and carry the same information.</li>
+<li><b>Computational cost</b>: training and storage grow with d.</li>
+</ul>
+<p><b>Hughes phenomenon</b>: with a fixed training-set size, accuracy first rises as features are added, then falls. Remedies are <b>dimensionality reduction</b>: feature selection (keep a subset) or feature extraction (PCA, LDA — build new, fewer features).</p>
+<div class="fx">
+<div class="f">Cells in a grid with m bins per feature:  m^d</div>
+<div class="f">Edge of a sub-cube holding fraction r of uniform data in a unit hypercube:  e_d(r) = r^(1/d)</div>
+<div class="f">Fraction of a d-ball's volume in its outer shell of thickness ε:  1 − (1 − ε)^d</div>
+</div>
+
+<div class="sim" id="sim-t10-1" data-sim="curse" data-title="Distances concentrate in high dimensions" data-desc="300 random points in a unit hypercube: as the dimension grows, the nearest and farthest points end up almost equally far away." data-opts='{}'><p class="sim-desc">Interactive simulator: Distances concentrate in high dimensions (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Each feature is divided into 10 bins. How many cells must be filled with data for d = 1, 2, 3 and 10? If we want 5 samples per cell, how many samples are needed for d = 10?</p>
+<div class="calc">d = 1: 10¹ = 10 cells     d = 2: 10² = 100     d = 3: 10³ = 1,000     d = 10: 10¹⁰ cells
+Samples for d = 10: 5 × 10¹⁰ = 50 billion</div>
+<p class="ans">10, 100, 1,000 and 10¹⁰ cells; 5 × 10¹⁰ samples for d = 10.</p>
+<p class="mean">Each new feature multiplies the data requirement by 10 — this exponential growth is the "curse".</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Hastie, Tibshirani &amp; Friedman, <i>The Elements of Statistical Learning</i>, 2nd ed., §2.5, <a href="https://hastie.su.domains/ElemStatLearn/">hastie.su.domains/ElemStatLearn</a></span></div><div class="body">
+<p class="q">Data are uniform in a unit hypercube. A "local" neighbourhood should capture 10% of the data. What edge length must the neighbourhood cube have in 1, 2, 3 and 10 dimensions? Repeat for 1% in 10 dimensions.</p>
+<div class="gf"><div><b>Formula</b><span>Volume of a cube of edge e is e^d, so e^d = r ⇒ e = r^(1/d).</span></div></div>
+<div class="calc">r = 0.10:  d=1 → 0.10   d=2 → 0.10^(1/2) = 0.316   d=3 → 0.464   d=10 → 0.10^(0.1) = 0.794
+r = 0.01, d = 10:  0.01^(0.1) = 0.631</div>
+<p class="ans">Edges 0.10, 0.316, 0.464 and 0.794; for 1% in 10-D, 0.631.</p>
+<p class="mean">In 10 dimensions a "neighbourhood" holding 10% of the data spans 79% of each feature's range — it is no longer local. Nearest-neighbour methods lose their meaning.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">(i) What fraction of a ball's volume lies in the outer 5% shell (ε = 0.05) for d = 2, 10 and 100? (ii) Use the result to explain why distance-based classifiers struggle in high dimensions and name two remedies.</p>
+<div class="calc">d = 2:   1 − 0.95² = 1 − 0.9025 = 0.0975  (9.75%)
+d = 10:  1 − 0.95¹⁰ = 1 − 0.5987 = 0.4013 (40.1%)
+d = 100: 1 − 0.95¹⁰⁰ = 1 − 0.0059 = 0.9941 (99.4%)</div>
+<ol><li>In 100-D almost all the volume — and so almost all uniformly spread points — lies near the surface, far from the centre and roughly equally far from each other.</li>
+<li>When all distances become similar, "nearest neighbour" is nearly random, so KNN and K-means degrade.</li>
+<li>Remedies: reduce dimension with <b>PCA</b> or <b>LDA</b>; <b>select</b> the informative features; use models with regularization.</li></ol>
+<p class="ans">9.75%, 40.1%, 99.4%. Distances concentrate, so neighbourhoods stop being informative; reduce dimensionality.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Saying "more features always improve accuracy" — the Hughes phenomenon says otherwise for fixed data size.</li><li>Calling PCA a feature <i>selection</i> method; it creates new features (extraction).</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Volume grows as m^d → data becomes sparse; distances concentrate; overfitting rises; cost rises. Fix: feature selection, PCA, LDA, regularization, more data.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t09"><span>← Previous · 09</span>Data privacy and algorithmic privacy</a><a class="next" href="#t11"><span>Next → · 11</span>Principal Component Analysis (PCA)</a></nav></article>
+
+<article class="topic" id="t11">
+<div class="th"><span class="tno">11</span><div><h2>Principal Component Analysis (PCA)</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Dimensionality_Reduction.pdf</span></div></div></div>
+<p class="why">A by-hand covariance and eigenvalue numerical is the most likely new Unit I question.</p>
+
+<h3>Concept</h3>
+<p>PCA is an <b>unsupervised</b> feature-extraction method. It rotates the coordinate axes so that the first new axis (<b>principal component 1</b>) points in the direction of greatest variance in the data, the second in the direction of greatest remaining variance perpendicular to the first, and so on. Keeping only the first k components reduces d features to k while keeping most of the information (variance). Your notes frame variance as "signal" and the small remaining directions as "noise".</p>
+<h3>The five steps (as in your notes)</h3>
+<ol>
+<li><b>Standardise</b> (or at least mean-centre) each feature.</li>
+<li><b>Covariance matrix</b> C (d × d): C<sub>jk</sub> = Σ (x<sub>ij</sub> − x̄<sub>j</sub>)(x<sub>ik</sub> − x̄<sub>k</sub>) / (n − 1).</li>
+<li><b>Eigen-decomposition</b>: solve det(C − λI) = 0 for eigenvalues λ, then (C − λI)v = 0 for eigenvectors v.</li>
+<li><b>Feature vector</b>: sort eigenvectors by eigenvalue (largest first) and keep the top k.</li>
+<li><b>Recast the data</b>: project each centred point: score = vᵀ(x − x̄).</li>
+</ol>
+<div class="fx">
+<div class="f">2×2 covariance C = [a b; b c]:   λ = (a+c)/2 ± √[((a−c)/2)² + b²]</div>
+<div class="f">Eigenvector for λ:  (b, λ − a)  then divide by its length</div>
+<div class="f">Proportion of variance explained by PCᵢ = λᵢ / Σλ</div>
+<div class="d">Eigenvalue = variance along that component; eigenvector = its direction. Components are uncorrelated and orthogonal. Disadvantages: components are less interpretable, PCA is linear and ignores class labels.</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 0 320 220" role="img" aria-label="Elongated cloud of points with PC1 along its long axis and PC2 perpendicular">
+<rect x="10" y="10" width="300" height="200" fill="var(--surface)" stroke="var(--line)"/>
+<g fill="var(--ink)" opacity=".8"><circle cx="70" cy="170" r="4"/><circle cx="95" cy="150" r="4"/><circle cx="110" cy="160" r="4"/><circle cx="130" cy="130" r="4"/><circle cx="150" cy="118" r="4"/><circle cx="160" cy="135" r="4"/><circle cx="180" cy="100" r="4"/><circle cx="200" cy="95" r="4"/><circle cx="215" cy="70" r="4"/><circle cx="240" cy="62" r="4"/><circle cx="250" cy="80" r="4"/><circle cx="120" cy="140" r="4"/></g>
+<path d="M50 185L270 40" stroke="var(--accent)" stroke-width="2.5"/><text x="232" y="40" font-size="12" style="fill:var(--accent)">PC1</text>
+<path d="M120 60L200 170" stroke="var(--u2)" stroke-width="2" stroke-dasharray="6 4"/><text x="112" y="56" font-size="12" style="fill:var(--u2)">PC2</text>
+</svg>
+<figcaption>PC1 follows the direction of greatest spread; PC2 is perpendicular and carries the little variance left.</figcaption>
+</figure>
+
+<div class="sim" id="sim-t11-1" data-sim="pca" data-title="Rotate the projection axis" data-desc="Turn the axis and watch the variance of the projected points. PCA picks the angle where it is largest." data-opts='{}'><p class="sim-desc">Interactive simulator: Rotate the projection axis (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">The covariance matrix of two standardised features is C = [2 1; 1 2]. Find the principal components and the variance explained by PC1.</p>
+<div class="calc">det(C − λI) = (2−λ)² − 1 = 0  →  2 − λ = ±1  →  λ₁ = 3, λ₂ = 1
+λ₁ = 3: (C − 3I)v = [−1 1; 1 −1]v = 0 → v₁ = (1, 1)/√2 = (0.707, 0.707)
+λ₂ = 1: (C − I)v  = [1 1; 1 1]v = 0  → v₂ = (1, −1)/√2 = (0.707, −0.707)
+Variance explained by PC1 = 3/(3+1) = 0.75</div>
+<p class="ans">PC1 = (0.707, 0.707) with variance 3 (75%); PC2 = (0.707, −0.707) with variance 1 (25%).</p>
+<p class="mean">The features rise together (positive covariance), so the main direction is the 45° diagonal.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Lindsay I. Smith, "A tutorial on Principal Components Analysis", Univ. of Otago Tech. Report OUCS-2002-12, Fig. 3.1 data, <a href="https://www2.cs.uh.edu/~acl/cs6397/Doc/2002-OU-A%20tutorial%20on%20Principal%20Components%20Analysis.pdf">PDF copy</a></span></div><div class="body">
+<p class="q">Data (x, y): (2.5, 2.4), (0.5, 0.7), (2.2, 2.9), (1.9, 2.2), (3.1, 3.0), (2.3, 2.7), (2.0, 1.6), (1.0, 1.1), (1.5, 1.6), (1.1, 0.9). Find the covariance matrix, eigenvalues, PC1, and the PC1 score of the first point.</p>
+<div class="calc">Means: x̄ = 18.1/10 = 1.81,  ȳ = 19.1/10 = 1.91
+Centred first point: (2.5−1.81, 2.4−1.91) = (0.69, 0.49)
+Σ(x−x̄)² = 5.549 → var(x) = 5.549/9 = 0.616556
+Σ(y−ȳ)² = 6.449 → var(y) = 0.716556
+Σ(x−x̄)(y−ȳ) = 5.539 → cov = 0.615444
+C = [0.616556 0.615444; 0.615444 0.716556]
+λ = (0.616556+0.716556)/2 ± √[(−0.05)² + 0.615444²] = 0.666556 ± 0.617472
+λ₁ = 1.284028,  λ₂ = 0.049083
+v₁ ∝ (b, λ₁ − a) = (0.615444, 0.667472) → unit (0.677873, 0.735179)
+Score of point 1 = 0.677873(0.69) + 0.735179(0.49) = 0.4677 + 0.3602 = 0.8280</div>
+<p class="ans">λ₁ = 1.2840, λ₂ = 0.0491; PC1 = (0.678, 0.735) explains 96.3% of the variance; the first point's PC1 score is 0.828.</p>
+<p class="mean">These match Smith's published eigenvalues. Keeping only PC1 compresses 2-D data to 1-D while losing under 4% of the variance. (Smith lists the eigenvector as (−0.678, −0.735); the sign of an eigenvector is arbitrary.)</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem in the common university format</span></div><div class="body">
+<p class="q">Given x = (2, 3, 4, 5, 6, 7) and y = (1, 5, 3, 6, 7, 8), find the first principal component and project the data onto it. What fraction of the variance does it retain?</p>
+<div class="calc">x̄ = 27/6 = 4.5,  ȳ = 30/6 = 5
+x − x̄: −2.5, −1.5, −0.5, 0.5, 1.5, 2.5     y − ȳ: −4, 0, −2, 1, 2, 3
+Σ(x−x̄)² = 17.5 → var(x) = 17.5/5 = 3.5
+Σ(y−ȳ)² = 34   → var(y) = 34/5 = 6.8
+Σ(x−x̄)(y−ȳ) = 10+0+1+0.5+3+7.5 = 22 → cov = 22/5 = 4.4
+C = [3.5 4.4; 4.4 6.8]
+λ = (3.5+6.8)/2 ± √[((3.5−6.8)/2)² + 4.4²] = 5.15 ± √(2.7225 + 19.36) = 5.15 ± 4.6992
+λ₁ = 9.8492,  λ₂ = 0.4508
+v₁ ∝ (4.4, 9.8492 − 3.5) = (4.4, 6.3492);  length = √(19.36 + 40.312) = 7.7247
+v₁ = (0.5696, 0.8219)
+Projections (0.5696·Δx + 0.8219·Δy):
+(−2.5,−4) → −4.712   (−1.5,0) → −0.854   (−0.5,−2) → −1.929
+(0.5,1)   →  1.107   (1.5,2)  →  2.498   (2.5,3)  →  3.890
+Variance retained = 9.8492/(9.8492+0.4508) = 9.8492/10.3 = 0.956</div>
+<p class="ans">PC1 = (0.570, 0.822); projected values −4.712, −0.854, −1.929, 1.107, 2.498, 3.890; PC1 keeps 95.6% of the variance.</p>
+<p class="mean">Check: the eigenvalues add up to the trace, 3.5 + 6.8 = 10.3 — always use this to catch arithmetic slips.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting to centre the data before projecting.</li><li>Dividing by n in one entry and n − 1 in another; be consistent.</li><li>Not normalising the eigenvector to unit length.</li><li>Choosing the eigenvector of the smallest eigenvalue as PC1.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>PCA: centre → covariance → eigenvalues/vectors → sort → project. λ = variance along a PC; Σλ = trace. Unsupervised, linear, maximises variance. Explained variance λᵢ/Σλ.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t10"><span>← Previous · 10</span>Curse of dimensionality</a><a class="next" href="#t12"><span>Next → · 12</span>Linear Discriminant Analysis (LDA)</a></nav></article>
+
+<article class="topic" id="t12">
+<div class="th"><span class="tno">12</span><div><h2>Linear Discriminant Analysis (LDA)</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">LDA-1.pdf (handwritten) · Dimensionality_Reduction.pdf</span></div></div></div>
+<p class="why">Your instructor wrote a full derivation and numerical by hand, a strong sign it can be examined.</p>
+
+<h3>Concept</h3>
+<p>LDA (Fisher's linear discriminant) is a <b>supervised</b> projection. Like PCA it projects each point onto a direction w (y = wᵀx), but it chooses w to separate the <b>classes</b>: "different classes as far apart as possible while samples of the same class remain as close as possible" (LDA-1.pdf). It maximises the <b>Fisher criterion</b>.</p>
+<div class="fx">
+<div class="f">Class means:  μ₁ = (1/N₁) Σ_{x∈C₁} x ,   μ₂ = (1/N₂) Σ_{x∈C₂} x</div>
+<div class="f">Within-class scatter:  S_W = S₁ + S₂ ,   Sᵢ = Σ_{x∈Cᵢ} (x − μᵢ)(x − μᵢ)ᵀ</div>
+<div class="f">Between-class scatter (2 classes):  S_B = (μ₁ − μ₂)(μ₁ − μ₂)ᵀ</div>
+<div class="f">Fisher criterion:  J(w) = (m₁ − m₂)² / (s₁² + s₂²) = wᵀS_B w / wᵀS_W w</div>
+<div class="f">Optimal direction (2 classes):  w ∝ S_W⁻¹ (μ₁ − μ₂)</div>
+<div class="f">2×2 inverse:  [a b; c d]⁻¹ = (1/(ad − bc)) [d −b; −c a]</div>
+<div class="d">General case: solve S_W⁻¹S_B w = λw; the eigenvector with the largest λ is the first discriminant. With C classes there are at most C − 1 useful directions. Assumptions (Dimensionality_Reduction.pdf): Gaussian classes, a shared covariance matrix, linear separability.</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>PCA</th><th>LDA</th></tr></thead><tbody>
+<tr><td>Uses labels?</td><td>No (unsupervised)</td><td>Yes (supervised)</td></tr>
+<tr><td>Maximises</td><td>Total variance</td><td>Between-class / within-class scatter</td></tr>
+<tr><td>Max components</td><td>d</td><td>C − 1</td></tr>
+<tr><td>Math</td><td>Eigenvectors of covariance</td><td>Eigenvectors of S_W⁻¹S_B</td></tr>
+<tr><td>Best for</td><td>Compression, visualisation</td><td>Classification preprocessing</td></tr>
+</tbody></table></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Two candidate projections give: direction w_a — projected class means 5 and 1, projected variances 1 and 1.5; direction w_b — means 6 and 2, variances 3 and 4. Which direction does LDA prefer?</p>
+<div class="calc">J(w_a) = (5 − 1)² / (1 + 1.5) = 16/2.5 = 6.4
+J(w_b) = (6 − 2)² / (3 + 4)  = 16/7   = 2.29</div>
+<p class="ans">w_a (J = 6.4): the means are equally far apart, but the classes are much tighter.</p>
+<p class="mean">Distance between means alone is not enough; LDA divides by the spread.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, LDA-1.pdf (handwritten worked example; data reconstructed from its means, scatter matrices and projections)</span></div><div class="body">
+<p class="q">Class A: (2, 3), (3, 3), (2, 2). Class B: (6, 5), (7, 8), (8, 6). Find the LDA direction and project every sample.</p>
+<div class="calc">Step 1  μ_A = (7/3, 8/3) = (2.333, 2.667);   μ_B = (21/3, 19/3) = (7, 6.333)
+Step 2  A deviations: (−0.333, 0.333), (0.667, 0.333), (−0.333, −0.667)
+        S_A = [0.667 0.333; 0.333 0.667]
+        B deviations: (−1, −1.333), (0, 1.667), (1, −0.333)
+        S_B(class) = [2 1; 1 4.667]
+        S_W = [2.667 1.333; 1.333 5.333]
+Step 3  μ_A − μ_B = (−4.667, −3.667)
+Step 4  det S_W = 2.667×5.333 − 1.333² = 14.222 − 1.778 = 12.444
+        S_W⁻¹ = (1/12.444)[5.333 −1.333; −1.333 2.667] = [0.4286 −0.1071; −0.1071 0.2143]
+        w = S_W⁻¹(μ_A − μ_B) = (0.4286(−4.667) − 0.1071(−3.667), −0.1071(−4.667) + 0.2143(−3.667))
+          = (−2.000 + 0.393, 0.500 − 0.786) = (−1.607, −0.286)
+        ‖w‖ = √(2.583 + 0.082) = 1.632 → w_unit = (−0.985, −0.175)
+Step 5  y = w_unitᵀx:  A: −2.49, −3.48, −2.32     B: −6.78, −8.29, −8.93</div>
+<p class="ans">w ≈ (−0.985, −0.175). Class A projects to about −2.3 to −3.5, class B to −6.8 to −8.9: completely separated on one axis.</p>
+<p class="mean">Your handwritten notes round S_W⁻¹ early and get (−1.61, −0.28) → (−0.985, −0.171); the small difference is rounding. The projected class means are −2.76 (A) and −8.00 (B); a threshold midway, about −5.4, classifies new points.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem (a widely used two-class textbook data set)</span></div><div class="body">
+<p class="q">Class 1: (4, 1), (2, 4), (2, 3), (3, 6), (4, 4). Class 2: (9, 10), (6, 8), (9, 5), (8, 7), (10, 8). Compute the Fisher direction using scatter matrices.</p>
+<div class="calc">μ₁ = (15/5, 18/5) = (3, 3.6);   μ₂ = (42/5, 38/5) = (8.4, 7.6)
+Class 1 deviations: (1,−2.6), (−1,0.4), (−1,−0.6), (0,2.4), (1,0.4)
+  S₁ = [Σdx² Σdxdy; Σdxdy Σdy²] = [4 −2; −2 13.2]
+Class 2 deviations: (0.6,2.4), (−2.4,0.4), (0.6,−2.6), (−0.4,−0.6), (1.6,0.4)
+  S₂ = [9.2 −0.2; −0.2 13.2]
+S_W = [13.2 −2.2; −2.2 26.4]
+det = 13.2×26.4 − 2.2² = 348.48 − 4.84 = 343.64
+S_W⁻¹ = (1/343.64)[26.4 2.2; 2.2 13.2] = [0.07683 0.00640; 0.00640 0.03841]
+μ₁ − μ₂ = (−5.4, −4.0)
+w = (0.07683(−5.4) + 0.00640(−4.0), 0.00640(−5.4) + 0.03841(−4.0)) = (−0.4405, −0.1882)
+unit: ‖w‖ = 0.4790 → w = (−0.920, −0.393)  (sign arbitrary: (0.920, 0.393))</div>
+<p class="ans">Fisher direction w = (0.920, 0.393) (or its negative). Projections: class 1 between 3.0 and 5.3, class 2 between 8.7 and 12.3 — fully separated.</p>
+<p class="mean">Many textbooks use the covariance form, dividing each Sᵢ by Nᵢ − 1. With equal class sizes (5 and 5 here) that only rescales S_W, so the unit direction is identical. State which form you use; the direction, not its length, matters.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Using S_B (between) where S_W (within) is needed in w = S_W⁻¹(μ₁ − μ₂).</li><li>Getting the 2×2 inverse wrong: swap a and d, negate b and c, divide by the determinant.</li><li>Forgetting the outer product (μ₁ − μ₂)(μ₁ − μ₂)ᵀ is a matrix, not a number.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>LDA = supervised projection maximising J = (m₁−m₂)²/(s₁²+s₂²). Steps: means → S₁, S₂ → S_W → w = S_W⁻¹(μ₁−μ₂) → normalise → project. At most C−1 directions.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t11"><span>← Previous · 11</span>Principal Component Analysis (PCA)</a><a class="next" href="#t13"><span>Next → · 13</span>Feature selection: forward, backward and bidirectional</a></nav></article>
+
+<article class="topic" id="t13">
+<div class="th"><span class="tno">13</span><div><h2>Feature selection: forward, backward and bidirectional</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr P">Partial</span><span class="files">Dimensionality_Reduction.pdf</span></div></div></div>
+<p class="why">Named in the syllabus; the notes give one slide each, so expect theory with a short trace.</p>
+
+<h3>Concept</h3>
+<p><b>Feature selection</b> keeps a subset of the original features; <b>feature extraction</b> (PCA, LDA) builds new features as combinations. Selection keeps features interpretable (you still know what "age" means).</p>
+<ul>
+<li><b>Filter methods</b>: score each feature on its own (correlation with the target, chi-square, information gain, variance threshold) — fast, model-independent.</li>
+<li><b>Wrapper methods</b>: try subsets with an actual model and keep the subset with the best validation score — slower, usually better. Sequential selection is a wrapper.</li>
+<li><b>Embedded methods</b>: selection happens during training — LASSO drives weights to 0; trees report importance.</li>
+</ul>
+<h3>Sequential algorithms</h3>
+<ol>
+<li><b>Sequential Forward Selection (SFS)</b>: start with the empty set; at each step add the single feature that most improves the score J; stop when no addition improves J (or at k features).</li>
+<li><b>Sequential Backward Selection (SBS)</b>: start with all features; at each step remove the feature whose removal gives the best J; stop when every removal makes J worse (or at k features).</li>
+<li><b>Bidirectional search</b>: run SFS from the empty set and SBS from the full set at the same time. Features added by SFS may not be removed by SBS, and features removed by SBS may not be added by SFS, so both converge to the same subset.</li>
+</ol>
+<p>Search sizes: exhaustive search tests 2^d − 1 subsets; SFS/SBS test at most d(d+1)/2. SFS cannot remove a feature that later becomes useless (the "nesting" problem); floating variants fix this.</p>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Validation accuracy J for subsets of features A, B, C, D: singles A 0.62, B 0.70, C 0.65, D 0.58; pairs AB 0.74, AC 0.71, AD 0.66, BC 0.79, BD 0.72, CD 0.69; triples ABC 0.80, ABD 0.75, ACD 0.73, BCD 0.81; all four 0.78. Run SFS.</p>
+<div class="calc">Step 1 (from ∅): best single = B (0.70)                → {B}
+Step 2: AB 0.74, BC 0.79, BD 0.72 → add C               → {B,C}  0.79
+Step 3: ABC 0.80, BCD 0.81 → add D                      → {B,C,D} 0.81
+Step 4: ABCD 0.78 < 0.81 → no improvement → stop</div>
+<p class="ans">SFS selects {B, C, D} with accuracy 0.81.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem (same table)</span></div><div class="body">
+<p class="q">Run SBS on the same table. Do SFS and SBS agree?</p>
+<div class="calc">Start: {A,B,C,D} = 0.78
+Remove one: −A → BCD 0.81, −B → ACD 0.73, −C → ABD 0.75, −D → ABC 0.80
+Best: remove A → {B,C,D} 0.81 (improved)
+Remove one more: −B → CD 0.69, −C → BD 0.72, −D → BC 0.79
+Best 0.79 < 0.81 → stop</div>
+<p class="ans">SBS also selects {B, C, D}; here both methods agree.</p>
+<p class="mean">They need not agree in general: greedy steps can lead them to different local optima. Bidirectional search forces agreement.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">(i) With 20 features, how many subsets does exhaustive search evaluate, and at most how many does SFS evaluate? (ii) Using the table above, run bidirectional selection to a target size of 2 and show the bookkeeping. (iii) Classify filter, wrapper and embedded methods with one example each.</p>
+<div class="calc">(i) Exhaustive: 2²⁰ − 1 = 1,048,575 subsets.  SFS: 20 + 19 + … + 1 = 20·21/2 = 210 evaluations.
+(ii) SFS step 1: add B (best single). SBS step 1: remove A (best removal). A is now banned from SFS; B is banned from SBS.
+     SFS step 2: candidates C, D (A banned): BC 0.79 vs BD 0.72 → {B,C}.
+     SBS step 2 from {B,C,D}: may remove C or D (B protected): BD 0.72 vs BC 0.79 → remove D → {B,C}.
+     Both searches meet at {B,C}.</div>
+<ol><li>Filter: Pearson correlation of each feature with the target — ranks features without a model.</li><li>Wrapper: SFS/SBS with KNN accuracy — uses the model.</li><li>Embedded: LASSO — zero weights remove features during training.</li></ol>
+<p class="ans">(i) 1,048,575 vs at most 210. (ii) Bidirectional search converges to {B, C}. (iii) Filter, wrapper, embedded as above.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Continuing SFS after the score stops improving.</li><li>Calling PCA a selection method.</li><li>Using test accuracy to select features (leakage).</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Selection keeps original features; extraction builds new ones. SFS: add best one at a time. SBS: remove worst one at a time. Bidirectional: both together, never undoing each other. Filter / wrapper / embedded.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t12"><span>← Previous · 12</span>Linear Discriminant Analysis (LDA)</a><a class="next" href="#t14"><span>Next → · 14</span>KNN algorithm, choosing K and the effect of K</a></nav></article>
+<h2 class="subhead">C · Classification: K-Nearest Neighbour</h2>
+
+<article class="topic" id="t14">
+<div class="th"><span class="tno">14</span><div><h2>KNN algorithm, choosing K and the effect of K</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Classification.pdf · KNN_classifier.pptx</span></div></div></div>
+<p class="why">Q2(b) of October 2025 tests KNN directly.</p>
+
+<h3>Concept</h3>
+<p>K-Nearest Neighbours is a supervised, <b>non-parametric</b>, <b>instance-based (lazy)</b> learner. It builds no model during training — it simply stores the training data. To classify a new point it finds the K closest stored points and takes a <b>majority vote</b> of their labels (for regression, the <b>mean</b> of their values). Its assumption: similar things exist close together.</p>
+<h3>Algorithm</h3>
+<ol>
+<li>Choose K and a distance metric (Euclidean by default); scale the features.</li>
+<li>Compute the distance from the query point to every training point.</li>
+<li>Sort the distances in ascending order and take the K nearest.</li>
+<li>Classification: majority vote (optionally weighted by 1/d). Regression: average of the K values.</li>
+</ol>
+<h3>Choosing K</h3>
+<ul>
+<li><b>Small K</b> (e.g. 1): boundary follows every point, sensitive to noise → <b>overfitting</b>, high variance.</li>
+<li><b>Large K</b>: boundary becomes smooth, minority patterns are outvoted → <b>underfitting</b>, high bias. At K = n every point gets the majority class.</li>
+<li>Choose K by validation / cross-validation; use an <b>odd K</b> for two classes to avoid ties; a common rule of thumb is K ≈ √n.</li>
+</ul>
+<div class="tw"><table><thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead><tbody>
+<tr><td>No training time; simple; naturally multi-class; adapts to any boundary shape</td><td>Slow prediction (distance to every point); needs scaling; hurt by irrelevant features and the curse of dimensionality; sensitive to imbalance and outliers (your notes recommend removing outliers)</td></tr>
+</tbody></table></div>
+<figure class="fig">
+<svg viewBox="0 0 300 220" role="img" aria-label="Query point with circles for K equals 3 and K equals 7 neighbourhoods">
+<rect x="5" y="5" width="290" height="210" fill="var(--surface)" stroke="var(--line)"/>
+<circle cx="150" cy="110" r="44" fill="none" stroke="var(--accent)" stroke-dasharray="5 4" stroke-width="1.6"/>
+<circle cx="150" cy="110" r="85" fill="none" stroke="var(--u2)" stroke-dasharray="5 4" stroke-width="1.6"/>
+<g fill="var(--pos)"><circle cx="175" cy="95" r="6"/><circle cx="130" cy="140" r="6"/><circle cx="262" cy="182" r="6"/><circle cx="90" cy="60" r="6"/></g>
+<g fill="var(--surface)" stroke="var(--neg)" stroke-width="2"><rect x="117" y="84" width="11" height="11"/><rect x="200" y="50" width="11" height="11"/><rect x="85" y="150" width="11" height="11"/><rect x="226" y="100" width="11" height="11"/><rect x="40" y="190" width="11" height="11"/></g>
+<path d="M144 104l12 12M156 104l-12 12" stroke="var(--ink)" stroke-width="2.5"/>
+<text x="150" y="60" font-size="11" text-anchor="middle" style="fill:var(--accent)">K = 3</text><text x="250" y="30" font-size="11" style="fill:var(--u2)">K = 7</text>
+</svg>
+<figcaption>✕ is the query. With K = 3 the vote is 2 circles vs 1 square → circle. With K = 7 it is 3 circles vs 4 squares → square. K can change the answer.</figcaption>
+</figure>
+
+<div class="sim" id="sim-t14-1" data-sim="knn" data-title="KNN classifier playground" data-desc="Drag the ✕ anywhere. Raise K to see the boundary go from jagged (K = 1, overfitting) to smooth (large K, underfitting)." data-opts='{"k": 5}'><p class="sim-desc">Interactive simulator: KNN classifier playground (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: course material, Classification.pdf (T-shirt size example)</span></div><div class="body">
+<p class="q">Sixteen customers are given as (height cm, weight kg, size): P1 (158,58,M), P2 (158,59,M), P3 (158,63,M), P4 (160,59,M), P5 (160,60,M), P6 (163,60,M), P7 (163,61,M), P8 (160,64,L), P9 (163,64,L), P10 (165,61,L), P11 (165,62,L), P12 (165,65,L), P13 (168,62,L), P14 (168,63,L), P15 (168,66,L), P16 (170,63,L). Predict the size of T = (170, 68) with K = 5 and Euclidean distance (unscaled).</p>
+<div class="calc">d(T,P15) = √[(170−168)² + (68−66)²] = √8   = 2.83  L
+d(T,P16) = √[0² + 5²]                     = 5.00  L
+d(T,P14) = √[2² + 5²]  = √29              = 5.39  L
+d(T,P12) = √[5² + 3²]  = √34              = 5.83  L
+d(T,P13) = √[2² + 6²]  = √40              = 6.32  L
+(next: P11 7.81 L, P9 8.06 L, P10 8.60 L, P7 9.90 M …)
+5 nearest: L, L, L, L, L → 5 votes L, 0 votes M</div>
+<p class="ans">T is size L.</p>
+<p class="mean">Your notes repeat the example with standardised features (mean height 163.65, sd 4.18; mean weight 62.24, sd 2.68) — always check whether the answer changes after scaling.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Training points: (1,1) A, (2,1) A, (1,2) A, (4,2) A, (3,3) B, (3,4) B, (5,5) B, (6,5) B. Classify Q = (3, 2.5) with K = 1, 3 and 5, and with distance-weighted voting (weight 1/d) for K = 5.</p>
+<div class="calc">Distances from Q:
+(3,3) B: √(0 + 0.25)      = 0.500
+(4,2) A: √(1 + 0.25)      = 1.118
+(3,4) B: √(0 + 2.25)      = 1.500
+(2,1) A: √(1 + 2.25)      = 1.803
+(1,2) A: √(4 + 0.25)      = 2.062
+(1,1) A: 2.500   (5,5) B: 3.202   (6,5) B: 3.905
+K = 1: {B}           → B
+K = 3: {B, A, B}     → B (2–1)
+K = 5: {B, A, B, A, A} → A (3–2)
+Weighted K = 5: B: 1/0.5 + 1/1.5 = 2.000 + 0.667 = 2.667
+                A: 1/1.118 + 1/1.803 + 1/2.062 = 0.894 + 0.555 + 0.485 = 1.934 → B</div>
+<p class="ans">K = 1 → B, K = 3 → B, K = 5 → A, weighted K = 5 → B.</p>
+<p class="mean">Plain K = 5 lets two distant A points outvote the very close B point; distance weighting restores the nearby evidence.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">House prices (₹ lakh) with features (area in 100 sq ft, age in years), already scaled: H1 (10, 5) 50, H2 (12, 3) 62, H3 (9, 8) 45, H4 (15, 2) 75, H5 (11, 6) 54. (i) Predict the price of Q = (11, 4) by KNN regression with K = 3. (ii) Validation RMSE for K = 1, 3, 5 was 9.1, 5.2, 7.8. Which K would you deploy and why?</p>
+<div class="calc">d(Q,H1) = √(1 + 1)   = 1.414
+d(Q,H2) = √(1 + 1)   = 1.414
+d(Q,H5) = √(0 + 4)   = 2.000
+d(Q,H3) = √(4 + 16)  = 4.472
+d(Q,H4) = √(16 + 4)  = 4.472
+K = 3 → H1, H2, H5 → price = (50 + 62 + 54)/3 = 166/3 = 55.33</div>
+<p class="ans">(i) ₹55.33 lakh. (ii) Deploy K = 3: lowest validation RMSE (5.2). K = 1 overfits (high variance), K = 5 underfits (averages in dissimilar houses).</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting to sort before picking the K nearest.</li><li>Using an even K for two classes and getting a tie.</li><li>Not scaling features (see topic 02, Example 3).</li><li>Calling KNN "fast": training is instant, but prediction is slow.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Lazy, non-parametric. Steps: distances → sort → K nearest → vote (class) or average (value). Small K overfits, large K underfits; pick K by validation, odd K for 2 classes. Scale features.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t13"><span>← Previous · 13</span>Feature selection: forward, backward and bidirectional</a><a class="next" href="#t15"><span>Next → · 15</span>Distance metrics: Euclidean, Manhattan, Minkowski</a></nav></article>
+
+<article class="topic" id="t15">
+<div class="th"><span class="tno">15</span><div><h2>Distance metrics: Euclidean, Manhattan, Minkowski</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Classification.pdf</span></div></div></div>
+<p class="why">Q2(b) asks how the metric changes the result; Q6(b) uses Manhattan distance.</p>
+
+<h3>Concept</h3>
+<p>A distance metric turns "similar" into a number. For x = (x₁ … x_d) and y = (y₁ … y_d):</p>
+<div class="fx">
+<div class="f">Euclidean (L2):   d = √[ Σ (xᵢ − yᵢ)² ]            straight-line ("as the crow flies")</div>
+<div class="f">Manhattan (L1):   d = Σ |xᵢ − yᵢ|                 grid / city-block distance</div>
+<div class="f">Minkowski (Lp):   d = ( Σ |xᵢ − yᵢ|^p )^(1/p)      p = 1 → Manhattan, p = 2 → Euclidean</div>
+<div class="f">Chebyshev (L∞):   d = maxᵢ |xᵢ − yᵢ|              limit p → ∞</div>
+<div class="f">Hamming:          number of positions that differ  (categorical / binary data)</div>
+</div>
+<div class="tw"><table><thead><tr><th>Metric</th><th>Behaviour</th><th>Good for</th></tr></thead><tbody>
+<tr><td>Euclidean</td><td>Squares differences, so one large difference dominates</td><td>Low-dimensional continuous data where straight-line distance is meaningful (physical positions)</td></tr>
+<tr><td>Manhattan</td><td>Adds absolute differences; less sensitive to one outlying feature</td><td>Grid movement (city streets, warehouse aisles), high-dimensional or sparse data, features with outliers</td></tr>
+<tr><td>Minkowski</td><td>Tunable p</td><td>Treat p as a hyperparameter</td></tr>
+<tr><td>Hamming</td><td>Counts mismatches</td><td>Binary strings, categorical attributes</td></tr>
+</tbody></table></div>
+
+<div class="sim" id="sim-t15-1" data-sim="knn" data-title="Same data, different distance metric" data-desc="Switch between Euclidean, Manhattan and Chebyshev: the neighbourhood changes shape (circle, diamond, square) and the boundary moves — the core of October 2025 Q2(b)." data-opts='{"k": 1, "metric": "manhattan"}'><p class="sim-desc">Interactive simulator: Same data, different distance metric (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Find the Euclidean, Manhattan, Minkowski (p = 3) and Chebyshev distances between x = (1, 2, 3) and y = (4, 6, 8).</p>
+<div class="calc">|differences| = 3, 4, 5
+Euclidean  = √(9 + 16 + 25) = √50 = 7.071
+Manhattan  = 3 + 4 + 5 = 12
+Minkowski p=3 = (27 + 64 + 125)^(1/3) = 216^(1/3) = 6
+Chebyshev  = max(3, 4, 5) = 5</div>
+<p class="ans">7.071, 12, 6, 5.</p>
+<p class="mean">As p increases, the distance shrinks toward the single largest difference: L1 ≥ L2 ≥ L3 ≥ L∞.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A 1-NN classifier has two training points: A = (3, 3) labelled "Red" and B = (0, 5) labelled "Blue". Classify Q = (0, 0) using Euclidean distance and using Manhattan distance.</p>
+<div class="calc">Euclidean: d(Q,A) = √(9+9) = 4.243   d(Q,B) = √(0+25) = 5.000 → nearest A → Red
+Manhattan: d(Q,A) = 3+3 = 6           d(Q,B) = 0+5 = 5     → nearest B → Blue</div>
+<p class="ans">Euclidean says Red; Manhattan says Blue. The metric alone changed the prediction.</p>
+<p class="mean">Euclidean favours points whose difference is spread over several features (A differs by 3 and 3); Manhattan penalises that spread linearly, so the point differing in one feature (B) wins.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level — October 2025 Q2(b), 4 marks</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">In KNN, explain how the choice of distance metric (e.g. Euclidean or Manhattan) can influence the classification result. Give an example scenario in 1–2 lines where one metric may be more suitable.</p>
+<ol>
+<li><b>Why the metric matters</b>: KNN's only notion of similarity is the distance. A different metric produces a different ranking of neighbours, so the K nearest points — and therefore the majority vote — can change (Example 2 above shows one point flip from Red to Blue).</li>
+<li><b>Euclidean</b> = √Σ(xᵢ − yᵢ)². Squaring magnifies large differences, so one feature with a big gap or an outlier can dominate. Neighbourhoods are circles (spheres).</li>
+<li><b>Manhattan</b> = Σ|xᵢ − yᵢ|. Every unit of difference counts equally; it is more robust to outliers and behaves better in high dimensions. Neighbourhoods are diamonds.</li>
+<li><b>Both need scaled features</b>; otherwise the feature with the largest range dominates either metric.</li>
+<li><b>Scenario</b>: a delivery app recommending the nearest warehouse in a city with a grid road layout should use <b>Manhattan</b>, because vehicles travel along perpendicular streets; for a drone delivery, straight-line <b>Euclidean</b> distance is the true travel distance.</li>
+</ol>
+<p class="ans">The metric decides who the neighbours are, so it can change the predicted class. Euclidean suits continuous, low-dimensional, straight-line problems; Manhattan suits grid-like movement, high-dimensional or outlier-prone data.</p>
+<p class="mean">Marking guide (likely): 1 mark — metric defines neighbours; 1 mark — formulas / behaviour; 1 mark — effect on vote; 1 mark — valid scenario.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting the square root in Euclidean distance.</li><li>Using squared differences in Manhattan distance.</li><li>Writing Minkowski without the 1/p root.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>L2 = √Σd², L1 = Σ|d|, Lp = (Σ|d|^p)^(1/p), L∞ = max|d|. L1 ≥ L2 ≥ L∞. Metric changes neighbours → can change the class. Manhattan for grids / high-D / outliers; Euclidean for geometric straight-line closeness.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t14"><span>← Previous · 14</span>KNN algorithm, choosing K and the effect of K</a><a class="next" href="#t16"><span>Next → · 16</span>Linear regression: least squares and gradient descent</a></nav></article>
+<h2 class="subhead">D · Regression</h2>
+
+<article class="topic" id="t16">
+<div class="th"><span class="tno">16</span><div><h2>Linear regression: least squares and gradient descent</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Regression.pdf · Gradient-Descent.pdf · gradient_descent_4_epochs.pdf</span></div></div></div>
+<p class="why">Two solved gradient-descent handouts exist in your folder; a numerical is likely in a future paper.</p>
+
+<h3>Concept</h3>
+<p>Linear regression models a continuous target as a straight-line function of the inputs: <b>ŷ = β₀ + β₁x</b> (simple) or <b>ŷ = β₀ + β₁x₁ + … + β_dx_d</b> (multiple). β₀ is the intercept (bias), β₁ the slope: the change in ŷ for a one-unit rise in x. The "best" line minimises the sum of squared residuals (errors) eᵢ = yᵢ − ŷᵢ.</p>
+<div class="fx">
+<div class="f">Ordinary least squares (analytical):  β₁ = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)² ,   β₀ = ȳ − β₁x̄</div>
+<div class="f">Cost:  J(θ₀, θ₁) = (1/2m) Σ (h(xᵢ) − yᵢ)² ,   h(x) = θ₀ + θ₁x</div>
+<div class="f">Gradient descent (numerical):  θ₀ := θ₀ − α·(1/m) Σ (h(xᵢ) − yᵢ)</div>
+<div class="f">                              θ₁ := θ₁ − α·(1/m) Σ (h(xᵢ) − yᵢ)·xᵢ</div>
+<div class="f">Goodness of fit:  R² = 1 − SSE/SST ,  SSE = Σ(yᵢ − ŷᵢ)² ,  SST = Σ(yᵢ − ȳ)²</div>
+<div class="d">α = learning rate (step size). Too large → overshoots and may diverge; too small → very slow. The OLS line always passes through (x̄, ȳ). Assumptions: linear relationship, independent errors with constant variance, little multicollinearity.</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 0 320 210" role="img" aria-label="Scatter of five points with the least squares line and vertical residuals">
+<rect x="30" y="10" width="280" height="170" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M30 180H310M30 10V180" stroke="var(--ink-3)"/>
+<path d="M30 130.2L310 60.8" stroke="var(--accent)" stroke-width="2.5"/>
+<g stroke="var(--u2)" stroke-width="1.5" stroke-dasharray="3 2"><path d="M76 134V118.8"/><path d="M122 96V107.4"/><path d="M168 77V96"/><path d="M214 96V84.6"/><path d="M260 77V73.2"/></g>
+<g fill="var(--ink)"><circle cx="76" cy="134" r="5"/><circle cx="122" cy="96" r="5"/><circle cx="168" cy="77" r="5"/><circle cx="214" cy="96" r="5"/><circle cx="260" cy="77" r="5"/></g>
+<g font-size="10" text-anchor="middle"><text x="76" y="196">1</text><text x="122" y="196">2</text><text x="168" y="196">3</text><text x="214" y="196">4</text><text x="260" y="196">5</text></g>
+<text x="250" y="60" font-size="11" style="fill:var(--accent)">ŷ = 2.2 + 0.6x</text>
+</svg>
+<figcaption>Example 1's data and fitted line. Dashed segments are residuals; OLS makes the sum of their squares as small as possible.</figcaption>
+</figure>
+
+<div class="sim" id="sim-t16-1" data-sim="gd" data-title="Gradient descent, step by step" data-desc="Batch gradient descent on the course handout data reproduces its 4-epoch numbers. Try α = 0.05 on the marks data to watch it diverge." data-opts='{}'><p class="sim-desc">Interactive simulator: Gradient descent, step by step (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Fit y on x by least squares: x = 1, 2, 3, 4, 5; y = 2, 4, 5, 4, 5. Predict y at x = 6 and find R².</p>
+<div class="calc">x̄ = 15/5 = 3,  ȳ = 20/5 = 4
+x − x̄: −2, −1, 0, 1, 2      y − ȳ: −2, 0, 1, 0, 1
+Σ(x−x̄)(y−ȳ) = 4 + 0 + 0 + 0 + 2 = 6
+Σ(x−x̄)² = 4 + 1 + 0 + 1 + 4 = 10
+β₁ = 6/10 = 0.6,   β₀ = 4 − 0.6×3 = 2.2   →  ŷ = 2.2 + 0.6x
+ŷ(6) = 2.2 + 3.6 = 5.8
+ŷ = 2.8, 3.4, 4.0, 4.6, 5.2 → residuals −0.8, 0.6, 1.0, −0.6, −0.2
+SSE = 0.64+0.36+1+0.36+0.04 = 2.4;  SST = 4+0+1+0+1 = 6
+R² = 1 − 2.4/6 = 0.6</div>
+<p class="ans">ŷ = 2.2 + 0.6x; ŷ(6) = 5.8; R² = 0.6.</p>
+<p class="mean">The line explains 60% of the variation in y.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, gradient_descent_4_epochs.pdf</span></div><div class="body">
+<p class="q">Data (x, y): (1, 2), (2, 4), (3, 5). Start at θ₀ = θ₁ = 0 with α = 0.05 and run 4 epochs of batch gradient descent.</p>
+<div class="calc">Epoch 1: h = 0,0,0;  errors h−y = −2, −4, −5
+  J = (4+16+25)/(2·3) = 7.5000
+  ∂J/∂θ₀ = (−2−4−5)/3 = −3.6667;  ∂J/∂θ₁ = (−2·1 −4·2 −5·3)/3 = −25/3 = −8.3333
+  θ₀ = 0 − 0.05(−3.6667) = 0.1833;  θ₁ = 0 − 0.05(−8.3333) = 0.4167
+Epoch 2: errors −1.4000, −2.9833, −3.5667;  J = 3.9302
+  gradients −2.6500, −6.0222 → θ₀ = 0.3158, θ₁ = 0.7178
+Epoch 3: errors −0.9664, −2.2486, −2.5308;  J = 2.0659
+  gradients −1.9153, −4.3520 → θ₀ = 0.4116, θ₁ = 0.9354
+Epoch 4: errors −0.6530, −1.7176, −1.7823;  J = 1.0922
+  gradients −1.3843, −3.1450 → θ₀ = 0.4808, θ₁ = 1.0926</div>
+<p class="ans">After 4 epochs: h(x) = 0.4808 + 1.0926x, cost fell 7.50 → 3.93 → 2.07 → 1.09.</p>
+<p class="mean">For comparison, OLS on these points gives ŷ = 0.6667 + 1.5x; gradient descent is moving toward it and would reach it with more epochs.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Hours studied x = 2, 3, 5, 7, 9, 10 and marks y = 4, 5, 7, 10, 15, 17. (i) Fit the least-squares line. (ii) Predict marks for 8 hours. (iii) Compute R² and interpret β₁.</p>
+<div class="calc">x̄ = 36/6 = 6,   ȳ = 58/6 = 9.667
+x − x̄: −4, −3, −1, 1, 3, 4      y − ȳ: −5.667, −4.667, −2.667, 0.333, 5.333, 7.333
+Σ(x−x̄)(y−ȳ) = 22.667+14+2.667+0.333+16+29.333 = 85
+Σ(x−x̄)² = 16+9+1+1+9+16 = 52
+β₁ = 85/52 = 1.6346;  β₀ = 9.667 − 1.6346×6 = −0.141
+(ii) ŷ(8) = −0.141 + 1.6346×8 = 12.94
+(iii) ŷ = 3.128, 4.763, 8.032, 11.301, 14.571, 16.205
+SSE = 4.391,  SST = Σ(y−ȳ)² = 143.333
+R² = 1 − 4.391/143.333 = 0.969</div>
+<p class="ans">ŷ = −0.141 + 1.635x; 8 hours → about 12.9 marks; R² = 0.969.</p>
+<p class="mean">Each extra hour of study is associated with about 1.63 more marks, and hours explain about 97% of the variation in marks. The negative intercept has no practical meaning (nobody studies 0 hours in this data) — do not extrapolate.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Dividing Σ(x−x̄)(y−ȳ) by n before dividing by Σ(x−x̄)² — the n's cancel, so leave them out.</li><li>Updating θ₀ before computing θ₁'s gradient (use the old values for both).</li><li>Forgetting the xᵢ factor in θ₁'s gradient.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>β₁ = Sxy/Sxx, β₀ = ȳ − β₁x̄. GD: θ := θ − α·∂J/∂θ, simultaneous update. R² = 1 − SSE/SST. OLS is exact in one step; GD is iterative and scales to big data.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t15"><span>← Previous · 15</span>Distance metrics: Euclidean, Manhattan, Minkowski</a><a class="next" href="#t17"><span>Next → · 17</span>Logistic regression: sigmoid, odds, log-odds and odds ratio</a></nav></article>
+
+<article class="topic" id="t17">
+<div class="th"><span class="tno">17</span><div><h2>Logistic regression: sigmoid, odds, log-odds and odds ratio</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr P">Partial</span><span class="files">Regression.pdf · Logistic_regression_Assignment.docx</span></div></div></div>
+<p class="why">Question 5 of October 2025 (6 marks); the odds ratio is barely covered in the notes.</p>
+
+<h3>Concept</h3>
+<p>Logistic regression is a <b>classification</b> algorithm despite its name. A straight line can output any number, but a probability must lie in [0, 1]. Your notes' fix: model the <b>log of the odds</b> as a straight line, then convert back with the <b>sigmoid</b>.</p>
+<div class="fx">
+<div class="f">Odds = p / (1 − p)                      (range 0 to ∞)</div>
+<div class="f">Log-odds (logit) = ln[p/(1 − p)] = z = β₀ + β₁x₁ + … + β_dx_d   (range −∞ to ∞)</div>
+<div class="f">Sigmoid:  p = σ(z) = 1 / (1 + e^(−z))       (range 0 to 1, σ(0) = 0.5)</div>
+<div class="f">Odds ratio for a 1-unit rise in x_j:  OR = e^(β_j)    so  β_j = ln(OR)</div>
+<div class="f">2×2 table:  OR = (odds in group 1)/(odds in group 0) = (a/b)/(c/d) = ad/bc</div>
+<div class="f">Loss: cross-entropy  −[y ln p + (1−y) ln(1−p)];  predict 1 if p ≥ 0.5 (z ≥ 0)</div>
+<div class="d">OR = 1: no effect; OR &gt; 1: x raises the odds; OR &lt; 1: x lowers them. Odds are <i>not</i> probabilities: odds 3 means p = 3/4.</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 0 340 190" role="img" aria-label="Sigmoid S-curve rising from 0 to 1, crossing 0.5 at z equals 0">
+<rect x="30" y="10" width="290" height="150" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M30 87H320" stroke="var(--ink-3)" stroke-dasharray="4 3"/><path d="M30 14H320" stroke="var(--grid)"/><path d="M175 10V160" stroke="var(--ink-3)"/>
+<path d="M30.0 159.6 L40.0 159.3 L50.0 159.0 L60.0 158.5 L70.0 157.8 L80.0 156.8 L90.0 155.3 L100.0 153.1 L110.0 149.9 L120.0 145.4 L130.0 139.3 L140.0 131.1 L150.0 120.7 L160.0 108.3 L170.0 94.3 L180.0 79.7 L190.0 65.7 L200.0 53.3 L210.0 42.9 L220.0 34.7 L230.0 28.6 L240.0 24.1 L250.0 20.9 L260.0 18.7 L270.0 17.2 L280.0 16.2 L290.0 15.5 L300.0 15.0 L310.0 14.7 L320.0 14.4" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<g font-size="10"><text x="26" y="18" text-anchor="end">1</text><text x="26" y="91" text-anchor="end">0.5</text><text x="22" y="162" text-anchor="end">0</text><text x="175" y="176" text-anchor="middle">z = 0</text><text x="40" y="176">z → −∞</text><text x="270" y="176">z → +∞</text></g>
+</svg>
+<figcaption>σ(z) squeezes any log-odds value into a probability. σ(−2) = 0.119, σ(−1) = 0.269, σ(0) = 0.5, σ(1) = 0.731, σ(2) = 0.881.</figcaption>
+</figure>
+<div class="tw"><table><thead><tr><th></th><th>Linear regression</th><th>Logistic regression</th></tr></thead><tbody>
+<tr><td>Task</td><td>Regression (continuous y)</td><td>Classification (binary y)</td></tr>
+<tr><td>Output</td><td>Any real number</td><td>Probability 0–1</td></tr>
+<tr><td>Model</td><td>ŷ = β₀ + βx</td><td>ln(p/(1−p)) = β₀ + βx</td></tr>
+<tr><td>Loss</td><td>MSE</td><td>Cross-entropy (log loss)</td></tr>
+<tr><td>Fitting</td><td>OLS (closed form) or GD</td><td>Maximum likelihood by GD (no closed form)</td></tr>
+<tr><td>Coefficient means</td><td>Change in y per unit x</td><td>Change in log-odds per unit x; e^β = odds ratio</td></tr>
+</tbody></table></div>
+
+<div class="sim" id="sim-t17-1" data-sim="sigmoid" data-title="Sigmoid, odds and the decision boundary" data-desc="Move β₀ and β₁ to reshape the S-curve. The readout gives p, odds, log-odds and the odds ratio e^β₁; the Q5 button loads the paper&#x27;s model." data-opts='{}'><p class="sim-desc">Interactive simulator: Sigmoid, odds and the decision boundary (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: course material, Logistic_regression_Assignment.docx, Parts B and C</span></div><div class="body">
+<p class="q">(a) Compute σ(z) for z = −2, −1, 0, 1, 2. (b) With z = w₁x₁ + w₂x₂ + b, w₁ = 2, w₂ = −1, b = 0.5, x₁ = 3, x₂ = 4, find z, σ(z) and the class at threshold 0.5.</p>
+<div class="calc">(a) σ(−2) = 1/(1+e²) = 1/8.389 = 0.1192    σ(−1) = 1/(1+e) = 0.2689
+    σ(0) = 0.5    σ(1) = 0.7311    σ(2) = 0.8808
+(b) z = 2(3) + (−1)(4) + 0.5 = 6 − 4 + 0.5 = 2.5
+    σ(2.5) = 1/(1 + e^(−2.5)) = 1/(1 + 0.0821) = 0.9241 ≥ 0.5 → class 1</div>
+<p class="ans">(a) 0.119, 0.269, 0.5, 0.731, 0.881. (b) z = 2.5, p = 0.924, class 1.</p>
+<p class="mean">Note the symmetry σ(−z) = 1 − σ(z): 0.119 + 0.881 = 1.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate — October 2025 Q5 (6 marks), full solution</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">Employees grouped by weekly hours: &gt;40 h — 42 met targets, 8 did not; ≤40 h — 30 met, 20 did not. (a) Odds of meeting targets in each group. (b) Odds ratio (&gt;40 vs ≤40). (c) Logistic regression model with hours (≤40 vs &gt;40) as predictor.</p>
+<div class="gf"><div><b>Given</b><span>a = 42, b = 8 (&gt;40 h); c = 30, d = 20 (≤40 h)</span></div><div><b>Find</b><span>odds₁, odds₀, OR, β₀, β₁</span></div><div><b>Formula</b><span>odds = met/not met; OR = odds₁/odds₀; model ln(p/(1−p)) = β₀ + β₁x</span></div></div>
+<div class="calc">(a) odds(>40) = 42/8 = 5.25        [p = 42/50 = 0.84; 0.84/0.16 = 5.25 ✓]
+    odds(≤40) = 30/20 = 1.5         [p = 30/50 = 0.60; 0.60/0.40 = 1.5 ✓]
+(b) OR = 5.25 / 1.5 = 3.5           [= ad/bc = (42×20)/(8×30) = 840/240 = 3.5 ✓]
+(c) Code x = 1 if hours > 40, x = 0 if hours ≤ 40.
+    When x = 0:  ln(odds) = β₀ = ln(1.5) = 0.4055
+    When x = 1:  ln(odds) = β₀ + β₁ = ln(5.25) = 1.6582 → β₁ = 1.6582 − 0.4055 = 1.2528 = ln(3.5)
+    Model: ln[p/(1−p)] = 0.4055 + 1.2528x
+           p = 1 / (1 + e^−(0.4055 + 1.2528x))
+    Check: x = 0 → p = 1/(1+e^−0.4055) = 1/(1+0.6667) = 0.60 ✓
+           x = 1 → p = 1/(1+e^−1.6582) = 1/(1+0.1905) = 0.84 ✓</div>
+<p class="ans">(a) 5.25 and 1.5. (b) OR = 3.5. (c) logit(p) = 0.4055 + 1.2528x (x = 1 for &gt;40 h); p = 0.84 for &gt;40 h and 0.60 for ≤40 h.</p>
+<p class="mean">Employees working more than 40 hours have 3.5 times the odds of meeting their targets. (The paper says "50 employees" but the table totals 100; nothing changes, because each group's odds use its own counts.)</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A model of heart-disease risk is ln[p/(1−p)] = −4 + 0.05x, where x is cholesterol above 100 mg/dL. (i) Find p for x = 60 and x = 100. (ii) What is the odds ratio for a 1-unit and for a 10-unit increase in x? (iii) At what x does the model switch from "low risk" to "high risk" (threshold 0.5)?</p>
+<div class="calc">(i) x = 60:  z = −4 + 3 = −1 → p = σ(−1) = 0.269
+    x = 100: z = −4 + 5 = 1  → p = σ(1)  = 0.731
+(ii) 1 unit:  OR = e^0.05 = 1.0513  (odds rise 5.1% per unit)
+     10 units: OR = e^(0.05×10) = e^0.5 = 1.6487  (odds rise 64.9%)
+(iii) p = 0.5 ⇔ z = 0 ⇔ −4 + 0.05x = 0 ⇔ x = 80</div>
+<p class="ans">p = 0.269 and 0.731; OR = 1.051 per unit, 1.649 per 10 units; boundary at x = 80.</p>
+<p class="mean">Odds ratios multiply: a 10-unit change multiplies the odds by e^(10β), not 10·e^β.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Odds = 42/50 (that is a probability). Odds = 42/8.</li><li>Reading β₁ as a change in probability; it is a change in log-odds.</li><li>Leaving out the coding of x in Q5(c) — the model has no meaning without it.</li><li>Computing OR the wrong way round (≤40 vs &gt;40 gives 1/3.5 = 0.286).</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>odds = p/(1−p); logit = ln odds = β₀ + βx; p = 1/(1+e^−z). OR = e^β = ad/bc. Boundary z = 0. Trained by maximum likelihood with cross-entropy loss.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t16"><span>← Previous · 16</span>Linear regression: least squares and gradient descent</a><a class="next" href="#t18"><span>Next → · 18</span>Regularization: LASSO (L1), Ridge (L2) and the effect of λ</a></nav></article>
+
+<article class="topic" id="t18">
+<div class="th"><span class="tno">18</span><div><h2>Regularization: LASSO (L1), Ridge (L2) and the effect of λ</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Regression.pdf</span></div></div></div>
+<p class="why">Question 2(a) of October 2025.</p>
+
+<h3>Concept</h3>
+<p>An overfitted model typically has very large coefficients that bend it toward the noise. <b>Regularization</b> adds a penalty on coefficient size to the cost, so the model must trade training fit against simplicity (Regression.pdf: "not just minimize the sum of the squared error … but also reduce the complexity of the model").</p>
+<div class="fx">
+<div class="f">Ridge (L2):  J = Σ (yᵢ − ŷᵢ)² + λ Σ βⱼ²</div>
+<div class="f">LASSO (L1):  J = Σ (yᵢ − ŷᵢ)² + λ Σ |βⱼ|</div>
+<div class="f">Elastic net: J = Σ (yᵢ − ŷᵢ)² + λ₁ Σ |βⱼ| + λ₂ Σ βⱼ²</div>
+<div class="f">One feature, no intercept:  Ridge β = Σxy / (Σx² + λ) ;  LASSO β = (Σxy − λ/2)/Σx² (set to 0 if Σxy ≤ λ/2)</div>
+<div class="d">λ ≥ 0 controls the penalty strength. The intercept β₀ is not penalised. Scale features first, otherwise the penalty treats them unequally.</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>Ridge (L2)</th><th>LASSO (L1)</th></tr></thead><tbody>
+<tr><td>Penalty</td><td>λΣβ² (squares)</td><td>λΣ|β| (absolute values)</td></tr>
+<tr><td>Effect</td><td>Shrinks all weights toward 0, never exactly 0</td><td>Shrinks and sets some weights exactly 0</td></tr>
+<tr><td>Feature selection</td><td>No</td><td>Yes (sparse model)</td></tr>
+<tr><td>Correlated features</td><td>Shares weight among them</td><td>Tends to keep one and drop the rest</td></tr>
+<tr><td>Solution</td><td>Closed form exists</td><td>No closed form (coordinate descent)</td></tr>
+</tbody></table></div>
+<div class="tw"><table><thead><tr><th>λ</th><th>Weights</th><th>Model</th><th>Bias</th><th>Variance</th><th>Risk</th></tr></thead><tbody>
+<tr><td>0</td><td>Ordinary least squares</td><td>Most flexible</td><td>Lowest</td><td>Highest</td><td>Overfitting</td></tr>
+<tr><td>Moderate</td><td>Shrunk</td><td>Balanced</td><td>Some</td><td>Reduced</td><td>Best test error</td></tr>
+<tr><td>Very large</td><td>→ 0</td><td>Almost constant (ŷ ≈ ȳ)</td><td>Highest</td><td>Lowest</td><td>Underfitting</td></tr>
+</tbody></table></div>
+
+<div class="sim" id="sim-t18-1" data-sim="ridge" data-title="Ridge vs LASSO shrinkage" data-desc="Increase λ for y = βx on the topic 18 data: Ridge shrinks the slope smoothly, LASSO drives it to exactly zero at λ = 46." data-opts='{}'><p class="sim-desc">Interactive simulator: Ridge vs LASSO shrinkage (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A model has weights β = (2, −3, 0.5) and training SSE = 10. Compute the Ridge and LASSO costs for λ = 0.1 and λ = 1.</p>
+<div class="calc">Σβ² = 4 + 9 + 0.25 = 13.25        Σ|β| = 2 + 3 + 0.5 = 5.5
+λ = 0.1:  Ridge = 10 + 1.325 = 11.325     LASSO = 10 + 0.55 = 10.55
+λ = 1:    Ridge = 10 + 13.25 = 23.25      LASSO = 10 + 5.5  = 15.5</div>
+<p class="ans">λ = 0.1: Ridge 11.325, LASSO 10.55. λ = 1: Ridge 23.25, LASSO 15.5.</p>
+<p class="mean">The larger weight (−3) dominates the L2 penalty because it is squared; that is why Ridge attacks large weights hardest.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Fit y = βx (no intercept) to x = (1, 2, 3), y = (2, 3, 5) by OLS, Ridge (λ = 1, 10, 100) and LASSO (λ = 10, 20, 46). Comment.</p>
+<div class="calc">Σxy = 2 + 6 + 15 = 23,   Σx² = 1 + 4 + 9 = 14
+OLS:   β = 23/14 = 1.643
+Ridge: λ=1 → 23/15 = 1.533   λ=10 → 23/24 = 0.958   λ=100 → 23/114 = 0.202
+LASSO: λ=10 → (23 − 5)/14 = 1.286   λ=20 → (23 − 10)/14 = 0.929
+       λ=46 → (23 − 23)/14 = 0  (and 0 for any λ ≥ 46)</div>
+<p class="ans">Ridge shrinks β smoothly toward 0 but never reaches it; LASSO reaches exactly 0 once λ ≥ 46.</p>
+<p class="mean">With many features, LASSO zeros the weak ones first — automatic feature selection.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level — October 2025 Q2(a), 2 marks</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">In the context of regularization, explain how increasing the value of the regularization parameter λ affects the bias–variance trade-off.</p>
+<ol>
+<li>Increasing λ increases the penalty on large coefficients, so the weights shrink toward zero (and some become exactly zero in LASSO). The model becomes simpler and less flexible.</li>
+<li>A simpler model fits the training data less closely, so <b>bias increases</b>; it also changes less from one training sample to another, so <b>variance decreases</b>.</li>
+<li>Small λ → low bias, high variance (risk of overfitting). Very large λ → high bias, low variance (underfitting: ŷ ≈ ȳ). The best λ, found by cross-validation, minimises total test error = bias² + variance + noise.</li>
+</ol>
+<p class="ans">Raising λ shrinks the coefficients: bias ↑, variance ↓. Too little λ overfits, too much underfits; choose λ by cross-validation.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Saying "increasing λ increases variance" — it is the reverse.</li><li>Claiming Ridge does feature selection.</li><li>Penalising the intercept.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Ridge: +λΣβ², shrinks. LASSO: +λΣ|β|, shrinks and zeros (selection). λ↑ ⇒ bias↑ variance↓. λ = 0 is OLS. Choose λ by CV.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t17"><span>← Previous · 17</span>Logistic regression: sigmoid, odds, log-odds and odds ratio</a><a class="next" href="#t19"><span>Next → · 19</span>Bias–variance trade-off</a></nav></article>
+
+<article class="topic" id="t19">
+<div class="th"><span class="tno">19</span><div><h2>Bias–variance trade-off</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Bias_variance.pptx · Intro_ML.pdf</span></div></div></div>
+<p class="why">Question 2(a) of October 2025 asks for it by name.</p>
+
+<h3>Concept</h3>
+<p>Imagine training the same kind of model on many different training sets drawn from the same population and predicting at one point x₀.</p>
+<ul>
+<li><b>Bias</b> = how far the <i>average</i> prediction is from the truth. It comes from wrong or over-simple assumptions (Bias_variance.pptx: "error due to inaccurate assumptions/simplifications").</li>
+<li><b>Variance</b> = how much the predictions scatter from one training set to another — sensitivity to the particular sample.</li>
+<li><b>Irreducible error</b> σ² = noise in the data that no model can remove.</li>
+</ul>
+<div class="fx">
+<div class="f">E[(y − f̂(x₀))²] = Bias² + Variance + σ²</div>
+<div class="f">Bias = E[f̂(x₀)] − f(x₀) ,   Variance = E[(f̂(x₀) − E[f̂(x₀)])²]</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 0 360 210" role="img" aria-label="Bias squared falls and variance rises with model complexity; total error is U-shaped with a minimum in the middle">
+<rect x="40" y="10" width="300" height="160" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M40 170H340M40 10V170" stroke="var(--ink-3)"/>
+<path d="M50 30C100 110 160 150 330 160" fill="none" stroke="var(--u1)" stroke-width="2.2"/>
+<path d="M50 160C200 155 260 120 330 30" fill="none" stroke="var(--u2)" stroke-width="2.2"/>
+<path d="M50 40C110 120 170 130 190 128S280 110 330 25" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+<path d="M188 20V170" stroke="var(--ink-3)" stroke-dasharray="4 3"/>
+<g font-size="11"><text x="60" y="26" style="fill:var(--u1)">Bias²</text><text x="290" y="56" style="fill:var(--u2)">Variance</text><text x="232" y="100" style="fill:var(--ink)">Total error</text><text x="190" y="186" text-anchor="middle">best complexity</text><text x="44" y="200">simple → underfit</text><text x="336" y="200" text-anchor="end">complex → overfit</text></g>
+</svg>
+<figcaption>As complexity grows, bias falls and variance rises; total test error is U-shaped. The best model sits at the bottom of the U.</figcaption>
+</figure>
+<div class="tw"><table><thead><tr><th>Knob</th><th>Move toward low bias / high variance</th><th>Move toward high bias / low variance</th></tr></thead><tbody>
+<tr><td>KNN K</td><td>Small K</td><td>Large K</td></tr>
+<tr><td>Regularization λ</td><td>Small λ</td><td>Large λ</td></tr>
+<tr><td>Tree depth</td><td>Deep / unpruned</td><td>Shallow / pruned</td></tr>
+<tr><td>Polynomial degree</td><td>High</td><td>Low</td></tr>
+<tr><td>Ensembles</td><td>Boosting lowers bias</td><td>Bagging lowers variance</td></tr>
+</tbody></table></div>
+<p>Your notes: to reduce variance choose a simpler classifier, cross-validate parameters, or get more training data.</p>
+
+<div class="sim" id="sim-t19-1" data-sim="fit" data-title="See bias and variance" data-desc="Each click draws a fresh training set from the same population. Low degrees miss the curve the same way every time (bias); high degrees swing wildly (variance)." data-opts='{"mode": "variance"}'><p class="sim-desc">Interactive simulator: See bias and variance (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Match: (a) linear model on strongly curved data; (b) 1-nearest-neighbour; (c) degree-3 polynomial on cubic data with plenty of samples. Which has high bias, which high variance, which is balanced?</p>
+<p class="ans">(a) high bias (underfit) · (b) high variance (overfit) · (c) balanced.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">The true value at x₀ is 10 and the noise variance is σ² = 1. Model A, trained on five different samples, predicts 8, 9, 7, 8, 8. Model B predicts 12, 7, 11, 9, 13. Compute bias², variance and expected error for each.</p>
+<div class="calc">A: mean = 40/5 = 8 → bias = 8 − 10 = −2 → bias² = 4
+   variance = [(0)² + (1)² + (−1)² + 0 + 0]/5 = 2/5 = 0.4
+   expected error = 4 + 0.4 + 1 = 5.4
+B: mean = 52/5 = 10.4 → bias = 0.4 → bias² = 0.16
+   deviations 1.6, −3.4, 0.6, −1.4, 2.6 → squares 2.56, 11.56, 0.36, 1.96, 6.76
+   variance = 23.2/5 = 4.64
+   expected error = 0.16 + 4.64 + 1 = 5.8</div>
+<p class="ans">A: bias² 4, variance 0.4, error 5.4 (high bias). B: bias² 0.16, variance 4.64, error 5.8 (high variance). A is slightly better overall.</p>
+<p class="mean">A low-bias model is not automatically better: B's scatter costs more than A's systematic offset.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level (8 marks)</span><span class="src">Source: derivation as in Bias_variance.pptx notes and Bishop, <i>Pattern Recognition and Machine Learning</i> §3.2</span></div><div class="body">
+<p class="q">Derive E[(y − f̂)²] = bias² + variance + σ², where y = f + ε, E[ε] = 0, Var(ε) = σ², and ε is independent of f̂. Then explain the trade-off.</p>
+<div class="calc">Write f̄ = E[f̂].
+y − f̂ = (f − f̄) + (f̄ − f̂) + ε
+Square and take expectations:
+E[(y − f̂)²] = (f − f̄)² + E[(f̄ − f̂)²] + E[ε²]
+              + 2(f − f̄)E[f̄ − f̂] + 2(f − f̄)E[ε] + 2E[(f̄ − f̂)ε]
+Cross terms: E[f̄ − f̂] = 0;  E[ε] = 0;  E[(f̄ − f̂)ε] = E[f̄ − f̂]·E[ε] = 0 (independence)
+⇒ E[(y − f̂)²] = (f − f̄)² + E[(f̂ − f̄)²] + σ²
+             =    Bias²   +   Variance    + Noise</div>
+<ol><li>Flexible models can match f closely (small bias) but react to every quirk of the sample (large variance); rigid models do the opposite.</li><li>Since the sum is what we pay, the best model balances the two; noise σ² sets a floor no model can beat.</li><li>Tools that move the balance: regularization λ, K in KNN, depth/pruning, bagging (↓ variance), boosting (↓ bias), more data (↓ variance).</li></ol>
+<p class="ans">Expected squared error = bias² + variance + irreducible noise; minimise the sum, not either term alone.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Writing "bias + variance" without squaring the bias.</li><li>Thinking the noise term can be reduced by a better model.</li><li>Confusing this statistical bias with algorithmic (fairness) bias or the bias weight b.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Error = bias² + variance + σ². Simple models: high bias. Complex models: high variance. Underfit ↔ bias, overfit ↔ variance. Regularize, prune, tune K, bag, or add data to cut variance.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t18"><span>← Previous · 18</span>Regularization: LASSO (L1), Ridge (L2) and the effect of λ</a><a class="next" href="#t20"><span>Next → · 20</span>Confusion matrix, accuracy, precision, recall, F1, specificity</a></nav></article>
+<h2 class="subhead">E · Performance Metrics</h2>
+
+<article class="topic" id="t20">
+<div class="th"><span class="tno">20</span><div><h2>Confusion matrix, accuracy, precision, recall, F1, specificity</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Intro_ML.pdf (slides 133–158)</span></div></div></div>
+<p class="why">Easy to set as a numerical and not tested in October 2025, so a good candidate for the next paper.</p>
+
+<h3>Concept</h3>
+<p>A <b>confusion matrix</b> tabulates predictions against actual labels. For a binary problem with a "positive" class:</p>
+<div class="tw"><table style="max-width:460px"><thead><tr><th></th><th>Actual positive</th><th>Actual negative</th></tr></thead><tbody>
+<tr><th>Predicted positive</th><td><b>TP</b> (true positive)</td><td><b>FP</b> (false positive, Type I error)</td></tr>
+<tr><th>Predicted negative</th><td><b>FN</b> (false negative, Type II error)</td><td><b>TN</b> (true negative)</td></tr>
+</tbody></table></div>
+<div class="fx">
+<div class="f">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
+<div class="f">Precision = TP / (TP + FP)        "of the predicted positives, how many are right?"</div>
+<div class="f">Recall (sensitivity, TPR) = TP / (TP + FN)   "of the actual positives, how many did we find?"</div>
+<div class="f">Specificity (TNR) = TN / (TN + FP)      FPR = FP / (FP + TN) = 1 − specificity</div>
+<div class="f">F1 = 2·P·R / (P + R)   (harmonic mean of precision and recall)</div>
+<div class="d">The harmonic mean punishes imbalance: P = 1, R = 0.1 gives F1 = 0.18, while the arithmetic mean would be 0.55. Multi-class: compute P and R per class, then average (macro) or weight by class size.</div>
+</div>
+<div class="tw"><table><thead><tr><th>Prefer</th><th>When false positives cost more</th><th>When false negatives cost more</th></tr></thead><tbody>
+<tr><td>Metric</td><td><b>Precision</b> — spam filter (a real email in spam is costly)</td><td><b>Recall</b> — cancer screening, fraud detection (missing a case is costly)</td></tr></tbody></table></div>
+<p>Accuracy misleads on <b>imbalanced</b> data: if 99% of patients are healthy, "always predict healthy" scores 99% accuracy and 0% recall.</p>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: Google Machine Learning Crash Course, "Accuracy, recall, precision", Exercise 1 counts, <a href="https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall">developers.google.com</a></span></div><div class="body">
+<p class="q">A classifier gives TP = 5, TN = 6, FP = 3, FN = 2. Compute accuracy, precision, recall, F1, specificity and FPR.</p>
+<div class="calc">Total = 5 + 6 + 3 + 2 = 16
+Accuracy    = (5 + 6)/16 = 11/16 = 0.6875
+Precision   = 5/(5 + 3) = 5/8 = 0.625
+Recall      = 5/(5 + 2) = 5/7 = 0.714
+F1          = 2(0.625)(0.714)/(0.625 + 0.714) = 0.8929/1.3393 = 0.667
+Specificity = 6/(6 + 3) = 0.667;   FPR = 3/9 = 0.333</div>
+<p class="ans">Accuracy 0.688, precision 0.625, recall 0.714, F1 0.667, specificity 0.667, FPR 0.333.</p>
+<p class="mean">Google's page works out the recall (5/7 ≈ 0.714); the other values follow from the same counts.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">1,000 patients, 10 of whom have a disease. Model A predicts "healthy" for everyone. Model B gives TP = 8, FN = 2, FP = 40, TN = 950. Compare them.</p>
+<div class="calc">Model A: TP = 0, FN = 10, FP = 0, TN = 990
+  Accuracy = 990/1000 = 0.99;  Recall = 0/10 = 0;  Precision undefined (0/0)
+Model B:
+  Accuracy  = (8 + 950)/1000 = 0.958
+  Precision = 8/(8 + 40) = 8/48 = 0.167
+  Recall    = 8/(8 + 2) = 0.80
+  F1        = 2(0.167)(0.8)/(0.967) = 0.276
+  Specificity = 950/990 = 0.960</div>
+<p class="ans">A has higher accuracy (99% vs 95.8%) but finds no sick patients; B finds 80% of them. B is the useful model.</p>
+<p class="mean">For rare-event problems, report recall, precision and F1, not accuracy alone. B's low precision means most alarms are false — acceptable for a screening test followed by a confirmatory test.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A 3-class animal classifier gives this confusion matrix (rows = actual, columns = predicted): Cat (50, 3, 2); Dog (5, 40, 5); Rabbit (2, 8, 35). Compute per-class precision, recall and F1, overall accuracy, and macro-F1.</p>
+<div class="tw"><table style="max-width:420px"><thead><tr><th>Actual \ Pred</th><th class="num">Cat</th><th class="num">Dog</th><th class="num">Rabbit</th><th class="num">Row total</th></tr></thead><tbody>
+<tr><td>Cat</td><td class="num">50</td><td class="num">3</td><td class="num">2</td><td class="num">55</td></tr>
+<tr><td>Dog</td><td class="num">5</td><td class="num">40</td><td class="num">5</td><td class="num">50</td></tr>
+<tr><td>Rabbit</td><td class="num">2</td><td class="num">8</td><td class="num">35</td><td class="num">45</td></tr>
+<tr><td>Column total</td><td class="num">57</td><td class="num">51</td><td class="num">42</td><td class="num">150</td></tr></tbody></table></div>
+<div class="calc">Precision = diagonal / column total;  Recall = diagonal / row total
+Cat:    P = 50/57 = 0.877   R = 50/55 = 0.909   F1 = 2(0.877)(0.909)/1.786 = 0.893
+Dog:    P = 40/51 = 0.784   R = 40/50 = 0.800   F1 = 0.792
+Rabbit: P = 35/42 = 0.833   R = 35/45 = 0.778   F1 = 0.805
+Accuracy = (50 + 40 + 35)/150 = 125/150 = 0.833
+Macro-F1 = (0.893 + 0.792 + 0.805)/3 = 0.830</div>
+<p class="ans">Accuracy 0.833; macro-F1 0.830; Dog has the lowest precision (other animals are often called dogs) and Rabbit the lowest recall (rabbits are mistaken for dogs).</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Swapping FP and FN. FP = predicted positive, actually negative.</li><li>Using the row total for precision; precision uses the predicted (column) total when rows are actual classes.</li><li>Averaging P and R arithmetically instead of harmonically for F1.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Acc = (TP+TN)/all. P = TP/(TP+FP). R = TP/(TP+FN). Spec = TN/(TN+FP). F1 = 2PR/(P+R). Precision when FP is costly, recall when FN is costly. Accuracy misleads with imbalance.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t19"><span>← Previous · 19</span>Bias–variance trade-off</a><a class="next" href="#t21"><span>Next → · 21</span>ROC curve and AUC</a></nav></article>
+
+<article class="topic" id="t21">
+<div class="th"><span class="tno">21</span><div><h2>ROC curve and AUC</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Intro_ML.pdf (slides 143–144)</span></div></div></div>
+<p class="why">Usually paired with the confusion matrix as a theory or short numerical part.</p>
+
+<h3>Concept</h3>
+<p>Most classifiers output a score or probability; a <b>threshold</b> turns it into a class. Each threshold gives one (FPR, TPR) pair. The <b>ROC curve</b> (receiver operating characteristic) plots TPR (recall) against FPR for all thresholds. A perfect classifier passes through (0, 1); a random one lies on the diagonal.</p>
+<p>The <b>AUC</b> (area under the ROC curve) summarises the curve in one number: it is the probability that a randomly chosen positive is scored higher than a randomly chosen negative (your notes). Your notes' grading scale: 0.9–1 excellent, 0.8–0.9 good, 0.7–0.8 fair, 0.6–0.7 poor, 0.5–0.6 fail.</p>
+<div class="fx">
+<div class="f">TPR = TP/(TP + FN) ,   FPR = FP/(FP + TN)</div>
+<div class="f">AUC = (# positive–negative pairs where the positive scores higher) / (P × N)   (ties count ½)</div>
+<div class="f">Trapezoid rule:  AUC = Σ (FPRᵢ₊₁ − FPRᵢ)(TPRᵢ₊₁ + TPRᵢ)/2</div>
+<div class="d">ROC/AUC is threshold-independent and insensitive to class balance; it measures ranking quality, not calibration (your notes point to log loss for that).</div>
+</div>
+
+<div class="sim" id="sim-t21-1" data-sim="roc" data-title="Threshold, confusion matrix and ROC" data-desc="Slide the threshold across the eight scored samples of topic 21 and watch the operating point move along the ROC curve." data-opts='{}'><p class="sim-desc">Interactive simulator: Threshold, confusion matrix and ROC (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Eight test samples with scores and true labels (P = positive, N = negative): 0.95 P, 0.85 P, 0.78 N, 0.66 P, 0.60 N, 0.55 P, 0.43 N, 0.30 N. Find TPR and FPR at thresholds 0.8, 0.6 and 0.4 (predict positive if score ≥ threshold).</p>
+<div class="calc">4 positives, 4 negatives
+t = 0.8: predicted P = {0.95, 0.85} → TP = 2, FP = 0 → TPR = 2/4 = 0.50, FPR = 0/4 = 0.00
+t = 0.6: predicted P = {0.95, 0.85, 0.78, 0.66, 0.60} → TP = 3, FP = 2 → TPR = 0.75, FPR = 0.50
+t = 0.4: predicted P = all but 0.30 → TP = 4, FP = 3 → TPR = 1.00, FPR = 0.75</div>
+<p class="ans">(FPR, TPR) = (0, 0.5) at 0.8; (0.5, 0.75) at 0.6; (0.75, 1) at 0.4.</p>
+<p class="mean">Lowering the threshold catches more positives but also more false alarms.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem (same data)</span></div><div class="body">
+<p class="q">Draw the full ROC curve for the eight samples and compute the AUC with the trapezoid rule.</p>
+<div class="calc">Lower the threshold one sample at a time (sorted by score):
+start (0, 0) → 0.95 P (0, .25) → 0.85 P (0, .50) → 0.78 N (.25, .50) → 0.66 P (.25, .75)
+→ 0.60 N (.50, .75) → 0.55 P (.50, 1) → 0.43 N (.75, 1) → 0.30 N (1, 1)
+Areas (width × average height), only steps that move right add area:
+(.25−0)(.50+.50)/2 = 0.125
+(.50−.25)(.75+.75)/2 = 0.1875
+(.75−.50)(1+1)/2 = 0.25
+(1−.75)(1+1)/2 = 0.25
+AUC = 0.125 + 0.1875 + 0.25 + 0.25 = 0.8125</div>
+<figure class="fig">
+<svg viewBox="0 0 260 250" role="img" aria-label="Step-shaped ROC curve from 0,0 to 1,1 above the diagonal, area 0.8125">
+<rect x="40" y="20" width="200" height="200" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M40 220L240 20" stroke="var(--ink-3)" stroke-dasharray="4 3"/>
+<path d="M40 220V120H90V70H140V20H240V220Z" fill="var(--accent-soft)"/>
+<path d="M40 220V120H90V70H140V20H240" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<g font-size="10"><text x="140" y="240" text-anchor="middle">FPR</text><text x="16" y="124" text-anchor="middle" transform="rotate(-90 16 124)">TPR</text><text x="36" y="224" text-anchor="end">0</text><text x="36" y="24" text-anchor="end">1</text><text x="240" y="234" text-anchor="middle">1</text><text x="180" y="150" style="fill:var(--accent)">AUC = 0.8125</text><text x="150" y="200">random</text></g>
+</svg>
+<figcaption>Each positive moves the curve up, each negative moves it right.</figcaption>
+</figure>
+<p class="ans">AUC = 0.8125 — "good" on your notes' scale.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Verify the AUC of Example 2 using its probabilistic meaning, and explain why a model with AUC 0.5 is useless while one with AUC 0.2 is not.</p>
+<div class="calc">Positives: 0.95, 0.85, 0.66, 0.55     Negatives: 0.78, 0.60, 0.43, 0.30
+Count negatives below each positive:
+0.95 > all 4 → 4      0.85 > all 4 → 4
+0.66 > 0.60, 0.43, 0.30 → 3      0.55 > 0.43, 0.30 → 2
+Pairs won = 4 + 4 + 3 + 2 = 13 out of 4 × 4 = 16
+AUC = 13/16 = 0.8125 ✓</div>
+<ol><li>AUC 0.5: positives are ranked above negatives only half the time — no better than a coin.</li><li>AUC 0.2: positives are usually ranked <i>below</i> negatives; flipping the predictions gives AUC 0.8. The model has information, just with the sign reversed.</li></ol>
+<p class="ans">Both methods give 0.8125. AUC 0.5 = random; AUC far below 0.5 means an inverted but informative ranking.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Plotting precision instead of TPR on the y-axis (that is a PR curve).</li><li>Putting TPR on the x-axis.</li><li>Thinking AUC depends on the chosen threshold; it summarises all thresholds.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>ROC: TPR (y) vs FPR (x) over all thresholds. AUC = P(score of random positive &gt; score of random negative). 1 = perfect, 0.5 = random. Compute by trapezoids or by counting pairs.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t20"><span>← Previous · 20</span>Confusion matrix, accuracy, precision, recall, F1, specificity</a><a class="next" href="#t22"><span>Next → · 22</span>Regression metrics: RMSE, MAPE, R² (with MAE and MSE)</a></nav></article>
+
+<article class="topic" id="t22">
+<div class="th"><span class="tno">22</span><div><h2>Regression metrics: RMSE, MAPE, R² (with MAE and MSE)</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Intro_ML.pdf (slides 159–165)</span></div></div></div>
+<p class="why">Named in the syllabus; a quick numerical from a small table.</p>
+
+<h3>Concept and formulas</h3>
+<div class="fx">
+<div class="f">MAE  = (1/n) Σ |yᵢ − ŷᵢ|                         average size of the error, same units as y</div>
+<div class="f">MSE  = (1/n) Σ (yᵢ − ŷᵢ)²                        squared units; large errors dominate</div>
+<div class="f">RMSE = √MSE                                      back in y's units; penalises large errors</div>
+<div class="f">MAPE = (100%/n) Σ |yᵢ − ŷᵢ| / |yᵢ|               percentage error; scale-free</div>
+<div class="f">R²   = 1 − SSE/SST = 1 − Σ(yᵢ − ŷᵢ)² / Σ(yᵢ − ȳ)²  share of variance explained</div>
+<div class="f">Adjusted R² = 1 − (1 − R²)(n − 1)/(n − k − 1)        k = number of predictors</div>
+<div class="d">RMSE ≥ MAE always; a big gap means a few large errors. MAPE breaks when some yᵢ = 0 and is asymmetric. R² = 1 is perfect, 0 means "no better than predicting ȳ", negative means worse than ȳ. R² never falls when you add a predictor; adjusted R² does if the predictor is useless.</div>
+</div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Actual house prices (₹ lakh): 100, 150, 200, 250, 300. Predicted: 110, 140, 210, 240, 330. Compute MAE, MSE, RMSE and MAPE.</p>
+<div class="calc">errors y − ŷ: −10, 10, −10, 10, −30
+MAE  = (10+10+10+10+30)/5 = 70/5 = 14
+MSE  = (100+100+100+100+900)/5 = 1300/5 = 260
+RMSE = √260 = 16.12
+MAPE = (10/100 + 10/150 + 10/200 + 10/250 + 30/300)/5 × 100%
+     = (0.1 + 0.0667 + 0.05 + 0.04 + 0.1)/5 × 100% = 0.3567/5 × 100% = 7.13%</div>
+<p class="ans">MAE 14, MSE 260, RMSE 16.12, MAPE 7.13%.</p>
+<p class="mean">RMSE (16.1) is above MAE (14) because of the single 30-lakh error.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem (same data)</span></div><div class="body">
+<p class="q">For the same predictions compute R² and adjusted R² for a model with one predictor. Then: a model with 3 predictors has R² = 0.85 and one with 8 predictors R² = 0.87, both on n = 50. Which is better by adjusted R²?</p>
+<div class="calc">ȳ = 1000/5 = 200
+SST = (−100)² + (−50)² + 0² + 50² + 100² = 25,000
+SSE = 1,300
+R² = 1 − 1300/25000 = 0.948
+Adjusted (n=5, k=1) = 1 − (0.052)(4)/(3) = 1 − 0.0693 = 0.931
+n = 50: k = 3: 1 − (0.15)(49/46) = 1 − 0.1598 = 0.840
+        k = 8: 1 − (0.13)(49/41) = 1 − 0.1554 = 0.845</div>
+<p class="ans">R² = 0.948, adjusted 0.931. The 8-predictor model is marginally better (0.845 vs 0.840) — its five extra predictors barely pay for themselves.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">True values 3, 5, 8, 4. Model A predicts 2.5, 5.5, 7, 5; Model B predicts 3, 5, 8, 8. Compute MAE and RMSE for both, say which each metric prefers and why. When would you report MAPE, and when not?</p>
+<div class="calc">A errors: 0.5, −0.5, 1, −1 → MAE = 3/4 = 0.75;  MSE = (0.25+0.25+1+1)/4 = 0.625 → RMSE = 0.791
+B errors: 0, 0, 0, −4      → MAE = 4/4 = 1.00;  MSE = 16/4 = 4 → RMSE = 2.000</div>
+<ol><li>Both metrics prefer A here, but RMSE separates them far more (0.79 vs 2.00) than MAE (0.75 vs 1.00), because B's one large error is squared.</li><li>Use RMSE when large errors are especially harmful (e.g. stock forecasts); MAE when all errors cost the same and outliers should not dominate.</li><li>MAPE is good for explaining errors in business terms ("off by 7% on average") when all actual values are well above zero; avoid it when actuals can be 0 or near 0 (division blows up).</li></ol>
+<p class="ans">A: MAE 0.75, RMSE 0.79. B: MAE 1.00, RMSE 2.00. RMSE punishes B's single big miss hardest.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting the square root in RMSE.</li><li>Dividing MAPE by the prediction instead of the actual value.</li><li>Reporting R² on training data as evidence of generalization.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>MAE = mean |e|; MSE = mean e²; RMSE = √MSE; MAPE = mean |e/y| × 100%; R² = 1 − SSE/SST; adjusted R² penalises extra predictors.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t21"><span>← Previous · 21</span>ROC curve and AUC</a><a class="next" href="unit-2.html#t23"><span>Next → · 23</span>Tree structure, entropy, information gain and ID3</a></nav></article>
+
+<footer><span>Sources are named under every example. "Course material" means a file in your ML_theory folder. "Practice problem" means a problem written for this guide, with every number checked by calculation.</span>
+<span><a href="index.html">Back to the study guide</a></span></footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var side=document.getElementById('sidenav'), bd=document.getElementById('sn-backdrop'),
+      tog=document.getElementById('sn-toggle'), cls=document.getElementById('sn-close'),
+      wide=window.matchMedia('(min-width:1100px)');
+  function openNav(){side.classList.add('open'); bd.hidden=false; tog.setAttribute('aria-expanded','true'); var f=document.getElementById('navfilter'); if(f) f.focus();}
+  function closeNav(){side.classList.remove('open'); bd.hidden=true; tog.setAttribute('aria-expanded','false');}
+  tog.addEventListener('click',function(){side.classList.contains('open')?closeNav():openNav();});
+  cls.addEventListener('click',function(){closeNav(); tog.focus();});
+  bd.addEventListener('click',closeNav);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&side.classList.contains('open')){closeNav();tog.focus();}});
+  side.addEventListener('click',function(e){var a=e.target.closest('a'); if(a && !wide.matches) closeNav();});
+  // filter
+  var f=document.getElementById('navfilter'), empty=document.getElementById('sn-empty');
+  var units=[].slice.call(side.querySelectorAll('.sn-unit')), opened=units.map(function(u){return u.open;});
+  f.addEventListener('input',function(){
+    var q=f.value.trim().toLowerCase(), any=false;
+    units.forEach(function(u,i){
+      var shown=0;
+      u.querySelectorAll('.sn-link').forEach(function(a){var ok=!q||a.textContent.toLowerCase().indexOf(q)>-1; a.hidden=!ok; if(ok) shown++;});
+      u.querySelectorAll('.sn-sec').forEach(function(s){var n=s.nextElementSibling, vis=false; while(n&&n.classList.contains('sn-link')){if(!n.hidden)vis=true; n=n.nextElementSibling;} s.hidden=!vis;});
+      u.hidden=shown===0; if(shown) any=true;
+      u.open=q?shown>0:opened[i];
+    });
+    empty.hidden=any;
+  });
+  // highlight the topic being read
+  var links={}; side.querySelectorAll('.sn-link[data-t]').forEach(function(a){if(!a.classList.contains('other')) links[a.dataset.t]=a;});
+  var current=null;
+  function mark(id){
+    if(current===id||!links[id]) return; if(current&&links[current]) links[current].removeAttribute('aria-current');
+    current=id; var a=links[id]; a.setAttribute('aria-current','true');
+    if(wide.matches){var top=a.offsetTop, h=side.clientHeight; if(top<side.scrollTop+60||top>side.scrollTop+h-60) side.scrollTop=top-h/3;}
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting) mark(e.target.id);});},{rootMargin:'-20% 0px -70% 0px'});
+    document.querySelectorAll('article.topic').forEach(function(t){io.observe(t);});
+  }
+  var h=location.hash.replace('#',''); if(links[h]) mark(h); else { var first=document.querySelector('article.topic'); if(first) mark(first.id); }
+})();
+</script>
+
+<script src="sims.js" defer></script>
+</body>
+</html>

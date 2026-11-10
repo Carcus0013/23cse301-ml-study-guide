@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>23CSE301 Simulator Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: textbook chapter — sticky unit nav, topic index, one reading column of topic articles with worked-example boxes */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef1f6; --line:#d9dee7; --grid:#e4e8ef;
+  --ink:#18202e; --ink-2:#4a5466; --ink-3:#6b7486;
+  --accent:#4b3fb5; --accent-soft:#e9e7fb;
+  --u1:#2a78d6; --u2:#eb6834; --u3:#1baf7a;
+  --p-high:#d03b3b; --p-mid:#ec835a; --p-low:#fab219;
+  --ans-bg:#e8f4ec; --ans-line:#2f8f4e;
+  --pos:#4b3fb5; --neg:#4a5466;
+  --f-display:"Zilla Slab", "Rockwell", Georgia, serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+    --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+    --accent:#9d93f0; --accent-soft:#2a2650;
+    --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+    --ans-bg:#17301f; --ans-line:#4cb36c;
+    --pos:#9d93f0; --neg:#b4bccb;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+  --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+  --accent:#9d93f0; --accent-soft:#2a2650;
+  --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+  --ans-bg:#17301f; --ans-line:#4cb36c;
+  --pos:#9d93f0; --neg:#b4bccb;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 72px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--surface)}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(1.9rem,4.6vw,2.7rem);font-weight:700}
+h2{font-size:1.6rem;font-weight:700}
+h3{font-size:1.12rem;font-weight:600;margin-top:6px}
+p{margin:0}
+a{color:var(--accent)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.topnav{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)))}
+.topnav .wrap{display:flex;gap:4px 18px;flex-wrap:wrap;align-items:center;padding:10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px))}
+.topnav strong{font-family:var(--f-mono);font-size:.82rem;margin-right:auto}
+.topnav a{font-size:.92rem;text-decoration:none;color:var(--ink-2)}
+.topnav a[aria-current="page"]{color:var(--accent);font-weight:600}
+header.hero{padding-block:36px 18px;display:grid;gap:12px}
+.lede{color:var(--ink-2);max-width:66ch}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.toc ol{margin:0;padding:0;list-style:none;columns:2 300px;column-gap:28px}
+.toc li{break-inside:avoid;padding:3px 0;font-size:.94rem;display:flex;gap:8px;align-items:baseline}
+.toc li .n{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-3);min-width:22px}
+.toc a{text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.86rem;color:var(--ink-2)}
+.subhead{margin-top:44px;padding-bottom:6px;border-bottom:2px solid var(--ink);font-family:var(--f-mono);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+article.topic{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 22px 18px;display:grid;gap:14px;scroll-margin-top:64px;min-width:0}
+.th{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.tno{font-family:var(--f-display);font-size:2.2rem;font-weight:700;line-height:1;color:var(--ink-3)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:6px}
+.pr{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:1px 9px 1px 7px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.pr::before{content:"";width:9px;height:9px;border-radius:50%}
+.pr.h::before{background:var(--p-high)} .pr.m::before{background:var(--p-mid)} .pr.l::before{background:var(--p-low)}
+.sr{font-family:var(--f-mono);font-size:.72rem;font-weight:600;border-radius:4px;padding:1px 6px;white-space:nowrap}
+.sr.M{background:var(--accent-soft);color:var(--accent)} .sr.P{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--ink-3)} .sr.X{color:var(--p-high);border:1px solid var(--p-high)}
+.files{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-3)}
+.why{font-size:.92rem;color:var(--ink-2);border-left:3px solid var(--line);padding-left:10px}
+.topic p,.topic li{max-width:72ch}
+.topic ul,.topic ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+.fx{background:var(--surface-2);border-radius:8px;padding:12px 14px;display:grid;gap:8px;overflow-x:auto}
+.fx .f{font-family:var(--f-mono);font-size:.92rem;white-space:nowrap;color:var(--ink)}
+.fx .d{font-size:.9rem;color:var(--ink-2)}
+.tw{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:.9rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);font-weight:600;background:var(--surface-2)}
+td.num,th.num{text-align:right}
+tr.hl td{background:var(--accent-soft)}
+figure.fig{margin:0;display:grid;gap:6px;justify-items:center;background:var(--surface-2);border-radius:8px;padding:12px}
+figure.fig figcaption{font-size:.84rem;color:var(--ink-2);max-width:62ch;text-align:center}
+svg{display:block;max-width:100%;height:auto}
+svg text{font-family:var(--f-mono);fill:var(--ink-2)}
+section.ex{border:1px solid var(--line);border-radius:10px;overflow:hidden;display:grid}
+.exh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;padding:9px 14px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.lvl{font-family:var(--f-mono);font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.lvl.b{color:var(--u3)} .lvl.i{color:var(--u1)} .lvl.e{color:var(--p-high)}
+.src{font-size:.82rem;color:var(--ink-2)}
+.ex .body{padding:14px;display:grid;gap:10px;min-width:0}
+.q{font-weight:600}
+.gf{display:grid;gap:4px;font-size:.94rem}
+.gf div{display:grid;grid-template-columns:78px 1fr;gap:10px}
+.gf b{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);padding-top:3px;font-weight:600}
+.calc{font-family:var(--f-mono);font-size:.88rem;background:var(--surface-2);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre;line-height:1.55}
+.ans{background:var(--ans-bg);border-left:4px solid var(--ans-line);border-radius:6px;padding:9px 12px;font-weight:600}
+.mean{font-size:.94rem;color:var(--ink-2)}
+.pit,.rev{border-radius:8px;padding:12px 14px;display:grid;gap:6px;font-size:.94rem}
+.pit{border:1.5px solid var(--p-high)}
+.pit > b{color:var(--p-high);font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.rev{background:var(--accent-soft)}
+.rev > b{color:var(--accent);font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.note{font-size:.88rem;color:var(--ink-2)}
+.toplink{font-size:.84rem;justify-self:end}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-3);display:grid;gap:6px}
+@media (max-width:640px){ article.topic{padding:16px 14px} .gf div{grid-template-columns:1fr;gap:0} .tno{font-size:1.7rem} body{font-size:16px} }
+
+/* navigation panel */
+[hidden]{display:none!important}
+.topnav .wrap{max-width:1320px}
+.layout{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:36px}
+.layout > main{min-width:0}
+.sn-toggle{display:inline-flex;align-items:center;gap:6px;font:600 .86rem var(--f-body);color:var(--surface);background:var(--accent);border:0;border-radius:6px;padding:5px 11px;cursor:pointer}
+.sn-toggle:focus-visible,.sn-close:focus-visible,.sn-link:focus-visible,#navfilter:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sidenav{background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;padding:14px 12px 18px;overflow-y:auto;overscroll-behavior:contain;
+  position:fixed;z-index:30;top:0;bottom:0;left:0;width:min(330px,88vw);
+  padding-top:calc(14px + env(safe-area-inset-top, 0px));padding-bottom:calc(18px + env(safe-area-inset-bottom, 0px));padding-left:calc(12px + env(safe-area-inset-left, 0px));
+  transform:translateX(-105%);transition:transform .2s ease;visibility:hidden}
+.sidenav.open{transform:none;visibility:visible;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.sn-backdrop{position:fixed;inset:0;z-index:25;background:rgba(10,12,20,.45)}
+.sn-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sn-close{background:none;border:1px solid var(--line);border-radius:6px;color:var(--ink-2);font-size:.9rem;padding:3px 9px;cursor:pointer}
+#navfilter{width:100%;font:.92rem var(--f-body);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 10px}
+.sn-unit{border-top:1px solid var(--line);padding-top:6px}
+.sn-unit > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:700;font-size:1.02rem;padding:4px 2px}
+.sn-unit > summary::-webkit-details-marker{display:none}
+.sn-unit > summary::after{content:"▸";margin-left:auto;color:var(--ink-3);font-size:.8rem;transition:transform .15s}
+.sn-unit[open] > summary::after{transform:rotate(90deg)}
+.sn-unit small{font-family:var(--f-body);font-weight:400;font-size:.78rem;color:var(--ink-3)}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block;flex:none}
+.sn-sec{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:9px 4px 3px}
+.sn-link{display:grid;grid-template-columns:20px 9px 1fr;gap:6px;align-items:baseline;padding:4px 6px;border-radius:5px;text-decoration:none;color:var(--ink-2);font-size:.86rem;line-height:1.35}
+.sn-link .n{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.sn-link .pd{width:7px;height:7px;border-radius:50%;align-self:center}
+.pd.h{background:var(--p-high)} .pd.m{background:var(--p-mid)} .pd.l{background:var(--p-low)}
+.sn-link:hover{background:var(--surface-2);color:var(--ink)}
+.sn-link[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.sn-link.other{color:var(--ink-3)}
+.sn-empty{font-size:.86rem;color:var(--ink-3);padding:4px}
+.sn-home{font-size:.86rem;font-weight:600;text-decoration:none;margin-top:4px}
+nav.pn{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px;font-size:.88rem}
+nav.pn a{text-decoration:none;font-weight:600;max-width:48%}
+nav.pn a.next{margin-left:auto;text-align:right}
+nav.pn span{display:block;font-family:var(--f-mono);font-size:.68rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+@media (min-width:1100px){
+  .layout{grid-template-columns:280px minmax(0,1fr)}
+  .sidenav{position:sticky;z-index:auto;top:calc(env(safe-area-inset-top, 0px) + 50px);bottom:auto;align-self:start;width:auto;max-height:calc(100vh - 66px);transform:none;visibility:visible;
+    border:1px solid var(--line);border-radius:10px;margin-top:20px;padding:14px 12px 18px;box-shadow:none}
+  .sn-close,.sn-toggle,.sn-backdrop{display:none!important}
+  .toc{display:none}
+  .wrap.main{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} .sidenav,.sn-unit > summary::after{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Pages"><div class="wrap"><strong>23CSE301 · ML</strong><a href="index.html">Study guide</a><a href="unit-1.html">Unit I</a><a href="unit-2.html">Unit II</a><a href="unit-3.html">Unit III</a><a href="lab.html" aria-current="page">Simulator Lab</a></div></nav>
+<main class="wrap"><header class="hero"><span class="eyebrow">23CSE301 Machine Learning · Interactive</span><h1>Simulator Lab</h1><p class="lede">All 29 simulators in one place, in syllabus order. Each one runs on the same numbers as the worked examples, so you can replay an exam question and then change it. Every simulator also sits inside its topic lesson.</p></header><h2 class="subhead">Unit I</h2><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 05</span><a href="unit-1.html#t05" style="font-weight:600">Generalization; underfitting, good fit and overfitting — open the lesson →</a></div><div class="sim" id="lab-1" data-sim="fit" data-title="Underfitting vs overfitting" data-desc="Fit polynomials of degree 1 to 9 to the same 12 noisy points. Training error keeps falling while test error traces a U." data-opts='{"mode": "fit"}'><p class="sim-desc">Interactive simulator: Underfitting vs overfitting (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 10</span><a href="unit-1.html#t10" style="font-weight:600">Curse of dimensionality — open the lesson →</a></div><div class="sim" id="lab-2" data-sim="curse" data-title="Distances concentrate in high dimensions" data-desc="300 random points in a unit hypercube: as the dimension grows, the nearest and farthest points end up almost equally far away." data-opts='{}'><p class="sim-desc">Interactive simulator: Distances concentrate in high dimensions (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 11</span><a href="unit-1.html#t11" style="font-weight:600">Principal Component Analysis (PCA) — open the lesson →</a></div><div class="sim" id="lab-3" data-sim="pca" data-title="Rotate the projection axis" data-desc="Turn the axis and watch the variance of the projected points. PCA picks the angle where it is largest." data-opts='{}'><p class="sim-desc">Interactive simulator: Rotate the projection axis (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 14</span><a href="unit-1.html#t14" style="font-weight:600">KNN algorithm, choosing K and the effect of K — open the lesson →</a></div><div class="sim" id="lab-4" data-sim="knn" data-title="KNN classifier playground" data-desc="Drag the ✕ anywhere. Raise K to see the boundary go from jagged (K = 1, overfitting) to smooth (large K, underfitting)." data-opts='{"k": 5}'><p class="sim-desc">Interactive simulator: KNN classifier playground (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 15</span><a href="unit-1.html#t15" style="font-weight:600">Distance metrics: Euclidean, Manhattan, Minkowski — open the lesson →</a></div><div class="sim" id="lab-5" data-sim="knn" data-title="Same data, different distance metric" data-desc="Switch between Euclidean, Manhattan and Chebyshev: the neighbourhood changes shape (circle, diamond, square) and the boundary moves — the core of October 2025 Q2(b)." data-opts='{"k": 1, "metric": "manhattan"}'><p class="sim-desc">Interactive simulator: Same data, different distance metric (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 16</span><a href="unit-1.html#t16" style="font-weight:600">Linear regression: least squares and gradient descent — open the lesson →</a></div><div class="sim" id="lab-6" data-sim="gd" data-title="Gradient descent, step by step" data-desc="Batch gradient descent on the course handout data reproduces its 4-epoch numbers. Try α = 0.05 on the marks data to watch it diverge." data-opts='{}'><p class="sim-desc">Interactive simulator: Gradient descent, step by step (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 17</span><a href="unit-1.html#t17" style="font-weight:600">Logistic regression: sigmoid, odds, log-odds and odds ratio — open the lesson →</a></div><div class="sim" id="lab-7" data-sim="sigmoid" data-title="Sigmoid, odds and the decision boundary" data-desc="Move β₀ and β₁ to reshape the S-curve. The readout gives p, odds, log-odds and the odds ratio e^β₁; the Q5 button loads the paper&#x27;s model." data-opts='{}'><p class="sim-desc">Interactive simulator: Sigmoid, odds and the decision boundary (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 18</span><a href="unit-1.html#t18" style="font-weight:600">Regularization: LASSO (L1), Ridge (L2) and the effect of λ — open the lesson →</a></div><div class="sim" id="lab-8" data-sim="ridge" data-title="Ridge vs LASSO shrinkage" data-desc="Increase λ for y = βx on the topic 18 data: Ridge shrinks the slope smoothly, LASSO drives it to exactly zero at λ = 46." data-opts='{}'><p class="sim-desc">Interactive simulator: Ridge vs LASSO shrinkage (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 19</span><a href="unit-1.html#t19" style="font-weight:600">Bias–variance trade-off — open the lesson →</a></div><div class="sim" id="lab-9" data-sim="fit" data-title="See bias and variance" data-desc="Each click draws a fresh training set from the same population. Low degrees miss the curve the same way every time (bias); high degrees swing wildly (variance)." data-opts='{"mode": "variance"}'><p class="sim-desc">Interactive simulator: See bias and variance (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit I · Topic 21</span><a href="unit-1.html#t21" style="font-weight:600">ROC curve and AUC — open the lesson →</a></div><div class="sim" id="lab-10" data-sim="roc" data-title="Threshold, confusion matrix and ROC" data-desc="Slide the threshold across the eight scored samples of topic 21 and watch the operating point move along the ROC curve." data-opts='{}'><p class="sim-desc">Interactive simulator: Threshold, confusion matrix and ROC (needs JavaScript).</p></div></section><h2 class="subhead">Unit II</h2><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 23</span><a href="unit-2.html#t23" style="font-weight:600">Tree structure, entropy, information gain and ID3 — open the lesson →</a></div><div class="sim" id="lab-11" data-sim="split" data-title="ID3 split explorer" data-desc="Split the October 2025 Q1 patients (or Mitchell&#x27;s PlayTennis days) on each attribute and compare the information gains." data-opts='{}'><p class="sim-desc">Interactive simulator: ID3 split explorer (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 24</span><a href="unit-2.html#t24" style="font-weight:600">Gini index (CART) and gain ratio (C4.5) — open the lesson →</a></div><div class="sim" id="lab-12" data-sim="entropy" data-title="Entropy vs Gini vs misclassification" data-desc="All three impurity measures of a two-class node as the class mix changes." data-opts='{}'><p class="sim-desc">Interactive simulator: Entropy vs Gini vs misclassification (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 26</span><a href="unit-2.html#t26" style="font-weight:600">Hyperplane, maximum marginal hyperplane, margin and support vectors — open the lesson →</a></div><div class="sim" id="lab-13" data-sim="svm" data-title="Find the widest street" data-desc="Rotate and shift the line to separate the October 2025 Q3 classes with the widest margin, then let the SVM show the optimum." data-opts='{"data": "fixed"}'><p class="sim-desc">Interactive simulator: Find the widest street (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 28</span><a href="unit-2.html#t28" style="font-weight:600">Hard margin vs soft margin (C and slack ξ) — open the lesson →</a></div><div class="sim" id="lab-14" data-sim="svm" data-title="Why Q3 as printed needs a soft margin" data-desc="With (−2, −6) in the positive class, try every angle: some point always lands on the wrong side." data-opts='{"data": "printed"}'><p class="sim-desc">Interactive simulator: Why Q3 as printed needs a soft margin (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 30</span><a href="unit-2.html#t30" style="font-weight:600">Bayes theorem: prior, likelihood, posterior, conditional independence — open the lesson →</a></div><div class="sim" id="lab-15" data-sim="bayes" data-title="Base-rate icon array" data-desc="1,000 people, one test. Change prevalence, sensitivity and false-positive rate and see why most positives can be false alarms." data-opts='{}'><p class="sim-desc">Interactive simulator: Base-rate icon array (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 32</span><a href="unit-2.html#t32" style="font-weight:600">Markov property, states, initial and transition probabilities, sequence probability — open the lesson →</a></div><div class="sim" id="lab-16" data-sim="markov" data-title="Weather Markov chain in motion" data-desc="The October 2025 Q7 chain. The weather token hops between states; the day counts settle on the stationary distribution." data-opts='{}'><p class="sim-desc">Interactive simulator: Weather Markov chain in motion (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 34</span><a href="unit-2.html#t34" style="font-weight:600">Evaluation problem: the Forward algorithm — open the lesson →</a></div><div class="sim" id="lab-17" data-sim="hmm" data-title="Forward trellis builder" data-desc="Fill the forward trellis of the umbrella HMM one day at a time. Tap an observation to change it." data-opts='{"mode": "forward"}'><p class="sim-desc">Interactive simulator: Forward trellis builder (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 35</span><a href="unit-2.html#t35" style="font-weight:600">Decoding problem: the Viterbi algorithm — open the lesson →</a></div><div class="sim" id="lab-18" data-sim="hmm" data-title="Viterbi decoder" data-desc="Same model, max instead of sum. After the last day the back-pointers light up the most likely weather." data-opts='{"mode": "viterbi"}'><p class="sim-desc">Interactive simulator: Viterbi decoder (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 37</span><a href="unit-2.html#t37" style="font-weight:600">Perceptron: neuron model, step function, learning rule and logic gates — open the lesson →</a></div><div class="sim" id="lab-19" data-sim="perceptron" data-title="Perceptron trainer" data-desc="Starts from the October 2025 Q8 weights (−3, −1, 1). Step through the patterns and watch the boundary move after each update." data-opts='{"gate": "NAND"}'><p class="sim-desc">Interactive simulator: Perceptron trainer (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 38</span><a href="unit-2.html#t38" style="font-weight:600">Linear separability and the limitations of the perceptron (XOR) — open the lesson →</a></div><div class="sim" id="lab-20" data-sim="perceptron" data-title="The perceptron vs XOR" data-desc="No straight line separates XOR, so training never settles: the boundary keeps jumping for 20 epochs." data-opts='{"gate": "XOR"}'><p class="sim-desc">Interactive simulator: The perceptron vs XOR (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 39</span><a href="unit-2.html#t39" style="font-weight:600">Multi-layer perceptron: architecture, forward propagation, backpropagation, activations — open the lesson →</a></div><div class="sim" id="lab-21" data-sim="mlp" data-title="A neural network learns XOR" data-desc="A 2–3–1 sigmoid network trained by backpropagation. The background is the network&#x27;s output, so you watch a non-linear boundary form." data-opts='{}'><p class="sim-desc">Interactive simulator: A neural network learns XOR (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit II · Topic 42</span><a href="unit-2.html#t42" style="font-weight:600">Expectation–Maximization (EM): E-step, M-step, applications — open the lesson →</a></div><div class="sim" id="lab-22" data-sim="em" data-title="EM fits a Gaussian mixture" data-desc="Data 1, 2, 3, 7, 8, 9 from topic 42. Alternate E-steps (soft assignments) and M-steps (new means, variances, weights); the log-likelihood only goes up." data-opts='{}'><p class="sim-desc">Interactive simulator: EM fits a Gaussian mixture (needs JavaScript).</p></div></section><h2 class="subhead">Unit III</h2><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit III · Topic 43</span><a href="unit-3.html#t43" style="font-weight:600">K-means: initial centroids, assignment, update, convergence — open the lesson →</a></div><div class="sim" id="lab-23" data-sim="kmeans" data-title="K-means animator" data-desc="Assign → update, one step at a time, with the distance table of October 2025 Q6(a). Switch to the course A1–A8 data or random blobs." data-opts='{"data": "paper"}'><p class="sim-desc">Interactive simulator: K-means animator (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit III · Topic 45</span><a href="unit-3.html#t45" style="font-weight:600">Hierarchical clustering: agglomerative, divisive, linkages, dendrograms — open the lesson →</a></div><div class="sim" id="lab-24" data-sim="hier" data-title="Build a dendrogram" data-desc="Merge clusters step by step for October 2025 Q6(b) (Manhattan, single linkage) or the course data, and switch linkage to compare." data-opts='{"data": "q6b", "linkage": "single"}'><p class="sim-desc">Interactive simulator: Build a dendrogram (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit III · Topic 47</span><a href="unit-3.html#t47" style="font-weight:600">Base, weak and strong learners; meta-model; voting and averaging — open the lesson →</a></div><div class="sim" id="lab-25" data-sim="vote" data-title="Why majority voting helps" data-desc="Accuracy of a majority vote of independent classifiers, each correct with probability p." data-opts='{}'><p class="sim-desc">Interactive simulator: Why majority voting helps (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit III · Topic 48</span><a href="unit-3.html#t48" style="font-weight:600">Bagging: bootstrap sampling, parallel training, aggregation, variance — open the lesson →</a></div><div class="sim" id="lab-26" data-sim="bootstrap" data-title="Bootstrap sampling" data-desc="Draw rows with replacement and watch about 63% of them make it into each sample; the rest are out-of-bag." data-opts='{}'><p class="sim-desc">Interactive simulator: Bootstrap sampling (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit III · Topic 50</span><a href="unit-3.html#t50" style="font-weight:600">Boosting and AdaBoost: error, α, weight update, normalization, final prediction — open the lesson →</a></div><div class="sim" id="lab-27" data-sim="adaboost" data-title="AdaBoost weight updates" data-desc="Each round fits a decision stump, raises the weights of its mistakes (red) and lowers the rest. Choose October 2025 Q4(b) to replay the paper&#x27;s update." data-opts='{"data": "line"}'><p class="sim-desc">Interactive simulator: AdaBoost weight updates (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit III · Topic 51</span><a href="unit-3.html#t51" style="font-weight:600">Agent, environment, state, action, reward, policy, value function, Q-value — open the lesson →</a></div><div class="sim" id="lab-28" data-sim="grid" data-title="Q-learning gridworld" data-desc="An agent learns to reach +10 and avoid the −10 pits. Arrows show its greedy policy; colours show max Q." data-opts='{}'><p class="sim-desc">Interactive simulator: Q-learning gridworld (needs JavaScript).</p></div></section><section class="labitem" style="margin-top:22px;display:grid;gap:8px"><div style="display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline"><span class="eyebrow">Unit III · Topic 52</span><a href="unit-3.html#t52" style="font-weight:600">Exploration vs exploitation; applications — open the lesson →</a></div><div class="sim" id="lab-29" data-sim="bandit" data-title="Four-armed bandit" data-desc="ε-greedy, greedy and UCB compete to find the best slot machine (arm 3)." data-opts='{}'><p class="sim-desc">Interactive simulator: Four-armed bandit (needs JavaScript).</p></div></section><footer><span>Simulators use only the numbers from your course files, the October 2025 paper and the worked examples in this guide.</span><span><a href="index.html">Back to the study guide</a></span></footer></main>
+<script src="sims.js" defer></script>
+</body>
+</html>

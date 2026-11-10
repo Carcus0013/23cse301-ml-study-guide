@@ -1,0 +1,1515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>23CSE301 Unit II Topics</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: textbook chapter — sticky unit nav, topic index, one reading column of topic articles with worked-example boxes */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef1f6; --line:#d9dee7; --grid:#e4e8ef;
+  --ink:#18202e; --ink-2:#4a5466; --ink-3:#6b7486;
+  --accent:#4b3fb5; --accent-soft:#e9e7fb;
+  --u1:#2a78d6; --u2:#eb6834; --u3:#1baf7a;
+  --p-high:#d03b3b; --p-mid:#ec835a; --p-low:#fab219;
+  --ans-bg:#e8f4ec; --ans-line:#2f8f4e;
+  --pos:#4b3fb5; --neg:#4a5466;
+  --f-display:"Zilla Slab", "Rockwell", Georgia, serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+    --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+    --accent:#9d93f0; --accent-soft:#2a2650;
+    --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+    --ans-bg:#17301f; --ans-line:#4cb36c;
+    --pos:#9d93f0; --neg:#b4bccb;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+  --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+  --accent:#9d93f0; --accent-soft:#2a2650;
+  --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+  --ans-bg:#17301f; --ans-line:#4cb36c;
+  --pos:#9d93f0; --neg:#b4bccb;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 72px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--surface)}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(1.9rem,4.6vw,2.7rem);font-weight:700}
+h2{font-size:1.6rem;font-weight:700}
+h3{font-size:1.12rem;font-weight:600;margin-top:6px}
+p{margin:0}
+a{color:var(--accent)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.topnav{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)))}
+.topnav .wrap{display:flex;gap:4px 18px;flex-wrap:wrap;align-items:center;padding:10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px))}
+.topnav strong{font-family:var(--f-mono);font-size:.82rem;margin-right:auto}
+.topnav a{font-size:.92rem;text-decoration:none;color:var(--ink-2)}
+.topnav a[aria-current="page"]{color:var(--accent);font-weight:600}
+header.hero{padding-block:36px 18px;display:grid;gap:12px}
+.lede{color:var(--ink-2);max-width:66ch}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.toc ol{margin:0;padding:0;list-style:none;columns:2 300px;column-gap:28px}
+.toc li{break-inside:avoid;padding:3px 0;font-size:.94rem;display:flex;gap:8px;align-items:baseline}
+.toc li .n{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-3);min-width:22px}
+.toc a{text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.86rem;color:var(--ink-2)}
+.subhead{margin-top:44px;padding-bottom:6px;border-bottom:2px solid var(--ink);font-family:var(--f-mono);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+article.topic{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 22px 18px;display:grid;gap:14px;scroll-margin-top:64px;min-width:0}
+.th{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.tno{font-family:var(--f-display);font-size:2.2rem;font-weight:700;line-height:1;color:var(--ink-3)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:6px}
+.pr{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:1px 9px 1px 7px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.pr::before{content:"";width:9px;height:9px;border-radius:50%}
+.pr.h::before{background:var(--p-high)} .pr.m::before{background:var(--p-mid)} .pr.l::before{background:var(--p-low)}
+.sr{font-family:var(--f-mono);font-size:.72rem;font-weight:600;border-radius:4px;padding:1px 6px;white-space:nowrap}
+.sr.M{background:var(--accent-soft);color:var(--accent)} .sr.P{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--ink-3)} .sr.X{color:var(--p-high);border:1px solid var(--p-high)}
+.files{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-3)}
+.why{font-size:.92rem;color:var(--ink-2);border-left:3px solid var(--line);padding-left:10px}
+.topic p,.topic li{max-width:72ch}
+.topic ul,.topic ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+.fx{background:var(--surface-2);border-radius:8px;padding:12px 14px;display:grid;gap:8px;overflow-x:auto}
+.fx .f{font-family:var(--f-mono);font-size:.92rem;white-space:nowrap;color:var(--ink)}
+.fx .d{font-size:.9rem;color:var(--ink-2)}
+.tw{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:.9rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);font-weight:600;background:var(--surface-2)}
+td.num,th.num{text-align:right}
+tr.hl td{background:var(--accent-soft)}
+figure.fig{margin:0;display:grid;gap:6px;justify-items:center;background:var(--surface-2);border-radius:8px;padding:12px}
+figure.fig figcaption{font-size:.84rem;color:var(--ink-2);max-width:62ch;text-align:center}
+svg{display:block;max-width:100%;height:auto}
+svg text{font-family:var(--f-mono);fill:var(--ink-2)}
+section.ex{border:1px solid var(--line);border-radius:10px;overflow:hidden;display:grid}
+.exh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;padding:9px 14px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.lvl{font-family:var(--f-mono);font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.lvl.b{color:var(--u3)} .lvl.i{color:var(--u1)} .lvl.e{color:var(--p-high)}
+.src{font-size:.82rem;color:var(--ink-2)}
+.ex .body{padding:14px;display:grid;gap:10px;min-width:0}
+.q{font-weight:600}
+.gf{display:grid;gap:4px;font-size:.94rem}
+.gf div{display:grid;grid-template-columns:78px 1fr;gap:10px}
+.gf b{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);padding-top:3px;font-weight:600}
+.calc{font-family:var(--f-mono);font-size:.88rem;background:var(--surface-2);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre;line-height:1.55}
+.ans{background:var(--ans-bg);border-left:4px solid var(--ans-line);border-radius:6px;padding:9px 12px;font-weight:600}
+.mean{font-size:.94rem;color:var(--ink-2)}
+.pit,.rev{border-radius:8px;padding:12px 14px;display:grid;gap:6px;font-size:.94rem}
+.pit{border:1.5px solid var(--p-high)}
+.pit > b{color:var(--p-high);font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.rev{background:var(--accent-soft)}
+.rev > b{color:var(--accent);font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.note{font-size:.88rem;color:var(--ink-2)}
+.toplink{font-size:.84rem;justify-self:end}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-3);display:grid;gap:6px}
+@media (max-width:640px){ article.topic{padding:16px 14px} .gf div{grid-template-columns:1fr;gap:0} .tno{font-size:1.7rem} body{font-size:16px} }
+
+/* navigation panel */
+[hidden]{display:none!important}
+.topnav .wrap{max-width:1320px}
+.layout{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:36px}
+.layout > main{min-width:0}
+.sn-toggle{display:inline-flex;align-items:center;gap:6px;font:600 .86rem var(--f-body);color:var(--surface);background:var(--accent);border:0;border-radius:6px;padding:5px 11px;cursor:pointer}
+.sn-toggle:focus-visible,.sn-close:focus-visible,.sn-link:focus-visible,#navfilter:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sidenav{background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;padding:14px 12px 18px;overflow-y:auto;overscroll-behavior:contain;
+  position:fixed;z-index:30;top:0;bottom:0;left:0;width:min(330px,88vw);
+  padding-top:calc(14px + env(safe-area-inset-top, 0px));padding-bottom:calc(18px + env(safe-area-inset-bottom, 0px));padding-left:calc(12px + env(safe-area-inset-left, 0px));
+  transform:translateX(-105%);transition:transform .2s ease;visibility:hidden}
+.sidenav.open{transform:none;visibility:visible;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.sn-backdrop{position:fixed;inset:0;z-index:25;background:rgba(10,12,20,.45)}
+.sn-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sn-close{background:none;border:1px solid var(--line);border-radius:6px;color:var(--ink-2);font-size:.9rem;padding:3px 9px;cursor:pointer}
+#navfilter{width:100%;font:.92rem var(--f-body);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 10px}
+.sn-unit{border-top:1px solid var(--line);padding-top:6px}
+.sn-unit > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:700;font-size:1.02rem;padding:4px 2px}
+.sn-unit > summary::-webkit-details-marker{display:none}
+.sn-unit > summary::after{content:"▸";margin-left:auto;color:var(--ink-3);font-size:.8rem;transition:transform .15s}
+.sn-unit[open] > summary::after{transform:rotate(90deg)}
+.sn-unit small{font-family:var(--f-body);font-weight:400;font-size:.78rem;color:var(--ink-3)}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block;flex:none}
+.sn-sec{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:9px 4px 3px}
+.sn-link{display:grid;grid-template-columns:20px 9px 1fr;gap:6px;align-items:baseline;padding:4px 6px;border-radius:5px;text-decoration:none;color:var(--ink-2);font-size:.86rem;line-height:1.35}
+.sn-link .n{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.sn-link .pd{width:7px;height:7px;border-radius:50%;align-self:center}
+.pd.h{background:var(--p-high)} .pd.m{background:var(--p-mid)} .pd.l{background:var(--p-low)}
+.sn-link:hover{background:var(--surface-2);color:var(--ink)}
+.sn-link[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.sn-link.other{color:var(--ink-3)}
+.sn-empty{font-size:.86rem;color:var(--ink-3);padding:4px}
+.sn-home{font-size:.86rem;font-weight:600;text-decoration:none;margin-top:4px}
+nav.pn{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px;font-size:.88rem}
+nav.pn a{text-decoration:none;font-weight:600;max-width:48%}
+nav.pn a.next{margin-left:auto;text-align:right}
+nav.pn span{display:block;font-family:var(--f-mono);font-size:.68rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+@media (min-width:1100px){
+  .layout{grid-template-columns:280px minmax(0,1fr)}
+  .sidenav{position:sticky;z-index:auto;top:calc(env(safe-area-inset-top, 0px) + 50px);bottom:auto;align-self:start;width:auto;max-height:calc(100vh - 66px);transform:none;visibility:visible;
+    border:1px solid var(--line);border-radius:10px;margin-top:20px;padding:14px 12px 18px;box-shadow:none}
+  .sn-close,.sn-toggle,.sn-backdrop{display:none!important}
+  .toc{display:none}
+  .wrap.main{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} .sidenav,.sn-unit > summary::after{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Pages"><div class="wrap"><button class="sn-toggle" id="sn-toggle" type="button" aria-controls="sidenav" aria-expanded="false">☰ Topics</button><strong>23CSE301 · ML</strong><a href="index.html">Study guide</a><a href="unit-1.html">Unit I</a><a href="unit-2.html" aria-current="page">Unit II</a><a href="unit-3.html">Unit III</a><a href="lab.html">Simulator Lab</a></div></nav><div class="layout">
+<aside class="sidenav" id="sidenav" aria-label="All topics"><div class="sn-head"><span class="eyebrow">All 52 topics</span><button class="sn-close" id="sn-close" type="button" aria-label="Close topics">✕</button></div><input id="navfilter" type="search" placeholder="Find a topic…" aria-label="Find a topic" autocomplete="off"><details class="sn-unit"><summary><span class="sw" style="background:var(--u1)"></span>Unit I <small>Introduction and Fundamentals</small></summary><div class="sn-sec">A · Introduction to Machine Learning</div><a class="sn-link other" href="unit-1.html#t01" data-t="t01" title="Important"><span class="n">01</span><span class="pd m"></span><span>What ML is and the types of machine learning</span></a><a class="sn-link other" href="unit-1.html#t02" data-t="t02" title="Important"><span class="n">02</span><span class="pd m"></span><span>Features and feature representation</span></a><a class="sn-link other" href="unit-1.html#t03" data-t="t03" title="Important"><span class="n">03</span><span class="pd m"></span><span>Class boundaries and decision boundaries</span></a><a class="sn-link other" href="unit-1.html#t04" data-t="t04" title="Important"><span class="n">04</span><span class="pd m"></span><span>Training, validation and testing; cross-validation</span></a><a class="sn-link other" href="unit-1.html#t05" data-t="t05" title="Very important"><span class="n">05</span><span class="pd h"></span><span>Generalization; underfitting, good fit and overfitting  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t06" data-t="t06" title="Important"><span class="n">06</span><span class="pd m"></span><span>Loss functions and cost functions</span></a><a class="sn-link other" href="unit-1.html#t07" data-t="t07" title="Additional"><span class="n">07</span><span class="pd l"></span><span>Explainability in machine learning</span></a><a class="sn-link other" href="unit-1.html#t08" data-t="t08" title="Additional"><span class="n">08</span><span class="pd l"></span><span>Algorithmic bias</span></a><a class="sn-link other" href="unit-1.html#t09" data-t="t09" title="Additional"><span class="n">09</span><span class="pd l"></span><span>Data privacy and algorithmic privacy</span></a><div class="sn-sec">B · Dimensionality Reduction</div><a class="sn-link other" href="unit-1.html#t10" data-t="t10" title="Important"><span class="n">10</span><span class="pd m"></span><span>Curse of dimensionality  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t11" data-t="t11" title="Important"><span class="n">11</span><span class="pd m"></span><span>Principal Component Analysis (PCA)  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t12" data-t="t12" title="Important"><span class="n">12</span><span class="pd m"></span><span>Linear Discriminant Analysis (LDA)</span></a><a class="sn-link other" href="unit-1.html#t13" data-t="t13" title="Important"><span class="n">13</span><span class="pd m"></span><span>Feature selection: forward, backward and bidirectional</span></a><div class="sn-sec">C · Classification: K-Nearest Neighbour</div><a class="sn-link other" href="unit-1.html#t14" data-t="t14" title="Very important"><span class="n">14</span><span class="pd h"></span><span>KNN algorithm, choosing K and the effect of K  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t15" data-t="t15" title="Very important"><span class="n">15</span><span class="pd h"></span><span>Distance metrics: Euclidean, Manhattan, Minkowski  <span class="simtag">sim</span></span></a><div class="sn-sec">D · Regression</div><a class="sn-link other" href="unit-1.html#t16" data-t="t16" title="Important"><span class="n">16</span><span class="pd m"></span><span>Linear regression: least squares and gradient descent  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t17" data-t="t17" title="Very important"><span class="n">17</span><span class="pd h"></span><span>Logistic regression: sigmoid, odds, log-odds and odds ratio  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t18" data-t="t18" title="Very important"><span class="n">18</span><span class="pd h"></span><span>Regularization: LASSO (L1), Ridge (L2) and the effect of λ  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t19" data-t="t19" title="Very important"><span class="n">19</span><span class="pd h"></span><span>Bias–variance trade-off  <span class="simtag">sim</span></span></a><div class="sn-sec">E · Performance Metrics</div><a class="sn-link other" href="unit-1.html#t20" data-t="t20" title="Important"><span class="n">20</span><span class="pd m"></span><span>Confusion matrix, accuracy, precision, recall, F1, specificity</span></a><a class="sn-link other" href="unit-1.html#t21" data-t="t21" title="Important"><span class="n">21</span><span class="pd m"></span><span>ROC curve and AUC  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t22" data-t="t22" title="Important"><span class="n">22</span><span class="pd m"></span><span>Regression metrics: RMSE, MAPE, R² (with MAE and MSE)</span></a></details><details class="sn-unit" open><summary><span class="sw" style="background:var(--u2)"></span>Unit II <small>Supervised Learning</small></summary><div class="sn-sec">A · Decision Trees</div><a class="sn-link" href="#t23" data-t="t23" title="Very important"><span class="n">23</span><span class="pd h"></span><span>Tree structure, entropy, information gain and ID3  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t24" data-t="t24" title="Important"><span class="n">24</span><span class="pd m"></span><span>Gini index (CART) and gain ratio (C4.5)  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t25" data-t="t25" title="Important"><span class="n">25</span><span class="pd m"></span><span>Tree construction and pruning</span></a><div class="sn-sec">B · Support Vector Machines</div><a class="sn-link" href="#t26" data-t="t26" title="Very important"><span class="n">26</span><span class="pd h"></span><span>Hyperplane, maximum marginal hyperplane, margin and support vectors  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t27" data-t="t27" title="Very important"><span class="n">27</span><span class="pd h"></span><span>SVM numerical: the augmented-vector (α) method</span></a><a class="sn-link" href="#t28" data-t="t28" title="Important"><span class="n">28</span><span class="pd m"></span><span>Hard margin vs soft margin (C and slack ξ)  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t29" data-t="t29" title="Important"><span class="n">29</span><span class="pd m"></span><span>Non-linear SVM and the kernel trick: linear, polynomial, RBF, sigmoid</span></a><div class="sn-sec">C · Naive Bayes</div><a class="sn-link" href="#t30" data-t="t30" title="Important"><span class="n">30</span><span class="pd m"></span><span>Bayes theorem: prior, likelihood, posterior, conditional independence  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t31" data-t="t31" title="Important"><span class="n">31</span><span class="pd m"></span><span>Gaussian, Multinomial and Bernoulli Naive Bayes; Laplace smoothing</span></a><div class="sn-sec">D · Markov Models</div><a class="sn-link" href="#t32" data-t="t32" title="Very important"><span class="n">32</span><span class="pd h"></span><span>Markov property, states, initial and transition probabilities, sequence probability  <span class="simtag">sim</span></span></a><div class="sn-sec">E · Hidden Markov Models</div><a class="sn-link" href="#t33" data-t="t33" title="Very important"><span class="n">33</span><span class="pd h"></span><span>HMM: hidden states, observations, A, B, π; Markov model vs HMM; applications</span></a><a class="sn-link" href="#t34" data-t="t34" title="Important"><span class="n">34</span><span class="pd m"></span><span>Evaluation problem: the Forward algorithm  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t35" data-t="t35" title="Important"><span class="n">35</span><span class="pd m"></span><span>Decoding problem: the Viterbi algorithm  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t36" data-t="t36" title="Additional"><span class="n">36</span><span class="pd l"></span><span>Learning problem: the Baum–Welch algorithm</span></a><div class="sn-sec">F · Artificial Neural Networks</div><a class="sn-link" href="#t37" data-t="t37" title="Very important"><span class="n">37</span><span class="pd h"></span><span>Perceptron: neuron model, step function, learning rule and logic gates  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t38" data-t="t38" title="Important"><span class="n">38</span><span class="pd m"></span><span>Linear separability and the limitations of the perceptron (XOR)  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t39" data-t="t39" title="Important"><span class="n">39</span><span class="pd m"></span><span>Multi-layer perceptron: architecture, forward propagation, backpropagation, activations  <span class="simtag">sim</span></span></a><div class="sn-sec">G · Parameter Estimation</div><a class="sn-link" href="#t40" data-t="t40" title="Important"><span class="n">40</span><span class="pd m"></span><span>Maximum likelihood estimation: likelihood and log-likelihood</span></a><a class="sn-link" href="#t41" data-t="t41" title="Important"><span class="n">41</span><span class="pd m"></span><span>Bayesian estimation: prior and posterior; MLE vs Bayesian</span></a><a class="sn-link" href="#t42" data-t="t42" title="Important"><span class="n">42</span><span class="pd m"></span><span>Expectation–Maximization (EM): E-step, M-step, applications  <span class="simtag">sim</span></span></a></details><details class="sn-unit"><summary><span class="sw" style="background:var(--u3)"></span>Unit III <small>Unsupervised and Ensemble Learning</small></summary><div class="sn-sec">A · Clustering</div><a class="sn-link other" href="unit-3.html#t43" data-t="t43" title="Very important"><span class="n">43</span><span class="pd h"></span><span>K-means: initial centroids, assignment, update, convergence  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t44" data-t="t44" title="Important"><span class="n">44</span><span class="pd m"></span><span>Elbow method, WCSS and cluster evaluation</span></a><a class="sn-link other" href="unit-3.html#t45" data-t="t45" title="Very important"><span class="n">45</span><span class="pd h"></span><span>Hierarchical clustering: agglomerative, divisive, linkages, dendrograms  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t46" data-t="t46" title="Additional"><span class="n">46</span><span class="pd l"></span><span>Ward&#x27;s method</span></a><div class="sn-sec">B · Ensemble Learning</div><a class="sn-link other" href="unit-3.html#t47" data-t="t47" title="Very important"><span class="n">47</span><span class="pd h"></span><span>Base, weak and strong learners; meta-model; voting and averaging  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t48" data-t="t48" title="Important"><span class="n">48</span><span class="pd m"></span><span>Bagging: bootstrap sampling, parallel training, aggregation, variance  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t49" data-t="t49" title="Very important"><span class="n">49</span><span class="pd h"></span><span>Random Forest: bootstrap rows, random features, majority vote</span></a><a class="sn-link other" href="unit-3.html#t50" data-t="t50" title="Very important"><span class="n">50</span><span class="pd h"></span><span>Boosting and AdaBoost: error, α, weight update, normalization, final prediction  <span class="simtag">sim</span></span></a><div class="sn-sec">C · Reinforcement Learning</div><a class="sn-link other" href="unit-3.html#t51" data-t="t51" title="Important"><span class="n">51</span><span class="pd m"></span><span>Agent, environment, state, action, reward, policy, value function, Q-value  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-3.html#t52" data-t="t52" title="Important"><span class="n">52</span><span class="pd m"></span><span>Exploration vs exploitation; applications  <span class="simtag">sim</span></span></a></details><p class="sn-empty" id="sn-empty" hidden>No topic matches.</p><a class="sn-home" href="index.html">← Back to the study guide</a></aside><div class="sn-backdrop" id="sn-backdrop" hidden></div>
+<main class="wrap main">
+<header class="hero"><span class="eyebrow">23CSE301 Machine Learning · Unit II</span>
+<h1>Unit II: Supervised Learning</h1>
+<p class="lede">Every Unit II topic from the syllabus, taught from the basics: concept, formulas, how it works, then three fully solved examples (basic, intermediate, exam level) with the source of each problem. Theory and hand calculation only. Topics tagged  include an interactive simulator.</p>
+<div class="legend"><span class="pr h">Very important</span><span class="pr m">Important</span><span class="pr l">Additional</span><span class="sr M">In your materials</span><span class="sr P">Partial</span><span class="sr X">From outside sources</span></div>
+</header>
+<nav class="toc" aria-label="Topics in this unit"><span class="eyebrow">20 topics · 60 solved examples</span><ol><li><span class="n">23</span><a href="#t23">Tree structure, entropy, information gain and ID3</a></li><li><span class="n">24</span><a href="#t24">Gini index (CART) and gain ratio (C4.5)</a></li><li><span class="n">25</span><a href="#t25">Tree construction and pruning</a></li><li><span class="n">26</span><a href="#t26">Hyperplane, maximum marginal hyperplane, margin and support vectors</a></li><li><span class="n">27</span><a href="#t27">SVM numerical: the augmented-vector (α) method</a></li><li><span class="n">28</span><a href="#t28">Hard margin vs soft margin (C and slack ξ)</a></li><li><span class="n">29</span><a href="#t29">Non-linear SVM and the kernel trick: linear, polynomial, RBF, sigmoid</a></li><li><span class="n">30</span><a href="#t30">Bayes theorem: prior, likelihood, posterior, conditional independence</a></li><li><span class="n">31</span><a href="#t31">Gaussian, Multinomial and Bernoulli Naive Bayes; Laplace smoothing</a></li><li><span class="n">32</span><a href="#t32">Markov property, states, initial and transition probabilities, sequence probability</a></li><li><span class="n">33</span><a href="#t33">HMM: hidden states, observations, A, B, π; Markov model vs HMM; applications</a></li><li><span class="n">34</span><a href="#t34">Evaluation problem: the Forward algorithm</a></li><li><span class="n">35</span><a href="#t35">Decoding problem: the Viterbi algorithm</a></li><li><span class="n">36</span><a href="#t36">Learning problem: the Baum–Welch algorithm</a></li><li><span class="n">37</span><a href="#t37">Perceptron: neuron model, step function, learning rule and logic gates</a></li><li><span class="n">38</span><a href="#t38">Linear separability and the limitations of the perceptron (XOR)</a></li><li><span class="n">39</span><a href="#t39">Multi-layer perceptron: architecture, forward propagation, backpropagation, activations</a></li><li><span class="n">40</span><a href="#t40">Maximum likelihood estimation: likelihood and log-likelihood</a></li><li><span class="n">41</span><a href="#t41">Bayesian estimation: prior and posterior; MLE vs Bayesian</a></li><li><span class="n">42</span><a href="#t42">Expectation–Maximization (EM): E-step, M-step, applications</a></li></ol></nav>
+<h2 class="subhead">A · Decision Trees</h2>
+
+<article class="topic" id="t23">
+<div class="th"><span class="tno">23</span><div><h2>Tree structure, entropy, information gain and ID3</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Decision Tree.pptx · Regression.pdf</span></div></div></div>
+<p class="why">Question 1 of October 2025 (6 marks).</p>
+
+<h3>Concept</h3>
+<p>A decision tree is a supervised, non-parametric model shaped like a flowchart. Terminology from your slides: the <b>root node</b> holds the whole dataset; <b>decision (internal) nodes</b> test one attribute; <b>branches</b> are the test outcomes; <b>leaf (terminal) nodes</b> give the class; <b>splitting</b> divides a node; <b>pruning</b> removes unhelpful branches. A path from root to leaf reads as an if–then rule.</p>
+<p><b>ID3</b> (Iterative Dichotomiser 3, Ross Quinlan) grows the tree top-down and greedily: at each node it splits on the attribute with the highest <b>information gain</b>, i.e. the one that makes the child nodes purest.</p>
+<div class="fx">
+<div class="f">Entropy(S) = − Σᵢ pᵢ log₂ pᵢ       (pᵢ = fraction of class i in S;  0·log 0 = 0)</div>
+<div class="f">Two classes: 0 when the node is pure, 1 when it is a 50/50 mix</div>
+<div class="f">Gain(S, A) = Entropy(S) − Σ_v (|S_v|/|S|) · Entropy(S_v)</div>
+<div class="d">S_v = the subset of S where attribute A takes value v. The weighted sum is the expected entropy left after splitting on A ("average information entropy" in your slides).</div>
+</div>
+<h3>ID3 algorithm (your slides' steps)</h3>
+<ol>
+<li>Compute the entropy of the current dataset S.</li>
+<li>For every attribute: compute the entropy of each of its values, take the weighted average, and compute the gain.</li>
+<li>Pick the attribute with the highest gain as the decision node; create one branch per value.</li>
+<li>Repeat on each branch with the remaining attributes, until a node is pure (entropy 0 → leaf), no attributes remain (leaf = majority class) or no samples remain.</li>
+</ol>
+<p><b>Splitting criterion</b> (Q1c): ID3 splits on the attribute with maximum information gain (equivalently, minimum weighted child entropy). Handy values: log₂(1/3) = −1.585, log₂(2/3) = −0.585, log₂(1/5) = −2.322, log₂(2/5) = −1.322, log₂(3/5) = −0.737, log₂(4/5) = −0.322. Entropy(2/5, 3/5) = 0.971, (1/3, 2/3) = 0.918, (1/4, 3/4) = 0.811, (9/14, 5/14) = 0.940.</p>
+
+<div class="sim" id="sim-t23-1" data-sim="split" data-title="ID3 split explorer" data-desc="Split the October 2025 Q1 patients (or Mitchell&#x27;s PlayTennis days) on each attribute and compare the information gains." data-opts='{}'><p class="sim-desc">Interactive simulator: ID3 split explorer (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic — October 2025 Q1 (6 marks), full solution</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">Patients: P1 (High, Yes, No) → Yes; P2 (Normal, No, No) → No; P3 (High, Yes, Yes) → Yes; P4 (Low, No, Yes) → No; P5 (Normal, Yes, No) → Yes, for attributes (Fever, Cough, Fatigue) and target Disease. (a) Initial entropy. (b) Best root attribute. (c) Splitting criterion. (d) Final tree.</p>
+<div class="calc">(a) 3 Yes, 2 No
+    E(S) = −(3/5)log₂(3/5) − (2/5)log₂(2/5) = 0.6(0.737) + 0.4(1.322) = 0.442 + 0.529 = 0.971
+(b) Fever:   High {P1,P3} = 2Y → E = 0
+             Normal {P2,P5} = 1Y 1N → E = 1
+             Low {P4} = 1N → E = 0
+             weighted = (2/5)(0) + (2/5)(1) + (1/5)(0) = 0.400 → Gain = 0.971 − 0.400 = 0.571
+    Cough:   Yes {P1,P3,P5} = 3Y → E = 0;  No {P2,P4} = 2N → E = 0
+             weighted = 0 → Gain = 0.971 − 0 = 0.971
+    Fatigue: No {P1,P2,P5} = 2Y 1N → E = 0.918;  Yes {P3,P4} = 1Y 1N → E = 1
+             weighted = (3/5)(0.918) + (2/5)(1) = 0.551 + 0.400 = 0.951 → Gain = 0.020
+    Highest gain: Cough (0.971)
+(c) Choose the attribute with maximum information gain (here Cough). Stop when a node is pure.
+(d) Both Cough branches are pure, so the tree stops after one split.</div>
+<figure class="fig">
+<svg viewBox="0 0 300 150" role="img" aria-label="Decision tree: root Cough; Yes branch leads to Disease equals Yes, No branch leads to Disease equals No">
+<rect x="105" y="10" width="90" height="34" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="150" y="32" text-anchor="middle" font-size="13" style="fill:var(--ink);font-weight:600">Cough?</text>
+<path d="M130 44L70 98M170 44L230 98" stroke="var(--ink-2)" stroke-width="1.5"/>
+<text x="86" y="70" font-size="11">Yes</text><text x="206" y="70" font-size="11">No</text>
+<rect x="20" y="98" width="100" height="32" rx="16" fill="var(--ans-bg)" stroke="var(--ans-line)"/><text x="70" y="119" text-anchor="middle" font-size="12" style="fill:var(--ink)">Disease = Yes</text>
+<rect x="180" y="98" width="100" height="32" rx="16" fill="var(--surface)" stroke="var(--ink-2)"/><text x="230" y="119" text-anchor="middle" font-size="12" style="fill:var(--ink)">Disease = No</text>
+</svg>
+<figcaption>Final tree for Q1: Cough alone separates the classes.</figcaption>
+</figure>
+<p class="ans">(a) 0.971. (b) Gains: Fever 0.571, Cough 0.971, Fatigue 0.020 → root = Cough. (c) Maximum information gain. (d) Cough = Yes → Disease = Yes; Cough = No → Disease = No.</p>
+<p class="mean">Cough's gain equals the full initial entropy, meaning it removes all uncertainty. Don't keep splitting pure nodes.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Tom M. Mitchell, <i>Machine Learning</i>, McGraw-Hill 1997, Table 3.2 and §3.4.2, <a href="http://www.cs.cmu.edu/~tom/mlbook.html">cs.cmu.edu/~tom/mlbook.html</a> (also the Play-Golf example in your Decision Tree.pptx)</span></div><div class="body">
+<p class="q">The 14-day PlayTennis data (Outlook, Temperature, Humidity, Wind → Play): 9 Yes, 5 No. Sunny 2Y/3N, Overcast 4Y/0N, Rain 3Y/2N; Hot 2Y/2N, Mild 4Y/2N, Cool 3Y/1N; High 3Y/4N, Normal 6Y/1N; Weak 6Y/2N, Strong 3Y/3N. Find the root and the full tree. (Sunny days: Humidity High → 3 No, Normal → 2 Yes. Rain days: Wind Weak → 3 Yes, Strong → 2 No.)</p>
+<div class="calc">E(S) = −(9/14)log₂(9/14) − (5/14)log₂(5/14) = 0.940
+Outlook:  (5/14)(0.971) + (4/14)(0) + (5/14)(0.971) = 0.694 → Gain = 0.246
+Temp:     (4/14)(1.000) + (6/14)(0.918) + (4/14)(0.811) = 0.911 → Gain = 0.029
+Humidity: (7/14)(0.985) + (7/14)(0.592) = 0.789 → Gain = 0.151
+Wind:     (8/14)(0.811) + (6/14)(1.000) = 0.892 → Gain = 0.048
+Root = Outlook (0.246). Overcast branch is pure → Yes.
+Sunny branch (E = 0.971): Gain(Humidity) = 0.971, Gain(Temp) = 0.571, Gain(Wind) = 0.020 → Humidity
+Rain branch (E = 0.971):  Gain(Wind) = 0.971, Gain(Temp) = 0.020, Gain(Humidity) = 0.020 → Wind</div>
+<figure class="fig">
+<svg viewBox="0 0 440 200" role="img" aria-label="PlayTennis tree: Outlook at root; Sunny to Humidity, Overcast to Yes, Rain to Wind; Humidity High No, Normal Yes; Wind Strong No, Weak Yes">
+<g font-size="11" text-anchor="middle">
+<rect x="180" y="8" width="80" height="28" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="220" y="27" style="fill:var(--ink);font-weight:600">Outlook</text>
+<path d="M200 36L80 82M220 36V82M240 36L360 82" stroke="var(--ink-2)"/>
+<text x="120" y="56">Sunny</text><text x="238" y="64">Overcast</text><text x="318" y="56">Rain</text>
+<rect x="40" y="82" width="84" height="28" rx="6" fill="var(--surface)" stroke="var(--accent)"/><text x="82" y="101" style="fill:var(--ink)">Humidity</text>
+<rect x="190" y="82" width="60" height="28" rx="14" fill="var(--ans-bg)" stroke="var(--ans-line)"/><text x="220" y="101" style="fill:var(--ink)">Yes</text>
+<rect x="320" y="82" width="80" height="28" rx="6" fill="var(--surface)" stroke="var(--accent)"/><text x="360" y="101" style="fill:var(--ink)">Wind</text>
+<path d="M70 110L40 156M94 110L124 156M350 110L320 156M370 110L400 156" stroke="var(--ink-2)"/>
+<text x="38" y="136">High</text><text x="128" y="136">Normal</text><text x="316" y="136">Strong</text><text x="408" y="136">Weak</text>
+<rect x="12" y="156" width="56" height="28" rx="14" fill="var(--surface)" stroke="var(--ink-2)"/><text x="40" y="175" style="fill:var(--ink)">No</text>
+<rect x="96" y="156" width="56" height="28" rx="14" fill="var(--ans-bg)" stroke="var(--ans-line)"/><text x="124" y="175" style="fill:var(--ink)">Yes</text>
+<rect x="292" y="156" width="56" height="28" rx="14" fill="var(--surface)" stroke="var(--ink-2)"/><text x="320" y="175" style="fill:var(--ink)">No</text>
+<rect x="372" y="156" width="56" height="28" rx="14" fill="var(--ans-bg)" stroke="var(--ans-line)"/><text x="400" y="175" style="fill:var(--ink)">Yes</text>
+</g></svg>
+<figcaption>Mitchell's PlayTennis tree. Temperature is never used: it carries almost no information.</figcaption>
+</figure>
+<p class="ans">Root Outlook (gain 0.246); Sunny → Humidity; Overcast → Yes; Rain → Wind.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: course material, Decision Tree.pptx, Example 5 (film data)</span></div><div class="body">
+<p class="q">Predict whether a film is a Hit: (Amitabh, Action, Yes), (Amitabh, Fiction, Yes), (Amitabh, Romance, No), (Amitabh, Action, Yes), (Abhishek, Action, No), (Abhishek, Fiction, No), (Abhishek, Romance, Yes) for attributes (Lead Actor, Genre). Build the ID3 tree.</p>
+<div class="calc">4 Yes, 3 No → E(S) = −(4/7)log₂(4/7) − (3/7)log₂(3/7) = 0.461 + 0.524 = 0.985
+Lead Actor: Amitabh 3Y 1N → E = 0.811 (4 films);  Abhishek 1Y 2N → E = 0.918 (3 films)
+   weighted = (4/7)(0.811) + (3/7)(0.918) = 0.464 + 0.394 = 0.857 → Gain = 0.128
+Genre: Action 2Y 1N → 0.918 (3);  Fiction 1Y 1N → 1 (2);  Romance 1Y 1N → 1 (2)
+   weighted = (3/7)(0.918) + (2/7)(1) + (2/7)(1) = 0.394 + 0.571 = 0.965 → Gain = 0.020
+Root = Lead Actor.
+Amitabh branch (3Y 1N): split on Genre → Action {Y, Y} pure Yes; Fiction {Y} Yes; Romance {N} No → Gain 0.811
+Abhishek branch (1Y 2N): split on Genre → Action {N} No; Fiction {N} No; Romance {Y} Yes → Gain 0.918</div>
+<p class="ans">Root: Lead Actor. Amitabh → Genre (Action Yes, Fiction Yes, Romance No). Abhishek → Genre (Action No, Fiction No, Romance Yes).</p>
+<p class="mean">Genre looks useless at the root (gain 0.020) but becomes perfect inside each actor's branch: the two attributes interact. Greedy ID3 still finds the right tree here.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Using natural log instead of log₂ (values then do not lie in 0–1 for two classes).</li><li>Forgetting the weights |S_v|/|S| in the average.</li><li>Expanding a pure node, or reusing an attribute already used on the same path.</li><li>Leaving out the splitting criterion statement (1 mark in Q1c).</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>E = −Σp log₂p. Gain = E(parent) − weighted E(children). ID3: pick max gain, branch per value, recurse until pure. Leaf = majority class when attributes run out.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="unit-1.html#t22"><span>← Previous · 22</span>Regression metrics: RMSE, MAPE, R² (with MAE and MSE)</a><a class="next" href="#t24"><span>Next → · 24</span>Gini index (CART) and gain ratio (C4.5)</a></nav></article>
+
+<article class="topic" id="t24">
+<div class="th"><span class="tno">24</span><div><h2>Gini index (CART) and gain ratio (C4.5)</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Decision Tree.pptx · Regression.pdf</span></div></div></div>
+<p class="why">The most natural variation of Q1: the same table with Gini instead of entropy.</p>
+
+<h3>Concept</h3>
+<p>Three tree algorithms appear in your slides. <b>ID3</b> uses information gain. <b>C4.5</b> (Quinlan's successor) uses the <b>gain ratio</b>, which corrects information gain's bias toward attributes with many values (an ID-number attribute would get maximal gain while being useless). <b>CART</b> (Breiman) builds binary trees using the <b>Gini index</b> — "how often a randomly chosen element would be misclassified"; lower is purer.</p>
+<div class="fx">
+<div class="f">Gini(S) = 1 − Σᵢ pᵢ²           0 = pure;  0.5 = 50/50 for two classes</div>
+<div class="f">Gini_split(A) = Σ_v (|S_v|/|S|) Gini(S_v)      choose A with the lowest value (largest Gini gain)</div>
+<div class="f">SplitInfo(A) = − Σ_v (|S_v|/|S|) log₂(|S_v|/|S|)</div>
+<div class="f">GainRatio(A) = Gain(S, A) / SplitInfo(A)</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>ID3</th><th>C4.5</th><th>CART</th></tr></thead><tbody>
+<tr><td>Criterion</td><td>Information gain</td><td>Gain ratio</td><td>Gini index (classification), MSE (regression)</td></tr>
+<tr><td>Splits</td><td>Multi-way</td><td>Multi-way</td><td>Binary only</td></tr>
+<tr><td>Attributes</td><td>Categorical</td><td>Categorical and continuous (thresholds), missing values</td><td>Categorical and continuous</td></tr>
+<tr><td>Pruning</td><td>None</td><td>Error-based post-pruning</td><td>Cost-complexity pruning</td></tr>
+</tbody></table></div>
+
+<div class="sim" id="sim-t24-1" data-sim="entropy" data-title="Entropy vs Gini vs misclassification" data-desc="All three impurity measures of a two-class node as the class mix changes." data-opts='{}'><p class="sim-desc">Interactive simulator: Entropy vs Gini vs misclassification (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Compute the Gini index and entropy of nodes with class counts (9, 5), (7, 7) and (10, 0).</p>
+<div class="calc">(9,5):  Gini = 1 − (9/14)² − (5/14)² = 1 − 0.4133 − 0.1276 = 0.459;  Entropy = 0.940
+(7,7):  Gini = 1 − 0.25 − 0.25 = 0.5;                               Entropy = 1
+(10,0): Gini = 1 − 1 = 0;                                           Entropy = 0</div>
+<p class="ans">0.459, 0.5, 0. Both measures are 0 for pure nodes and maximal at 50/50 (Gini 0.5, entropy 1).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: 23CSE301 October 2025 Q1 data, re-solved with Gini</span></div><div class="body">
+<p class="q">Use the Gini index to choose the root for the Q1 patient data.</p>
+<div class="calc">Gini(S) = 1 − (3/5)² − (2/5)² = 1 − 0.36 − 0.16 = 0.48
+Fever:   High 2Y → 0;  Normal 1Y1N → 0.5;  Low 1N → 0
+         split = (2/5)(0) + (2/5)(0.5) + (1/5)(0) = 0.200 → gain 0.280
+Cough:   Yes 3Y → 0;  No 2N → 0  → split = 0 → gain 0.480
+Fatigue: No 2Y1N → 1 − 4/9 − 1/9 = 0.444;  Yes 1Y1N → 0.5
+         split = (3/5)(0.444) + (2/5)(0.5) = 0.267 + 0.200 = 0.467 → gain 0.013</div>
+<p class="ans">Cough again (Gini split 0): Gini and entropy agree here, as they usually do.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: Mitchell's PlayTennis data (see topic 23), computed here</span></div><div class="body">
+<p class="q">For the PlayTennis data compute (i) the Gini split value of each attribute, (ii) the gain ratio of Outlook. (iii) Why does C4.5 need the gain ratio?</p>
+<div class="calc">Gini(S) = 0.459
+Outlook:  Sunny 2/3 → 0.48; Overcast → 0; Rain → 0.48
+          split = (5/14)(0.48) + 0 + (5/14)(0.48) = 0.343 → Gini gain 0.116
+Temp:     Hot 0.5; Mild 1 − (4/6)² − (2/6)² = 0.444; Cool 1 − (3/4)² − (1/4)² = 0.375
+          split = (4/14)(0.5) + (6/14)(0.444) + (4/14)(0.375) = 0.440 → gain 0.019
+Humidity: High 1 − (3/7)² − (4/7)² = 0.490; Normal 1 − (6/7)² − (1/7)² = 0.245
+          split = 0.5(0.490) + 0.5(0.245) = 0.367 → gain 0.092
+Wind:     Weak 0.375; Strong 0.5 → split = (8/14)(0.375) + (6/14)(0.5) = 0.429 → gain 0.031
+(ii) SplitInfo(Outlook) = −(5/14)log₂(5/14) − (4/14)log₂(4/14) − (5/14)log₂(5/14) = 1.577
+     GainRatio = 0.246/1.577 = 0.156</div>
+<p class="ans">Lowest Gini split: Outlook (0.343) → root, same as ID3. Gain ratio of Outlook = 0.156.</p>
+<p class="mean">(iii) An attribute with a unique value per row (e.g. Day number) has 14 pure branches, gain = 0.940, so ID3 would pick it. Its SplitInfo is log₂14 = 3.81, so its gain ratio is only 0.247 — the penalty stops this useless split from dominating.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Choosing the attribute with the highest Gini split value — you want the lowest.</li><li>Forgetting to weight child Gini values by their sizes.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Gini = 1 − Σp²; pick the lowest weighted Gini. Gain ratio = Gain / SplitInfo (C4.5) to stop many-valued attributes winning. CART = binary + Gini; ID3 = gain; C4.5 = gain ratio.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t23"><span>← Previous · 23</span>Tree structure, entropy, information gain and ID3</a><a class="next" href="#t25"><span>Next → · 25</span>Tree construction and pruning</a></nav></article>
+
+<article class="topic" id="t25">
+<div class="th"><span class="tno">25</span><div><h2>Tree construction and pruning</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr P">Partial</span><span class="files">Decision Tree.pptx · Overfitting-and-Underfitting.pdf</span></div></div></div>
+<p class="why">Q1(d) asks for the final tree; pruning has only a definition in the notes.</p>
+
+<h3>Construction</h3>
+<p>Trees are grown by <b>recursive partitioning</b> (your slides): choose the best split, divide the data, recurse. Stopping (leaf) conditions: the node is pure; no attributes remain; too few samples; maximum depth reached; or the best gain is below a threshold. A leaf predicts the majority class (classification) or the mean value (regression).</p>
+<h3>Pruning</h3>
+<p>A fully grown tree overfits: deep branches fit noise. <b>Pruning</b> — "the opposite of splitting" — removes branches that do not help on unseen data.</p>
+<ul>
+<li><b>Pre-pruning (early stopping)</b>: stop growing early — maximum depth, minimum samples per leaf, minimum gain. Cheap, but may stop before a useful split.</li>
+<li><b>Post-pruning</b>: grow the full tree, then cut back.
+<ul><li><b>Reduced error pruning</b>: replace a subtree by a leaf if that does not increase error on a validation set.</li>
+<li><b>Cost-complexity (weakest-link) pruning</b> (CART): minimise R_α(T) = R(T) + α·|leaves|.</li></ul></li>
+</ul>
+<div class="fx">
+<div class="f">R_α(T) = R(T) + α |T̃|            R(T) = training error rate, |T̃| = number of leaves</div>
+<div class="f">Effective α of node t:  α_t = [R(t) − R(T_t)] / (|T̃_t| − 1)</div>
+<div class="d">R(t) = error if t is turned into a leaf; R(T_t) = error of the subtree below t. The node with the smallest α_t is the weakest link and is pruned first; the best α is chosen by cross-validation.</div>
+</div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A subtree under node "Humidity" makes 7 errors on 40 validation samples. If the subtree is replaced by a leaf predicting the majority class, it makes 5 errors. Should it be pruned under reduced error pruning?</p>
+<div class="calc">Subtree error = 7/40 = 17.5%;  leaf error = 5/40 = 12.5% → leaf is not worse</div>
+<p class="ans">Prune: the simpler leaf does better on unseen data, so the subtree was fitting noise.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem on CART cost-complexity pruning (Breiman et al., <i>Classification and Regression Trees</i>, 1984, for the method)</span></div><div class="body">
+<p class="q">Training error rates (as fractions of all 100 training samples): node t₁ as a leaf R = 0.10, its subtree R = 0.04 with 4 leaves; node t₂ as a leaf R = 0.06, its subtree R = 0.03 with 2 leaves. Which node is pruned first?</p>
+<div class="calc">α(t₁) = (0.10 − 0.04)/(4 − 1) = 0.06/3 = 0.020
+α(t₂) = (0.06 − 0.03)/(2 − 1) = 0.03/1 = 0.030
+Smallest α → t₁ (weakest link)</div>
+<p class="ans">Prune t₁ first (α = 0.02): its three extra leaves buy only 0.02 error reduction each.</p>
+<p class="mean">α is the price paid in error per leaf removed; pruning the cheapest subtrees first gives the sequence of trees CART chooses from by cross-validation.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem using PlayTennis gains (topic 23)</span></div><div class="body">
+<p class="q">A pre-pruning rule says "do not split if the best information gain is below 0.05". (i) Would the root of PlayTennis be split? (ii) Inside the Sunny branch, would Humidity be used? (iii) Suppose a noisy dataset had a node with 3 samples where the best gain was 0.92 but each child held one sample. Should it be split? Compare pre- and post-pruning.</p>
+<ol>
+<li>Root: best gain Outlook 0.246 ≥ 0.05 → split.</li>
+<li>Sunny branch: Humidity gain 0.971 ≥ 0.05 → split (and its children are pure → leaves).</li>
+<li>Gain is high, but each child rests on a single sample — a split fitted to noise. A "minimum 5 samples per node" rule (pre-pruning) or validation-based post-pruning would stop or remove it.</li>
+<li>Pre-pruning is faster but short-sighted: a weak split may enable strong splits below it (the film example, topic 23, where Genre has gain 0.02 at the root but is perfect one level down). Post-pruning sees the whole tree first, so it is usually more accurate, at more computational cost.</li>
+</ol>
+<p class="ans">Split at the root and in Sunny; do not trust the 3-sample split; post-pruning generally beats pre-pruning in accuracy, pre-pruning wins on speed.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Pruning on the training set (training error never prefers the pruned tree).</li><li>Confusing pruning with feature selection.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Grow recursively until pure / no attributes / too few samples. Pruning fights overfitting. Pre-pruning: depth, min samples, min gain. Post-pruning: reduced error (validation), cost complexity α_t = (R(t) − R(T_t))/(leaves − 1).</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t24"><span>← Previous · 24</span>Gini index (CART) and gain ratio (C4.5)</a><a class="next" href="#t26"><span>Next → · 26</span>Hyperplane, maximum marginal hyperplane, margin and support vectors</a></nav></article>
+<h2 class="subhead">B · Support Vector Machines</h2>
+
+<article class="topic" id="t26">
+<div class="th"><span class="tno">26</span><div><h2>Hyperplane, maximum marginal hyperplane, margin and support vectors</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">SVM ML.pdf · Classification.pdf</span></div></div></div>
+<p class="why">Question 3 of October 2025 — 8 marks, the largest question.</p>
+
+<h3>Concept</h3>
+<p>Many lines can separate two linearly separable classes. A <b>Support Vector Machine</b> picks the one with the widest gap to the nearest points of both classes — the <b>maximum marginal hyperplane (MMH)</b>. A wide gap means a new point must move far before it is misclassified, so the MMH generalises best.</p>
+<ul>
+<li><b>Hyperplane</b>: the decision surface w·x + b = 0 — a line in 2-D, a plane in 3-D, a hyperplane in higher dimensions. w is perpendicular to it; b shifts it.</li>
+<li><b>Margin boundaries</b>: w·x + b = +1 and w·x + b = −1, parallel to the hyperplane and passing through the closest points.</li>
+<li><b>Margin</b>: the distance between the two boundaries = 2/‖w‖.</li>
+<li><b>Support vectors</b> (Q3a): the training points that lie exactly on the margin boundaries, i.e. those closest to the decision boundary. They alone determine the hyperplane: removing any other point changes nothing, moving a support vector moves the boundary (SVM ML.pdf: "If the support vectors move, the boundary changes").</li>
+</ul>
+<div class="fx">
+<div class="f">Decision rule:  ŷ = sign(w·x + b)</div>
+<div class="f">Hard-margin primal:  minimise ½‖w‖²   subject to  yᵢ(w·xᵢ + b) ≥ 1  for all i</div>
+<div class="f">Distance of a point to the hyperplane:  |w·x + b| / ‖w‖</div>
+<div class="f">Dual solution:  w = Σ αᵢyᵢxᵢ ,  αᵢ &gt; 0 only for support vectors;  f(x) = sign(Σ αᵢyᵢ xᵢ·x + b)</div>
+<div class="d">Maximising 2/‖w‖ is the same as minimising ½‖w‖². The dual depends on the data only through dot products xᵢ·xⱼ — which is what makes the kernel trick (topic 29) possible.</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 0 340 240" role="img" aria-label="Two classes separated by a solid hyperplane with dashed margin lines; support vectors circled on the margins">
+<rect x="10" y="10" width="320" height="220" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M120 230L230 10" stroke="var(--ink)" stroke-width="2.5"/>
+<path d="M80 230L190 10" stroke="var(--ink-2)" stroke-dasharray="6 4" stroke-width="1.5"/>
+<path d="M160 230L270 10" stroke="var(--ink-2)" stroke-dasharray="6 4" stroke-width="1.5"/>
+<g fill="var(--pos)"><circle cx="60" cy="60" r="6"/><circle cx="40" cy="130" r="6"/><circle cx="90" cy="100" r="6"/><circle cx="60" cy="190" r="6"/><circle cx="145" cy="100" r="6"/><circle cx="120" cy="150" r="6"/></g>
+<g fill="var(--surface)" stroke="var(--neg)" stroke-width="2"><rect x="256" y="64" width="12" height="12"/><rect x="204" y="124" width="12" height="12"/><rect x="270" y="150" width="12" height="12"/><rect x="290" y="80" width="12" height="12"/><rect x="250" y="190" width="12" height="12"/></g>
+<g fill="none" stroke="var(--p-high)" stroke-width="2"><circle cx="145" cy="100" r="11"/><circle cx="120" cy="150" r="11"/><circle cx="210" cy="130" r="12"/></g>
+<path d="M150 150L190 170" stroke="var(--accent)" stroke-width="1.5"/><text x="194" y="182" font-size="11" style="fill:var(--accent)">margin = 2/‖w‖</text>
+<text x="200" y="28" font-size="11">w·x+b = 0</text><text x="24" y="226" font-size="10">w·x+b = +1</text><text x="236" y="226" font-size="10">w·x+b = −1</text>
+</svg>
+<figcaption>Circled points lie on the dashed margin lines: they are the support vectors.</figcaption>
+</figure>
+
+<div class="sim" id="sim-t26-1" data-sim="svm" data-title="Find the widest street" data-desc="Rotate and shift the line to separate the October 2025 Q3 classes with the widest margin, then let the SVM show the optimum." data-opts='{"data": "fixed"}'><p class="sim-desc">Interactive simulator: Find the widest street (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">An SVM has w = (3, 4), b = −12. (i) Classify (4, 3) and (1, 1). (ii) Find the distance of (4, 3) from the hyperplane. (iii) Find the margin width.</p>
+<div class="calc">(i) (4,3): 3(4) + 4(3) − 12 = 12 → +1;   (1,1): 3 + 4 − 12 = −5 → −1
+(ii) ‖w‖ = √(9 + 16) = 5;  distance = |12|/5 = 2.4
+(iii) margin = 2/‖w‖ = 2/5 = 0.4</div>
+<p class="ans">(4,3) → +1, (1,1) → −1; distance 2.4; margin 0.4.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, SVM ML.pdf ("SVM Example: Find the Optimal Hyperplane")</span></div><div class="body">
+<p class="q">Class A: (−0.5, 0.5), (0.5, 0.5), (1, 0.5), (1, 1), (1, −0.5), (2, 0). Class B: (4, 0), (4.5, 1), (4.5, 0.5), (5, −1), (5.5, 0). Find the support vectors, hyperplane, w, b and margin geometrically.</p>
+<ol>
+<li>Plot: A lies at x₁ ≤ 2, B at x₁ ≥ 4. The closest pair is (2, 0) in A and (4, 0) in B → these are the <b>support vectors</b>.</li>
+<li>The MMH is the perpendicular bisector of the closest pair: midway at x₁ = 3, vertical.</li>
+<li>So w = (w₁, 0). Conditions: w·(4,0) + b = +1 for B taken as +1 and w·(2,0) + b = −1 for A: 4w₁ + b = 1, 2w₁ + b = −1 → 2w₁ = 2 → w₁ = 1, b = −3.</li>
+<li>Margin = 2/‖w‖ = 2/1 = 2 (boundaries x₁ = 2 and x₁ = 4).</li>
+</ol>
+<p class="ans">Support vectors (2, 0) and (4, 0); w = (1, 0), b = −3; hyperplane x₁ − 3 = 0 (x₁ = 3); margin 2.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">An SVM trained on six points gives w = (1, 1), b = −3. Points: (1, 1) −1, (0, 0) −1, (1, 0) −1, (2, 2) +1, (3, 3) +1, (2, 3) +1. (i) Check every point is correctly classified with margin ≥ 1. (ii) Identify the support vectors. (iii) Find the margin width. (iv) Write Q3(a)'s answer: what are support vectors?</p>
+<div class="calc">yᵢ(w·xᵢ + b):
+(1,1): −1 × (1 + 1 − 3) = −1 × −1 = 1   ← on margin
+(0,0): −1 × (−3) = 3
+(1,0): −1 × (−2) = 2
+(2,2): +1 × (4 − 3) = 1                 ← on margin
+(3,3): +1 × 3 = 3
+(2,3): +1 × 2 = 2
+All ≥ 1 ✓.  margin = 2/‖w‖ = 2/√2 = 1.414</div>
+<p class="ans">All correct; support vectors (1, 1) and (2, 2) (where yᵢ(w·xᵢ + b) = 1); margin 1.414.</p>
+<p class="mean">Model answer for "What are support vectors?" (2 marks): <i>Support vectors are the training samples closest to the decision boundary, lying on the margin hyperplanes w·x + b = ±1. They are the only points with non-zero Lagrange multipliers αᵢ, so they alone define the position and orientation of the maximum marginal hyperplane; removing other points leaves the classifier unchanged.</i></p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Writing the margin as 1/‖w‖ — that is half the margin (distance from hyperplane to one boundary).</li><li>Calling every point near the boundary a support vector; only those with yᵢ(w·xᵢ + b) = 1.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Hyperplane w·x + b = 0; margins ±1; width 2/‖w‖; minimise ½‖w‖² s.t. yᵢ(w·xᵢ+b) ≥ 1. Support vectors sit on the margins and alone define the MMH.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t25"><span>← Previous · 25</span>Tree construction and pruning</a><a class="next" href="#t27"><span>Next → · 27</span>SVM numerical: the augmented-vector (α) method</a></nav></article>
+
+<article class="topic" id="t27">
+<div class="th"><span class="tno">27</span><div><h2>SVM numerical: the augmented-vector (α) method</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Classification.pdf (slides 137–143) · SVM ML.pdf</span></div></div></div>
+<p class="why">Q3(b) of October 2025 is worth 6 marks and expects this method.</p>
+
+<h3>The method in your notes</h3>
+<ol>
+<li>Plot the points and choose the support vectors s₁, s₂, … (the closest points of the opposite classes).</li>
+<li><b>Augment</b> each support vector with a 1 for the bias: s̃ = (x₁, x₂, 1).</li>
+<li>Write one equation per support vector: Σⱼ αⱼ (s̃ⱼ · s̃ᵢ) = yᵢ, with yᵢ = −1 for the negative class and +1 for the positive class.</li>
+<li>Solve the simultaneous equations for the α's.</li>
+<li>Compute w̃ = Σ αᵢ s̃ᵢ = (w₁, w₂, b). The hyperplane is w₁x₁ + w₂x₂ + b = 0.</li>
+<li>Check: every point should satisfy yᵢ(w·xᵢ + b) ≥ 1, with equality for the support vectors.</li>
+</ol>
+<div class="fx"><div class="f">Σⱼ αⱼ (s̃ⱼ · s̃ᵢ) = yᵢ   for each support vector i       w̃ = Σ αᵢ s̃ᵢ</div>
+<div class="d">In this formulation α carries the class sign (negative for the negative class), so w̃ = Σαᵢs̃ᵢ already includes yᵢ.</div></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: course material, Classification.pdf, "SVM Solved Example" (slides 137–142)</span></div><div class="body">
+<p class="q">Support vectors s₁ = (2, 1) and s₂ = (2, −1) belong to the negative class and s₃ = (4, 0) to the positive class. Find the hyperplane.</p>
+<div class="calc">Augment: s̃₁ = (2, 1, 1), s̃₂ = (2, −1, 1), s̃₃ = (4, 0, 1)
+Dot products: s̃₁·s̃₁ = 4+1+1 = 6   s̃₁·s̃₂ = 4−1+1 = 4   s̃₁·s̃₃ = 8+0+1 = 9
+              s̃₂·s̃₂ = 6            s̃₂·s̃₃ = 9           s̃₃·s̃₃ = 16+0+1 = 17
+Equations:
+  6α₁ + 4α₂ + 9α₃  = −1
+  4α₁ + 6α₂ + 9α₃  = −1
+  9α₁ + 9α₂ + 17α₃ = +1
+Subtract the first two: 2α₁ − 2α₂ = 0 → α₁ = α₂ = a
+  10a + 9α₃ = −1   and   18a + 17α₃ = 1
+  From the first: α₃ = (−1 − 10a)/9 → 18a + 17(−1 − 10a)/9 = 1
+  162a − 17 − 170a = 9 → −8a = 26 → a = −3.25;  α₃ = (−1 + 32.5)/9 = 3.5
+w̃ = −3.25(2,1,1) − 3.25(2,−1,1) + 3.5(4,0,1)
+  = (−6.5 − 6.5 + 14,  −3.25 + 3.25 + 0,  −3.25 − 3.25 + 3.5) = (1, 0, −3)</div>
+<p class="ans">α₁ = α₂ = −3.25, α₃ = 3.5; w = (1, 0), b = −3; hyperplane x₁ = 3.</p>
+<p class="mean">This matches your notes. The boundary is the vertical line midway between x₁ = 2 and x₁ = 4.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, SVM ML.pdf numerical example (support vectors (2, 0) and (4, 0)), solved with the α method</span></div><div class="body">
+<p class="q">For the SVM ML.pdf data (topic 26, Example 2), confirm the geometric answer using the α method with support vectors s₁ = (2, 0) (negative) and s₂ = (4, 0) (positive).</p>
+<div class="calc">s̃₁ = (2, 0, 1), s̃₂ = (4, 0, 1)
+s̃₁·s̃₁ = 5,  s̃₁·s̃₂ = 9,  s̃₂·s̃₂ = 17
+  5α₁ + 9α₂  = −1
+  9α₁ + 17α₂ = +1
+det = 5×17 − 9×9 = 85 − 81 = 4
+α₁ = (−1×17 − 9×1)/4 = −26/4 = −6.5
+α₂ = (5×1 − 9×(−1))/4 = 14/4 = 3.5
+w̃ = −6.5(2,0,1) + 3.5(4,0,1) = (−13 + 14, 0, −6.5 + 3.5) = (1, 0, −3)</div>
+<p class="ans">Same result: x₁ − 3 = 0, margin 2.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level — October 2025 Q3(b) (6 marks), full solution</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">Positive: (−1, 6), (0, 5), (1, 7), (−2, −6), (0, 7). Negative: (−1, 0), (0, 3), (1, 0), (−2, −1), (2, −1). Design a linear SVM that finds the MMH.</p>
+<div class="gf"><div><b>Note</b><span>As printed, (−2, −6) lies below the negative class and the positive points then surround (−1, 0), so the data are not linearly separable. The intended point is almost certainly (−2, 6) — all other positives have x₂ ≥ 5. State this correction in one line and solve.</span></div></div>
+<div class="calc">Step 1 Plot: positives (with (−2,6)) have x₂ ≥ 5; negatives have x₂ ≤ 3.
+        Closest opposite points: (0, 5) [+] and (0, 3) [−], distance 2.
+Step 2 Support vectors: s₁ = (0, 3) negative, s₂ = (0, 5) positive.
+Step 3 Augment: s̃₁ = (0, 3, 1), s̃₂ = (0, 5, 1)
+        s̃₁·s̃₁ = 0 + 9 + 1 = 10,  s̃₁·s̃₂ = 0 + 15 + 1 = 16,  s̃₂·s̃₂ = 0 + 25 + 1 = 26
+Step 4  10α₁ + 16α₂ = −1
+        16α₁ + 26α₂ = +1
+        det = 260 − 256 = 4
+        α₁ = (−1×26 − 16×1)/4 = −42/4 = −10.5
+        α₂ = (10×1 − 16×(−1))/4 = 26/4 = 6.5
+Step 5 w̃ = −10.5(0, 3, 1) + 6.5(0, 5, 1) = (0, −31.5 + 32.5, −10.5 + 6.5) = (0, 1, −4)
+        Hyperplane: 0·x₁ + 1·x₂ − 4 = 0  →  x₂ = 4
+Step 6 Check: (0,5): +1(5 − 4) = 1 ✓ (SV);  (0,3): −1(3 − 4) = 1 ✓ (SV)
+        (−1,6): 2, (1,7): 3, (0,7): 3, (−2,6): 2 ≥ 1 ✓
+        (−1,0): −1(0 − 4) = 4, (1,0): 4, (−2,−1): 5, (2,−1): 5 ≥ 1 ✓
+        Margin = 2/‖w‖ = 2/1 = 2  (boundaries x₂ = 3 and x₂ = 5)</div>
+<p class="ans">MMH: x₂ = 4 (w = (0, 1), b = −4); support vectors (0, 5) and (0, 3); margin 2. Classify a new point as positive if x₂ &gt; 4.</p>
+<p class="mean">The margin cannot exceed 2, because (0, 3) and (0, 5) are only 2 apart, so x₂ = 4 is optimal. If you keep (−2, −6) as printed, say that the classes overlap and a soft-margin SVM (topic 28) or a kernel would be needed.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting to augment with the bias 1 — then there is no b.</li><li>Using +1 on the right-hand side for a negative support vector.</li><li>Picking support vectors that are not the closest points.</li><li>Not checking the final hyperplane against all points.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Choose SVs → augment with 1 → Σαⱼ(s̃ⱼ·s̃ᵢ) = yᵢ → solve → w̃ = Σαᵢs̃ᵢ = (w, b) → check yᵢ(w·xᵢ+b) ≥ 1. Margin 2/‖w‖.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t26"><span>← Previous · 26</span>Hyperplane, maximum marginal hyperplane, margin and support vectors</a><a class="next" href="#t28"><span>Next → · 28</span>Hard margin vs soft margin (C and slack ξ)</a></nav></article>
+
+<article class="topic" id="t28">
+<div class="th"><span class="tno">28</span><div><h2>Hard margin vs soft margin (C and slack ξ)</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">SVM ML.pdf (Step 4)</span></div></div></div>
+<p class="why">An easy theory variation of Q3, and the honest way to handle Q3's printed data.</p>
+
+<h3>Concept</h3>
+<p>A <b>hard-margin</b> SVM demands every training point be on the correct side with margin ≥ 1. It only works when the data are perfectly separable and is sensitive to a single outlier. A <b>soft-margin</b> SVM allows violations: each point gets a <b>slack variable</b> ξᵢ ≥ 0 measuring how far it falls short.</p>
+<div class="fx">
+<div class="f">Soft margin:  minimise ½‖w‖² + C Σ ξᵢ   subject to  yᵢ(w·xᵢ + b) ≥ 1 − ξᵢ,  ξᵢ ≥ 0</div>
+<div class="f">ξᵢ = max(0, 1 − yᵢ(w·xᵢ + b))   (= hinge loss)</div>
+<div class="d">ξ = 0: correct and outside the margin. 0 &lt; ξ ≤ 1: correct but inside the margin. ξ &gt; 1: misclassified. C: large C punishes violations strongly (narrow margin, risk of overfitting); small C tolerates violations (wide margin, better generalization, risk of underfitting).</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>Hard margin</th><th>Soft margin</th></tr></thead><tbody>
+<tr><td>Assumes</td><td>Perfect separability</td><td>Overlap / noise allowed</td></tr>
+<tr><td>Constraint</td><td>yᵢ(w·xᵢ+b) ≥ 1</td><td>yᵢ(w·xᵢ+b) ≥ 1 − ξᵢ</td></tr>
+<tr><td>Outliers</td><td>One outlier can wreck or prevent a solution</td><td>Absorbed with a slack cost</td></tr>
+<tr><td>Hyperparameter</td><td>None</td><td>C</td></tr>
+<tr><td>Use</td><td>Clean, theoretical data</td><td>Real-world data</td></tr></tbody></table></div>
+
+<div class="sim" id="sim-t28-1" data-sim="svm" data-title="Why Q3 as printed needs a soft margin" data-desc="With (−2, −6) in the positive class, try every angle: some point always lands on the wrong side." data-opts='{"data": "printed"}'><p class="sim-desc">Interactive simulator: Why Q3 as printed needs a soft margin (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">With w = (1, −1), b = 0, compute yᵢ(w·xᵢ + b) and the slack for: (3, 1) +1; (2, 1.5) +1; (1, 0.2) +1; (0, 2) −1; (1, 0.5) −1. Classify each point's situation.</p>
+<div class="calc">(3,1)+:    1×(3 − 1) = 2.0    ξ = 0     outside margin, correct
+(2,1.5)+:  1×(0.5)   = 0.5    ξ = 0.5   inside margin, correct
+(1,0.2)+:  1×(0.8)   = 0.8    ξ = 0.2   inside margin, correct
+(0,2)−:   −1×(−2)    = 2.0    ξ = 0     outside margin, correct
+(1,0.5)−: −1×(0.5)   = −0.5   ξ = 1.5   misclassified (ξ > 1)
+Σξ = 0 + 0.5 + 0.2 + 0 + 1.5 = 2.2</div>
+<p class="ans">Slacks 0, 0.5, 0.2, 0, 1.5 (total 2.2); only (1, 0.5) is misclassified.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Two candidate hyperplanes for the same data: H₁ has ‖w‖ = 2 and Σξ = 0.5; H₂ has ‖w‖ = 0.8 and Σξ = 2.0. Which does the soft-margin SVM choose when C = 1 and when C = 10? Give each margin width.</p>
+<div class="calc">Objective = ½‖w‖² + CΣξ
+C = 1:   H₁ = ½(4) + 0.5 = 2.5      H₂ = ½(0.64) + 2.0 = 2.32  → H₂
+C = 10:  H₁ = 2 + 5 = 7.0           H₂ = 0.32 + 20 = 20.32    → H₁
+Margins: H₁ = 2/2 = 1.0;  H₂ = 2/0.8 = 2.5</div>
+<p class="ans">C = 1 picks H₂ (wide margin 2.5, more violations); C = 10 picks H₁ (narrow margin 1.0, fewer violations).</p>
+<p class="mean">C is the trade-off dial between margin width and training errors — the SVM's counterpart of λ in regularization (C behaves like 1/λ).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem built on October 2025 Q3 data</span></div><div class="body">
+<p class="q">Using Q3's data exactly as printed (with (−2, −6) positive), evaluate the hyperplane x₂ = 4 (w = (0, 1), b = −4) as a soft-margin solution: compute the slack of every positive point and say what C would have to do.</p>
+<div class="calc">Positives: y(w·x + b) = x₂ − 4
+(−1,6): 2 → ξ = 0   (0,5): 1 → ξ = 0   (1,7): 3 → 0   (0,7): 3 → 0
+(−2,−6): −6 − 4 = −10 → ξ = 1 − (−10) = 11   (misclassified)
+Negatives: all have −(x₂ − 4) ≥ 1 → ξ = 0
+Objective = ½(1)² + C(11) = 0.5 + 11C</div>
+<ol><li>Only (−2, −6) violates the margin, by a lot (ξ = 11).</li><li>With small C the SVM accepts this one error and keeps the clean boundary x₂ = 4 for the other nine points — sensible if (−2, −6) is a data-entry error or outlier.</li><li>With very large C the optimiser would twist the boundary to reduce ξ for that point, at the cost of a much smaller margin for everything else; no straight line can bring every slack to 0.</li></ol>
+<p class="ans">Only (−2, −6) has non-zero slack (ξ = 11). A soft-margin SVM with moderate C keeps x₂ = 4 and treats that point as an outlier.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Saying a larger C gives a wider margin — it gives a narrower one.</li><li>Thinking ξ &gt; 0 always means misclassified; only ξ &gt; 1 does.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Hard: no violations, separable data only. Soft: ½‖w‖² + CΣξ, ξ = max(0, 1 − y f(x)). Large C → narrow margin, few errors (overfit risk); small C → wide margin, more errors.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t27"><span>← Previous · 27</span>SVM numerical: the augmented-vector (α) method</a><a class="next" href="#t29"><span>Next → · 29</span>Non-linear SVM and the kernel trick: linear, polynomial, RBF, sigmoid</a></nav></article>
+
+<article class="topic" id="t29">
+<div class="th"><span class="tno">29</span><div><h2>Non-linear SVM and the kernel trick: linear, polynomial, RBF, sigmoid</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Classification.pdf (slides 128–159) · SVM ML.pdf (Step 6)</span></div></div></div>
+<p class="why">Your notes include a non-linear α-method numerical; kernels are a common theory part.</p>
+
+<h3>Concept</h3>
+<p>When no straight line separates the classes (e.g. one class in a ring around the other), map the data with a non-linear function φ(x) into a higher-dimensional space where a linear separator exists. The <b>kernel trick</b>: the SVM's dual needs only dot products, so we never compute φ(x) explicitly — a <b>kernel function</b> K(x, z) = φ(x)·φ(z) gives the dot product directly in the original space.</p>
+<div class="fx">
+<div class="f">Linear:       K(x, z) = x·z</div>
+<div class="f">Polynomial:   K(x, z) = (x·z + c)^d</div>
+<div class="f">RBF / Gaussian: K(x, z) = exp(−γ ‖x − z‖²)       (γ = 1/(2σ²))</div>
+<div class="f">Sigmoid:      K(x, z) = tanh(κ x·z + c)</div>
+<div class="f">Decision:     f(x) = sign( Σ αᵢyᵢ K(xᵢ, x) + b )</div>
+</div>
+<div class="tw"><table><thead><tr><th>Kernel</th><th>When (from your notes)</th></tr></thead><tbody>
+<tr><td>Linear</td><td>Many features, text classification; fastest</td></tr>
+<tr><td>Polynomial</td><td>Feature interactions; less efficient and less used in practice</td></tr>
+<tr><td>RBF</td><td>Default for non-linear data; very flexible (γ large → wiggly, overfits)</td></tr>
+<tr><td>Sigmoid</td><td>Behaves like a neural network layer; occasional use</td></tr></tbody></table></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">For x = (1, 2), z = (2, 1) compute the linear, polynomial (c = 1, d = 2), RBF (γ = 0.5) and sigmoid (κ = 0.1, c = 0) kernels.</p>
+<div class="calc">x·z = 2 + 2 = 4;   ‖x − z‖² = (−1)² + 1² = 2
+Linear  = 4
+Poly    = (4 + 1)² = 25
+RBF     = exp(−0.5 × 2) = e^(−1) = 0.368
+Sigmoid = tanh(0.1 × 4) = tanh(0.4) = 0.380</div>
+<p class="ans">4, 25, 0.368, 0.380.</p>
+<p class="mean">RBF is a similarity: 1 for identical points, falling toward 0 as they move apart.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Show that K(x, z) = (x·z)² equals φ(x)·φ(z) for φ(x) = (x₁², √2 x₁x₂, x₂²), using x = (1, 2), z = (3, 1).</p>
+<div class="calc">Kernel: x·z = 3 + 2 = 5 → (x·z)² = 25
+φ(x) = (1, √2·2, 4) = (1, 2.828, 4);   φ(z) = (9, √2·3, 1) = (9, 4.243, 1)
+φ(x)·φ(z) = 9 + 2.828×4.243 + 4 = 9 + 12 + 4 = 25 ✓
+In general: (x₁z₁ + x₂z₂)² = x₁²z₁² + 2x₁x₂z₁z₂ + x₂²z₂² = φ(x)·φ(z)</div>
+<p class="ans">Both give 25: the kernel computes a 3-D dot product while working only in 2-D.</p>
+<p class="mean">For degree d on n features, φ has a huge number of terms, yet the kernel costs one dot product and one power — the whole point of the trick.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem in the style of Classification.pdf's non-linear SVM example (slides 145–158)</span></div><div class="body">
+<p class="q">Positive points (2, 2), (2, −2), (−2, −2), (−2, 2) surround negative points (1, 1), (1, −1), (−1, −1), (−1, 1). Use φ(x₁, x₂) = (4 − x₂ + |x₁ − x₂|, 4 − x₁ + |x₁ − x₂|) if √(x₁² + x₂²) &gt; 2, else (x₁, x₂). Map the data, pick support vectors and find the hyperplane in the new space.</p>
+<div class="calc">Positives (norm 2.83 > 2):
+(2,2) → (4−2+0, 4−2+0) = (2, 2)         (2,−2) → (4+2+4, 4−2+4) = (10, 6)
+(−2,−2) → (6, 6)                          (−2,2) → (4−2+4, 4+2+4) = (6, 10)
+Negatives (norm 1.41 ≤ 2): unchanged (1,1), (1,−1), (−1,−1), (−1,1)
+Now separable: closest pair (1,1) [−] and (2,2) [+]
+s̃₁ = (1, 1, 1), s̃₂ = (2, 2, 1)
+s̃₁·s̃₁ = 3, s̃₁·s̃₂ = 5, s̃₂·s̃₂ = 9
+  3α₁ + 5α₂ = −1
+  5α₁ + 9α₂ = +1    det = 27 − 25 = 2
+α₁ = (−9 − 5)/2 = −7;  α₂ = (3 + 5)/2 = 4
+w̃ = −7(1,1,1) + 4(2,2,1) = (1, 1, −3) → x₁′ + x₂′ − 3 = 0
+Check: negatives have x₁′ + x₂′ ≤ 2 → value ≤ −1 ✓; positives ≥ 4 → value ≥ 1 ✓</div>
+<p class="ans">In the mapped space the boundary is x₁′ + x₂′ = 3 with support vectors (1, 1) and (2, 2); margin 2/√2 = 1.414. In the original space it is a closed curve around the inner class.</p>
+<p class="mean">Classification of a new point: map it with φ first, then test the sign of x₁′ + x₂′ − 3.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting to map test points with the same φ.</li><li>Calling the kernel a "mapping"; the kernel is a dot product of mapped vectors.</li><li>Using a large RBF γ and wondering why the model overfits.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Non-linear data → map with φ → linear SVM in new space. Kernel K(x,z) = φ(x)·φ(z) avoids computing φ. Linear x·z; poly (x·z+c)^d; RBF exp(−γ‖x−z‖²); sigmoid tanh(κx·z+c).</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t28"><span>← Previous · 28</span>Hard margin vs soft margin (C and slack ξ)</a><a class="next" href="#t30"><span>Next → · 30</span>Bayes theorem: prior, likelihood, posterior, conditional independence</a></nav></article>
+<h2 class="subhead">C · Naive Bayes</h2>
+
+<article class="topic" id="t30">
+<div class="th"><span class="tno">30</span><div><h2>Bayes theorem: prior, likelihood, posterior, conditional independence</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Naive_Bayes.pdf · Naive Bayes.pptx · Classification.pdf · MLP.pdf</span></div></div></div>
+<p class="why">Not tested in October 2025, but it has its own lecture and a full numerical, and HMMs build on it.</p>
+
+<h3>Concept</h3>
+<p><b>Conditional probability</b> P(A | B) is the probability of A once we know B happened: P(A | B) = P(A ∩ B)/P(B). <b>Bayes' theorem</b> reverses a conditional: it updates a prior belief with evidence.</p>
+<div class="fx">
+<div class="f">P(C | X) = P(X | C) · P(C) / P(X)</div>
+<div class="f">posterior = likelihood × prior / evidence</div>
+<div class="f">Evidence (total probability):  P(X) = Σ_k P(X | C_k) P(C_k)</div>
+<div class="d">In your slides' words: P(C) — class prior; P(X) — predictor prior (evidence); P(X | C) — likelihood; P(C | X) — posterior. For classification, P(X) is the same for every class, so compare only P(X | C)P(C) (the MAP rule).</div>
+</div>
+<ul>
+<li><b>Independent</b> events: P(A ∩ B) = P(A)P(B) (tossing a coin and rolling a die together, as in your notes).</li>
+<li><b>Conditional independence</b> of features given the class: P(x₁, x₂ | C) = P(x₁ | C) P(x₂ | C). This is the "naive" assumption of Naive Bayes (topic 31).</li>
+</ul>
+
+<div class="sim" id="sim-t30-1" data-sim="bayes" data-title="Base-rate icon array" data-desc="1,000 people, one test. Change prevalence, sensitivity and false-positive rate and see why most positives can be false alarms." data-opts='{}'><p class="sim-desc">Interactive simulator: Base-rate icon array (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Of 100 students, 40 attended coaching, 50 passed, and 30 both attended and passed. Find P(pass | coaching) directly and with Bayes' theorem.</p>
+<div class="calc">Directly: P(pass | coaching) = 30/40 = 0.75
+Bayes: P(coaching | pass) = 30/50 = 0.6;  P(pass) = 0.5;  P(coaching) = 0.4
+P(pass | coaching) = 0.6 × 0.5 / 0.4 = 0.75 ✓</div>
+<p class="ans">0.75 both ways.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem (classic base-rate example)</span></div><div class="body">
+<p class="q">A disease affects 1% of people. A test detects it 95% of the time (sensitivity) and gives a false positive 10% of the time for healthy people. A person tests positive. What is the probability they have the disease?</p>
+<div class="gf"><div><b>Given</b><span>P(D) = 0.01, P(+ | D) = 0.95, P(+ | ¬D) = 0.10</span></div><div><b>Find</b><span>P(D | +)</span></div></div>
+<div class="calc">P(+) = P(+|D)P(D) + P(+|¬D)P(¬D) = 0.95×0.01 + 0.10×0.99 = 0.0095 + 0.099 = 0.1085
+P(D | +) = 0.0095 / 0.1085 = 0.0876</div>
+<p class="ans">Only about 8.8%.</p>
+<p class="mean">Because healthy people vastly outnumber sick ones, most positives are false alarms. Ignoring the prior (the base rate) is the most common reasoning error with Bayes' theorem.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Machines A, B and C produce 50%, 30% and 20% of a factory's bolts, with defect rates 2%, 3% and 4%. (i) What fraction of all bolts is defective? (ii) A bolt is defective; find the probability it came from each machine. (iii) Which machine is most likely responsible?</p>
+<div class="calc">(i) P(def) = 0.5×0.02 + 0.3×0.03 + 0.2×0.04 = 0.010 + 0.009 + 0.008 = 0.027
+(ii) P(A | def) = 0.010/0.027 = 0.370
+     P(B | def) = 0.009/0.027 = 0.333
+     P(C | def) = 0.008/0.027 = 0.296    (sum = 1 ✓)</div>
+<p class="ans">(i) 2.7%. (ii) A 0.370, B 0.333, C 0.296. (iii) A — despite having the lowest defect rate, because it makes the most bolts.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Confusing P(X | C) with P(C | X).</li><li>Forgetting the prior, or computing P(X) without the law of total probability.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>P(C|X) = P(X|C)P(C)/P(X). Posterior ∝ likelihood × prior. P(X) = Σ P(X|C)P(C). Conditional independence: P(x₁,x₂|C) = P(x₁|C)P(x₂|C).</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t29"><span>← Previous · 29</span>Non-linear SVM and the kernel trick: linear, polynomial, RBF, sigmoid</a><a class="next" href="#t31"><span>Next → · 31</span>Gaussian, Multinomial and Bernoulli Naive Bayes; Laplace smoothing</a></nav></article>
+
+<article class="topic" id="t31">
+<div class="th"><span class="tno">31</span><div><h2>Gaussian, Multinomial and Bernoulli Naive Bayes; Laplace smoothing</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Naive_Bayes.pdf · Naive Bayes.pptx · Classification.pdf</span></div></div></div>
+<p class="why">Your notes' Ham/Spam example with smoothing is exactly exam-shaped.</p>
+
+<h3>Concept</h3>
+<p>Naive Bayes classifies x = (x₁, …, x_d) by choosing the class with the largest posterior. Estimating P(x₁, …, x_d | C) jointly needs huge data, so it assumes the features are <b>conditionally independent given the class</b>:</p>
+<div class="fx">
+<div class="f">ĉ = argmax_C  P(C) · Πⱼ P(xⱼ | C)</div>
+<div class="f">Gaussian NB (continuous):   P(xⱼ | C) = (1/√(2πσ²_{jC})) · exp(−(xⱼ − μ_{jC})² / (2σ²_{jC}))</div>
+<div class="f">Multinomial NB (word counts):  P(w | C) = count(w, C) / total words in C</div>
+<div class="f">Bernoulli NB (binary present/absent):  P(x | C) = Πⱼ pⱼ^xⱼ (1 − pⱼ)^(1−xⱼ)</div>
+<div class="f">Laplace (add-one) smoothing:  P(w | C) = (count(w, C) + 1) / (total words in C + V)</div>
+<div class="d">V = vocabulary size. Without smoothing, one unseen word gives P = 0 and wipes out the whole product (the "zero-frequency problem"). In practice we add logarithms instead of multiplying tiny numbers.</div>
+</div>
+<div class="tw"><table><thead><tr><th>Advantages</th><th>Disadvantages</th></tr></thead><tbody><tr><td>Very fast; needs little data; handles many features and multi-class problems; works well for text (spam, sentiment)</td><td>The independence assumption is rarely true; probabilities are poorly calibrated; zero-frequency problem without smoothing; Gaussian NB assumes normal features</td></tr></tbody></table></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: course material, Naive_Bayes.pdf (Ham/Spam example)</span></div><div class="body">
+<p class="q">Word counts — Ham (34 words): Dear 8, Visit 2, Invitation 5, Link 2, Friend 6, Hello 5, Discount 0, Money 1, Click 2, Dinner 3. Spam (47 words): Dear 3, Visit 6, Invitation 2, Link 7, Friend 1, Hello 4, Discount 8, Money 7, Click 9, Dinner 0. Priors: 15 of 25 messages are Ham, 10 Spam. Classify "Dear visit dinner money money money" (a) without smoothing, (b) with Laplace smoothing (V = 10).</p>
+<div class="calc">(a) Ham:  (15/25) × (8/34)(2/34)(3/34)(1/34)³ = 0.6 × 3.107×10⁻⁸ = 1.864×10⁻⁸
+    Spam: (10/25) × (3/47)(6/47)(0/47)(7/47)³ = 0   ← "dinner" never appears in spam
+    → Ham (only because of a zero)
+(b) Ham:  (9/44)(3/44)(4/44)(2/44)³ = 1.19×10⁻⁷;  × 0.6 = 7.14×10⁻⁸
+    Spam: (4/57)(7/57)(1/57)(8/57)³ = 4.18×10⁻⁷;  × 0.4 = 1.67×10⁻⁷
+    → Spam (1.67×10⁻⁷ > 7.14×10⁻⁸)</div>
+<p class="ans">Without smoothing: Ham (forced by a zero count). With Laplace smoothing: Spam.</p>
+<p class="mean">"Money" three times is strong spam evidence, but the single zero count for "dinner" hid it. Smoothing removes the veto of an unseen word. (Your notes show the smoothed Ham value before multiplying by its prior, 1.19×10⁻⁷.)</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Tom M. Mitchell, <i>Machine Learning</i> (1997), §6.9.1, PlayTennis data (Table 3.2), <a href="http://www.cs.cmu.edu/~tom/mlbook.html">cs.cmu.edu/~tom/mlbook.html</a></span></div><div class="body">
+<p class="q">Using the 14-day PlayTennis data (9 Yes, 5 No), classify x = (Outlook = Sunny, Temperature = Cool, Humidity = High, Wind = Strong). Counts — Yes: Sunny 2, Cool 3, High 3, Strong 3 (out of 9); No: Sunny 3, Cool 1, High 4, Strong 3 (out of 5).</p>
+<div class="calc">Yes: P(Yes) Π P(xⱼ|Yes) = (9/14)(2/9)(3/9)(3/9)(3/9) = 0.6429 × 0.2222 × 0.3333³ = 0.00529
+No:  P(No)  Π P(xⱼ|No)  = (5/14)(3/5)(1/5)(4/5)(3/5)  = 0.3571 × 0.6 × 0.2 × 0.8 × 0.6 = 0.02057
+Normalised: P(No | x) = 0.02057/(0.02057 + 0.00529) = 0.795</div>
+<p class="ans">PlayTennis = No (posterior ≈ 0.80).</p>
+<p class="mean">Same numbers as Mitchell (0.0053 vs 0.0206).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: Wikipedia, "Naive Bayes classifier", Person classification example, <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">en.wikipedia.org</a></span></div><div class="body">
+<p class="q">Training data (height ft, weight lb, foot size in): Male — (6, 180, 12), (5.92, 190, 11), (5.58, 170, 12), (5.92, 165, 10). Female — (5, 100, 6), (5.5, 150, 8), (5.42, 130, 7), (5.75, 150, 9). Classify (6, 130, 8) with Gaussian Naive Bayes, equal priors, sample variances.</p>
+<div class="calc">Male:   means 5.855, 176.25, 11.25;   variances 0.035033, 122.92, 0.91667
+Female: means 5.4175, 132.5, 7.5;     variances 0.097225, 558.33, 1.6667
+Example for male height: p = 1/√(2π·0.035033) · exp(−(6 − 5.855)²/(2·0.035033))
+                           = 2.1314 × exp(−0.3001) = 2.1314 × 0.7408 = 1.5789
+Male:   p(height) = 1.5789, p(weight) = 5.9881×10⁻⁶, p(foot) = 1.3112×10⁻³
+        numerator = 0.5 × 1.5789 × 5.9881×10⁻⁶ × 1.3112×10⁻³ = 6.1984×10⁻⁹
+Female: p(height) = 0.2235, p(weight) = 0.016789, p(foot) = 0.28669
+        numerator = 0.5 × 0.2235 × 0.016789 × 0.28669 = 5.3778×10⁻⁴</div>
+<p class="ans">Female (5.38×10⁻⁴ ≫ 6.20×10⁻⁹).</p>
+<p class="mean">A density can exceed 1 (male height 1.58) — it is not a probability. Only the comparison between classes matters, so the evidence P(x) is never needed.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting to multiply by the prior.</li><li>Adding 1 to the numerator but forgetting + V in the denominator.</li><li>Treating a Gaussian density value as a probability.</li><li>Using Multinomial NB for continuous features.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>argmax P(C)ΠP(xⱼ|C). Gaussian for continuous, Multinomial for counts, Bernoulli for binary. Laplace: (count+1)/(N+V). Independence assumption = "naive".</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t30"><span>← Previous · 30</span>Bayes theorem: prior, likelihood, posterior, conditional independence</a><a class="next" href="#t32"><span>Next → · 32</span>Markov property, states, initial and transition probabilities, sequence probability</a></nav></article>
+
+<h2 class="subhead">D · Markov Models</h2>
+
+<article class="topic" id="t32">
+<div class="th"><span class="tno">32</span><div><h2>Markov property, states, initial and transition probabilities, sequence probability</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">MLP.pdf (slides 13–15)</span></div></div></div>
+<p class="why">Question 7(b) of October 2025 (4 marks).</p>
+
+<h3>Concept</h3>
+<p>A <b>Markov model (Markov chain)</b> describes a system that moves between a finite set of <b>states</b> over time according to probabilities. Its defining assumption is the <b>Markov property</b> ("memoryless"): the next state depends only on the current state, not on the history.</p>
+<div class="fx">
+<div class="f">Markov property:  P(q_{t+1} | q_t, q_{t−1}, …, q₁) = P(q_{t+1} | q_t)</div>
+<div class="f">Initial probabilities:  πᵢ = P(q₁ = i),   Σπᵢ = 1</div>
+<div class="f">Transition probability matrix (TPM):  a_ij = P(q_{t+1} = j | q_t = i)   (rows = from, columns = to; each row sums to 1)</div>
+<div class="f">Sequence probability:  P(q₁, q₂, …, q_T) = π(q₁) · a(q₁,q₂) · a(q₂,q₃) ⋯ a(q_{T−1},q_T)</div>
+<div class="f">State distribution after n steps:  p_{t+n} = p_t · Aⁿ ;   stationary distribution: π* = π* A</div>
+</div>
+
+<div class="sim" id="sim-t32-1" data-sim="markov" data-title="Weather Markov chain in motion" data-desc="The October 2025 Q7 chain. The weather token hops between states; the day counts settle on the stationary distribution." data-opts='{}'><p class="sim-desc">Interactive simulator: Weather Markov chain in motion (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic — October 2025 Q7(b) (4 marks), full solution</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">States Sunny (S), Cloudy (C), Rainy (R) with π = (0.5, 0.3, 0.2) and TPM rows S: (0.6, 0.3, 0.1), C: (0.4, 0.4, 0.2), R: (0.3, 0.3, 0.4). Compute P(Sunny, Cloudy, Rainy, Rainy) and interpret.</p>
+<div class="gf"><div><b>Formula</b><span>P = π(S) · a(S→C) · a(C→R) · a(R→R), by the Markov property each factor depends only on the previous state.</span></div></div>
+<div class="calc">π(S)   = 0.5
+a(S→C) = 0.3   (row S, column C)
+a(C→R) = 0.2   (row C, column R)
+a(R→R) = 0.4   (row R, column R)
+P = 0.5 × 0.3 × 0.2 × 0.4 = 0.012</div>
+<p class="ans">P(S, C, R, R) = 0.012 (1.2%).</p>
+<p class="mean">Interpretation: under this model only about 1.2% of four-day weather sequences follow exactly Sunny → Cloudy → Rainy → Rainy. The sequence is unlikely mainly because it starts with the rare Sunny→Cloudy and Cloudy→Rainy moves (0.3 and 0.2); once it rains, staying rainy (0.4) is the most likely rainy transition. For comparison, Sunny → Sunny → Sunny → Cloudy has probability 0.5 × 0.6 × 0.6 × 0.3 = 0.054.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, MLP.pdf slides 14–15</span></div><div class="body">
+<p class="q">Two states, Sunny and Rainy, with A = [0.8 0.2; 0.4 0.6]. (i) Today is sunny: probability of rain tomorrow, and two days from now? (ii) If today's weather is unknown with π = (0.6, 0.4), what is tomorrow's distribution?</p>
+<div class="calc">(i) Tomorrow: a(S→R) = 0.2
+    Two days: P(R₂ | S₀) = a(S→S)a(S→R) + a(S→R)a(R→R) = 0.8×0.2 + 0.2×0.6 = 0.16 + 0.12 = 0.28
+    (equivalently the (S, R) entry of A² = [0.72 0.28; 0.56 0.44])
+(ii) p₁ = π A = [0.6×0.8 + 0.4×0.4,  0.6×0.2 + 0.4×0.6] = [0.64, 0.36]</div>
+<p class="ans">(i) 0.2 and 0.28. (ii) Sunny 0.64, Rainy 0.36.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem on the October 2025 chain</span></div><div class="body">
+<p class="q">For the Q7 chain: (i) find the weather distribution on day 2 and day 3; (ii) find the long-run (stationary) distribution; (iii) draw the transition diagram.</p>
+<div class="calc">(i) Day 2: p = πA = [0.5(0.6)+0.3(0.4)+0.2(0.3),  0.5(0.3)+0.3(0.4)+0.2(0.3),  0.5(0.1)+0.3(0.2)+0.2(0.4)]
+            = [0.30+0.12+0.06, 0.15+0.12+0.06, 0.05+0.06+0.08] = [0.48, 0.33, 0.19]
+    Day 3: [0.48(0.6)+0.33(0.4)+0.19(0.3), 0.48(0.3)+0.33(0.4)+0.19(0.3), 0.48(0.1)+0.33(0.2)+0.19(0.4)]
+          = [0.477, 0.333, 0.190]
+(ii) Solve π* = π*A with π_S + π_C + π_R = 1:
+     Column C: π_C = 0.3π_S + 0.4π_C + 0.3π_R → since every column-C entry with S and R is 0.3:
+               0.6π_C = 0.3(π_S + π_R) = 0.3(1 − π_C) → 0.9π_C = 0.3 → π_C = 1/3
+     Column R: π_R = 0.1π_S + 0.2π_C + 0.4π_R → 0.6π_R = 0.1π_S + 0.0667
+               with π_S = 2/3 − π_R: 0.6π_R = 0.0667 − 0.1π_R + 0.0667 → 0.7π_R = 0.1333 → π_R = 0.1905
+     π_S = 1 − 0.3333 − 0.1905 = 0.4762
+     π* = (10/21, 7/21, 4/21) = (0.476, 0.333, 0.190)</div>
+<figure class="fig">
+<svg viewBox="0 0 460 330" role="img" aria-label="Transition diagram for Sunny, Cloudy, Rainy with the probabilities of the October 2025 question">
+<defs><marker id="m32" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>
+<g transform="translate(20,10)" fill="none" stroke="var(--ink-2)" stroke-width="1.6" marker-end="url(#m32)">
+<path d="M122 222Q210 262 298 222"/><path d="M298 198Q210 178 122 198"/><path d="M118 189Q169 156 194 101"/><path d="M182 91Q131 124 106 179"/><path d="M302 189Q251 156 226 101"/><path d="M238 91Q289 124 314 179"/><path d="M60 195C20 175 20 245 60 225"/><path d="M360 195C400 175 400 245 360 225"/><path d="M195 42C175 2 245 2 225 42"/></g>
+<g transform="translate(20,10)"><circle cx="90" cy="210" r="34" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.8"/><circle cx="330" cy="210" r="34" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.8"/><circle cx="210" cy="70" r="34" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.8"/>
+<g font-size="12" text-anchor="middle" style="font-weight:600"><text x="90" y="214" style="fill:var(--ink)">Sunny</text><text x="330" y="214" style="fill:var(--ink)">Cloudy</text><text x="210" y="74" style="fill:var(--ink)">Rainy</text></g>
+<g font-size="11" text-anchor="middle"><text x="210" y="262">0.3</text><text x="210" y="176">0.4</text><text x="176" y="166">0.1</text><text x="120" y="118">0.3</text><text x="244" y="166">0.2</text><text x="300" y="118">0.3</text><text x="14" y="214" text-anchor="end">0.6</text><text x="406" y="214" text-anchor="start">0.4</text><text x="252" y="24" text-anchor="start">0.4</text></g></g>
+</svg>
+<figcaption>Each arrow is a transition probability; the arrows leaving a state add to 1.</figcaption>
+</figure>
+<p class="ans">Day 2: (0.48, 0.33, 0.19); day 3: (0.477, 0.333, 0.190); long run: Sunny 47.6%, Cloudy 33.3%, Rainy 19.0%.</p>
+<p class="mean">The distribution settles within two steps: the starting probabilities are quickly forgotten — a direct consequence of memorylessness.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Dropping the initial probability π(q₁).</li><li>Reading the matrix column → row (a_ij is from row i to column j).</li><li>Adding probabilities along a path instead of multiplying.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Markov property: future depends only on present. Model = (states, π, A). P(sequence) = π(q₁)Πa. n-step: pAⁿ. Stationary: π*A = π*. Rows of A sum to 1.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t31"><span>← Previous · 31</span>Gaussian, Multinomial and Bernoulli Naive Bayes; Laplace smoothing</a><a class="next" href="#t33"><span>Next → · 33</span>HMM: hidden states, observations, A, B, π; Markov model vs HMM; applications</a></nav></article>
+<h2 class="subhead">E · Hidden Markov Models</h2>
+
+<article class="topic" id="t33">
+<div class="th"><span class="tno">33</span><div><h2>HMM: hidden states, observations, A, B, π; Markov model vs HMM; applications</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">MLP.pdf (slides 16–19)</span></div></div></div>
+<p class="why">Question 7(a) of October 2025 (2 marks).</p>
+
+<h3>Concept</h3>
+<p>A plain Markov model assumes we can see the states. Often we cannot: we see only <b>observations</b> that depend on a hidden state (your notes: "the underlying states are hidden, but we can observe outputs generated by those states"). A <b>Hidden Markov Model</b> has two linked sequences: a hidden state sequence that follows a Markov chain, and an observation sequence where each observation depends only on the current hidden state.</p>
+<div class="fx">
+<div class="f">λ = (A, B, π)</div>
+<div class="f">A: transition matrix  a_ij = P(q_{t+1} = j | q_t = i)</div>
+<div class="f">B: emission (observation) matrix  b_j(o) = P(o_t = o | q_t = j)</div>
+<div class="f">π: initial state distribution  πᵢ = P(q₁ = i)</div>
+<div class="f">Joint probability:  P(O, Q) = π(q₁) b_{q₁}(o₁) · Π_{t=2..T} a(q_{t−1}, q_t) b_{q_t}(o_t)</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 0 460 170" role="img" aria-label="HMM architecture: a chain of hidden states q1 to q4 linked by transition arrows, each emitting an observation o1 to o4 below">
+<defs><marker id="m33" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>
+<g stroke="var(--ink-2)" stroke-width="1.6" marker-end="url(#m33)"><path d="M92 45H138"/><path d="M202 45H248"/><path d="M312 45H358"/><path d="M60 72V108"/><path d="M170 72V108"/><path d="M280 72V108"/><path d="M390 72V108"/></g>
+<g fill="var(--surface)" stroke="var(--accent)" stroke-width="2"><circle cx="60" cy="45" r="28"/><circle cx="170" cy="45" r="28"/><circle cx="280" cy="45" r="28"/><circle cx="390" cy="45" r="28"/></g>
+<g fill="var(--surface-2)" stroke="var(--ink-2)"><rect x="38" y="110" width="44" height="36" rx="4"/><rect x="148" y="110" width="44" height="36" rx="4"/><rect x="258" y="110" width="44" height="36" rx="4"/><rect x="368" y="110" width="44" height="36" rx="4"/></g>
+<g font-size="12" text-anchor="middle"><text x="60" y="49" style="fill:var(--ink)">q₁</text><text x="170" y="49" style="fill:var(--ink)">q₂</text><text x="280" y="49" style="fill:var(--ink)">q₃</text><text x="390" y="49" style="fill:var(--ink)">q₄</text><text x="60" y="133" style="fill:var(--ink)">o₁</text><text x="170" y="133" style="fill:var(--ink)">o₂</text><text x="280" y="133" style="fill:var(--ink)">o₃</text><text x="390" y="133" style="fill:var(--ink)">o₄</text></g>
+<g font-size="10"><text x="115" y="36" text-anchor="middle">A</text><text x="225" y="36" text-anchor="middle">A</text><text x="335" y="36" text-anchor="middle">A</text><text x="72" y="94">B</text><text x="182" y="94">B</text><text x="20" y="20">π</text><text x="430" y="40">hidden</text><text x="420" y="132">observed</text></g>
+</svg>
+<figcaption>Hidden states (circles) form a Markov chain through A; each emits a visible observation (squares) through B.</figcaption>
+</figure>
+<div class="tw"><table><thead><tr><th></th><th>Markov model</th><th>Hidden Markov Model</th></tr></thead><tbody>
+<tr><td>States</td><td>Directly observed</td><td>Hidden</td></tr>
+<tr><td>What we see</td><td>The state sequence</td><td>Observations emitted by the states</td></tr>
+<tr><td>Parameters</td><td>π, A</td><td>π, A, B</td></tr>
+<tr><td>Typical question</td><td>P(state sequence)</td><td>P(observations); most likely hidden sequence; learn λ</td></tr>
+<tr><td>Example</td><td>Weather recorded daily</td><td>Weather inferred from umbrellas or ice-cream counts</td></tr></tbody></table></div>
+<p><b>Three classic problems</b> (Rabiner): <b>Evaluation</b> — P(O | λ), solved by the Forward algorithm (topic 34). <b>Decoding</b> — most likely hidden sequence, Viterbi (topic 35). <b>Learning</b> — estimate λ from observations, Baum–Welch (topic 36).</p>
+<p><b>Applications</b>: speech recognition, part-of-speech tagging, named-entity recognition, gene finding and protein sequence analysis, handwriting and gesture recognition, finance regime detection.</p>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: course material, MLP.pdf slides 18–19 (umbrella example)</span></div><div class="body">
+<p class="q">Hidden weather: Sunny, Rainy. π = (0.6, 0.4). Emissions: P(Umbrella | Sunny) = 0.1, P(Umbrella | Rainy) = 0.8. On the first day we observe an umbrella. What is the probability it was rainy?</p>
+<div class="calc">P(U) = P(U|S)P(S) + P(U|R)P(R) = 0.1×0.6 + 0.8×0.4 = 0.06 + 0.32 = 0.38
+P(R | U) = P(U|R)P(R)/P(U) = 0.32/0.38 = 0.842</div>
+<p class="ans">P(Rainy | umbrella) = 0.842.</p>
+<p class="mean">Seeing the umbrella raised the belief in rain from the prior 0.4 to 0.84 — an HMM is Bayes' theorem applied over time.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Jurafsky &amp; Martin, <i>Speech and Language Processing</i> (3rd ed. draft), Appendix A, Fig. A.2 and Eq. A.9, <a href="https://web.stanford.edu/~jurafsky/slp3/A.pdf">web.stanford.edu/~jurafsky/slp3/A.pdf</a></span></div><div class="body">
+<p class="q">Jason Eisner's ice-cream HMM: hidden H (hot), C (cold); π(H) = 0.8, π(C) = 0.2; a(H→H) = 0.6, a(H→C) = 0.4, a(C→H) = 0.5, a(C→C) = 0.5; emissions P(1|H) = 0.2, P(2|H) = 0.4, P(3|H) = 0.4, P(1|C) = 0.5, P(2|C) = 0.4, P(3|C) = 0.1. Compute P(O = 3 1 3, Q = hot hot cold).</p>
+<div class="calc">P(O, Q) = π(H)·a(H→H)·a(H→C) × P(3|H)·P(1|H)·P(3|C)
+        = (0.8 × 0.6 × 0.4) × (0.4 × 0.2 × 0.1)
+        = 0.192 × 0.008 = 0.001536</div>
+<p class="ans">0.001536.</p>
+<p class="mean">This is the probability of one hidden path. P(O) itself sums this over all 2³ = 8 paths — the Forward algorithm does that efficiently (topic 34).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level — October 2025 Q7(a) (2 marks)</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">A speech recognition system is modelled with an HMM. Identify the hidden states and the observations and illustrate how they are related in recognising spoken words.</p>
+<ol>
+<li><b>Hidden states</b>: the linguistic units being spoken — phonemes (or sub-phoneme states), which chain into words. They cannot be observed directly.</li>
+<li><b>Observations</b>: the acoustic signal, cut into short frames (≈10 ms) and converted into feature vectors (e.g. MFCCs).</li>
+<li><b>Relationship</b>: transition probabilities A give how likely one phoneme follows another (e.g. /k/→/æ/→/t/ for "cat"); emission probabilities B give how likely each acoustic frame is when a given phoneme is being spoken. Recognition = decoding: the Viterbi algorithm finds the phoneme (word) sequence most likely to have produced the observed frames.</li>
+</ol>
+<p class="ans">Hidden = phonemes/words; observed = acoustic feature vectors; linked by emission probabilities, sequenced by transition probabilities; decoded with Viterbi.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Calling the words "observations".</li><li>Forgetting B when listing HMM parameters.</li><li>Using emission probabilities in a plain Markov chain question (Q7b had none).</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>HMM = hidden Markov chain + emissions. λ = (A, B, π). Problems: evaluation (Forward), decoding (Viterbi), learning (Baum–Welch). Applications: speech, POS tagging, bioinformatics.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t32"><span>← Previous · 32</span>Markov property, states, initial and transition probabilities, sequence probability</a><a class="next" href="#t34"><span>Next → · 34</span>Evaluation problem: the Forward algorithm</a></nav></article>
+
+<article class="topic" id="t34">
+<div class="th"><span class="tno">34</span><div><h2>Evaluation problem: the Forward algorithm</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr X">From outside sources</span><span class="files">Not in your folder · Jurafsky &amp; Martin App. A</span></div></div></div>
+<p class="why">The natural next step after Q7; computable by hand on a two-state model.</p>
+
+<h3>Concept</h3>
+<p>Evaluation asks: how likely is an observation sequence O under model λ? Summing over every hidden path costs N^T terms (N states, T steps). The <b>Forward algorithm</b> uses dynamic programming: α_t(j) is the probability of seeing the first t observations and being in state j at time t. Each α reuses the previous column, so the cost drops to N²T.</p>
+<div class="fx">
+<div class="f">Initialisation:  α₁(j) = πⱼ · bⱼ(o₁)</div>
+<div class="f">Recursion:       α_t(j) = [ Σᵢ α_{t−1}(i) · a_ij ] · bⱼ(o_t)</div>
+<div class="f">Termination:     P(O | λ) = Σⱼ α_T(j)</div>
+</div>
+
+<div class="sim" id="sim-t34-1" data-sim="hmm" data-title="Forward trellis builder" data-desc="Fill the forward trellis of the umbrella HMM one day at a time. Tap an observation to change it." data-opts='{"mode": "forward"}'><p class="sim-desc">Interactive simulator: Forward trellis builder (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem on the course umbrella model (MLP.pdf)</span></div><div class="body">
+<p class="q">Umbrella model: π = (S 0.6, R 0.4); A = [S→S 0.8, S→R 0.2; R→S 0.4, R→R 0.6]; P(U|S) = 0.1, P(U|R) = 0.8. Find P(U, U).</p>
+<div class="calc">t=1: α₁(S) = 0.6 × 0.1 = 0.06        α₁(R) = 0.4 × 0.8 = 0.32
+t=2: α₂(S) = (0.06×0.8 + 0.32×0.4) × 0.1 = (0.048 + 0.128) × 0.1 = 0.0176
+     α₂(R) = (0.06×0.2 + 0.32×0.6) × 0.8 = (0.012 + 0.192) × 0.8 = 0.1632
+P(U,U) = 0.0176 + 0.1632 = 0.1808</div>
+<p class="ans">P(umbrella on both days) = 0.1808.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Jurafsky &amp; Martin, <i>Speech and Language Processing</i>, App. A, Fig. A.5 (forward trellis for 3 1 3), <a href="https://web.stanford.edu/~jurafsky/slp3/A.pdf">web.stanford.edu/~jurafsky/slp3/A.pdf</a></span></div><div class="body">
+<p class="q">Using the ice-cream HMM (topic 33, Example 2), compute P(3 1 3).</p>
+<div class="calc">t=1 (o=3): α₁(H) = 0.8 × 0.4 = 0.32         α₁(C) = 0.2 × 0.1 = 0.02
+t=2 (o=1): α₂(H) = (0.32×0.6 + 0.02×0.5) × 0.2 = (0.192 + 0.010) × 0.2 = 0.0404
+           α₂(C) = (0.32×0.4 + 0.02×0.5) × 0.5 = (0.128 + 0.010) × 0.5 = 0.069
+t=3 (o=3): α₃(H) = (0.0404×0.6 + 0.069×0.5) × 0.4 = (0.02424 + 0.0345) × 0.4 = 0.023496
+           α₃(C) = (0.0404×0.4 + 0.069×0.5) × 0.1 = (0.01616 + 0.0345) × 0.1 = 0.005066
+P(3 1 3) = 0.023496 + 0.005066 = 0.028562</div>
+<figure class="fig">
+<svg viewBox="0 0 420 170" role="img" aria-label="Forward trellis with H and C rows over three time steps and alpha values in each cell">
+<g stroke="var(--ink-3)" stroke-width="1"><path d="M90 45L210 45M90 45L210 125M90 125L210 45M90 125L210 125M210 45L330 45M210 45L330 125M210 125L330 45M210 125L330 125"/></g>
+<g fill="var(--surface)" stroke="var(--accent)" stroke-width="2"><circle cx="90" cy="45" r="26"/><circle cx="210" cy="45" r="26"/><circle cx="330" cy="45" r="26"/><circle cx="90" cy="125" r="26"/><circle cx="210" cy="125" r="26"/><circle cx="330" cy="125" r="26"/></g>
+<g font-size="10" text-anchor="middle"><text x="90" y="49" style="fill:var(--ink)">.32</text><text x="210" y="49" style="fill:var(--ink)">.0404</text><text x="330" y="49" style="fill:var(--ink)">.0235</text><text x="90" y="129" style="fill:var(--ink)">.02</text><text x="210" y="129" style="fill:var(--ink)">.069</text><text x="330" y="129" style="fill:var(--ink)">.0051</text>
+<text x="30" y="49">H</text><text x="30" y="129">C</text><text x="90" y="166">o₁ = 3</text><text x="210" y="166">o₂ = 1</text><text x="330" y="166">o₃ = 3</text><text x="392" y="90">Σ = .0286</text></g>
+</svg>
+<figcaption>Each cell sums the arrows coming into it; the last column sums to P(O).</figcaption>
+</figure>
+<p class="ans">P(3 1 3) = 0.0286. The α₂ values match the book's trellis (0.0404 and 0.069).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">With the umbrella model, compute P(U, U, N) where N = no umbrella (P(N|S) = 0.9, P(N|R) = 0.2). How many multiplications would brute force need compared with the forward algorithm?</p>
+<div class="calc">From Example 1: α₂(S) = 0.0176, α₂(R) = 0.1632
+t=3 (o=N): α₃(S) = (0.0176×0.8 + 0.1632×0.4) × 0.9 = (0.01408 + 0.06528) × 0.9 = 0.071424
+           α₃(R) = (0.0176×0.2 + 0.1632×0.6) × 0.2 = (0.00352 + 0.09792) × 0.2 = 0.020288
+P(U,U,N) = 0.071424 + 0.020288 = 0.091712
+Brute force: N^T = 2³ = 8 paths, each 2T − 1 = 5 multiplications ≈ 40 (+ additions)
+Forward: about N²T = 2²×3 = 12 multiply-add steps</div>
+<p class="ans">P(U, U, N) = 0.0917. The forward algorithm's cost grows linearly in T instead of exponentially.</p>
+<p class="mean">For a speech HMM with 50 states and 100 frames, brute force needs 50¹⁰⁰ paths; forward needs about 250,000 operations.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Multiplying by the emission before summing the incoming arrows (multiply after).</li><li>Using max instead of sum (that is Viterbi).</li><li>Forgetting the final sum over states.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>α₁(j) = πⱼbⱼ(o₁); α_t(j) = [Σᵢ α_{t−1}(i)a_ij] bⱼ(o_t); P(O) = Σⱼ α_T(j). Cost N²T.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t33"><span>← Previous · 33</span>HMM: hidden states, observations, A, B, π; Markov model vs HMM; applications</a><a class="next" href="#t35"><span>Next → · 35</span>Decoding problem: the Viterbi algorithm</a></nav></article>
+
+<article class="topic" id="t35">
+<div class="th"><span class="tno">35</span><div><h2>Decoding problem: the Viterbi algorithm</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr X">From outside sources</span><span class="files">Not in your folder · Jurafsky &amp; Martin App. A</span></div></div></div>
+<p class="why">The second natural follow-up to Q7 and the algorithm behind Q7(a)'s speech recogniser.</p>
+
+<h3>Concept</h3>
+<p>Decoding asks: which hidden state sequence most likely produced O? Viterbi is the Forward algorithm with the sum replaced by a <b>max</b>, plus <b>back-pointers</b> that remember which previous state gave the max, so the best path can be traced backwards.</p>
+<div class="fx">
+<div class="f">Initialisation:  v₁(j) = πⱼ bⱼ(o₁)</div>
+<div class="f">Recursion:       v_t(j) = maxᵢ [ v_{t−1}(i) a_ij ] · bⱼ(o_t);   bt_t(j) = argmaxᵢ [ v_{t−1}(i) a_ij ]</div>
+<div class="f">Termination:     best probability = maxⱼ v_T(j);  q_T* = argmaxⱼ v_T(j)</div>
+<div class="f">Backtrack:       q_{t−1}* = bt_t(q_t*)</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>Forward</th><th>Viterbi</th></tr></thead><tbody><tr><td>Problem</td><td>Evaluation: P(O)</td><td>Decoding: best Q</td></tr><tr><td>Combine</td><td>Sum over previous states</td><td>Max over previous states</td></tr><tr><td>Extra</td><td>—</td><td>Back-pointers</td></tr><tr><td>Result</td><td>A probability</td><td>A state sequence and its probability</td></tr></tbody></table></div>
+
+<div class="sim" id="sim-t35-1" data-sim="hmm" data-title="Viterbi decoder" data-desc="Same model, max instead of sum. After the last day the back-pointers light up the most likely weather." data-opts='{"mode": "viterbi"}'><p class="sim-desc">Interactive simulator: Viterbi decoder (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem on the course umbrella model</span></div><div class="body">
+<p class="q">Umbrella model (topic 34). Observations U, U. Find the most likely weather sequence.</p>
+<div class="calc">t=1: v₁(S) = 0.06,  v₁(R) = 0.32
+t=2: v₂(S) = max(0.06×0.8, 0.32×0.4) × 0.1 = max(0.048, 0.128) × 0.1 = 0.0128   bt = R
+     v₂(R) = max(0.06×0.2, 0.32×0.6) × 0.8 = max(0.012, 0.192) × 0.8 = 0.1536   bt = R
+Best end: R (0.1536) → back-pointer R → path R, R</div>
+<p class="ans">Rainy, Rainy with probability 0.1536.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Jurafsky &amp; Martin, <i>Speech and Language Processing</i>, App. A, Fig. A.8 (Viterbi trellis for 3 1 3), <a href="https://web.stanford.edu/~jurafsky/slp3/A.pdf">web.stanford.edu/~jurafsky/slp3/A.pdf</a></span></div><div class="body">
+<p class="q">For the ice-cream HMM and O = 3 1 3, find the most likely weather sequence.</p>
+<div class="calc">t=1: v₁(H) = 0.8×0.4 = 0.32       v₁(C) = 0.2×0.1 = 0.02
+t=2: v₂(H) = max(0.32×0.6, 0.02×0.5) × 0.2 = 0.192 × 0.2 = 0.0384   bt = H
+     v₂(C) = max(0.32×0.4, 0.02×0.5) × 0.5 = 0.128 × 0.5 = 0.064    bt = H
+t=3: v₃(H) = max(0.0384×0.6, 0.064×0.5) × 0.4 = max(0.02304, 0.032) × 0.4 = 0.0128   bt = C
+     v₃(C) = max(0.0384×0.4, 0.064×0.5) × 0.1 = max(0.01536, 0.032) × 0.1 = 0.0032   bt = C
+Best end H (0.0128) → bt₃(H) = C → bt₂(C) = H → path H, C, H</div>
+<p class="ans">Hot, Cold, Hot with probability 0.0128. The book's v₂ values are 0.038 and 0.064.</p>
+<p class="mean">Intuitive: 3 ice creams suggests hot, 1 suggests cold. Notice it is not simply "best state at each step": v₂(C) &gt; v₂(H) at t = 2 decides the middle state only after t = 3 confirms it.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Umbrella model, O = U, U, N. (i) Find the Viterbi path and its probability. (ii) Compare it with P(O) from topic 34, Example 3.</p>
+<div class="calc">t=1: v₁(S) = 0.06, v₁(R) = 0.32
+t=2: v₂(S) = 0.0128 (bt R),  v₂(R) = 0.1536 (bt R)          [Example 1]
+t=3 (N): v₃(S) = max(0.0128×0.8, 0.1536×0.4) × 0.9 = max(0.01024, 0.06144) × 0.9 = 0.055296  bt R
+         v₃(R) = max(0.0128×0.2, 0.1536×0.6) × 0.2 = max(0.00256, 0.09216) × 0.2 = 0.018432  bt R
+Best end S (0.055296) → bt R → bt R → path R, R, S
+P(O) = 0.091712 → best path share = 0.055296/0.091712 = 0.603</div>
+<p class="ans">Rainy, Rainy, Sunny with probability 0.0553 — about 60% of all the probability of U, U, N.</p>
+<p class="mean">The best single path need not carry most of P(O); here the remaining 40% is spread over the other seven paths.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Picking the best state independently at each time step instead of backtracking.</li><li>Forgetting to store back-pointers.</li><li>Summing instead of taking the max.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Viterbi = Forward with max + back-pointers. v_t(j) = max_i[v_{t−1}(i)a_ij]·bⱼ(o_t). End at the max, trace pointers back.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t34"><span>← Previous · 34</span>Evaluation problem: the Forward algorithm</a><a class="next" href="#t36"><span>Next → · 36</span>Learning problem: the Baum–Welch algorithm</a></nav></article>
+
+<article class="topic" id="t36">
+<div class="th"><span class="tno">36</span><div><h2>Learning problem: the Baum–Welch algorithm</h2>
+<div class="meta"><span class="pr l">Additional</span><span class="sr X">From outside sources</span><span class="files">Not in your folder · Rabiner (1989) tutorial</span></div></div></div>
+<p class="why">Too long to compute fully in a two-hour exam; expect the idea and the steps, perhaps one γ value.</p>
+
+<h3>Concept</h3>
+<p>Learning asks: given only observation sequences, estimate λ = (A, B, π). The hidden states are missing data, so <b>Baum–Welch</b> applies the EM algorithm (topic 42) to HMMs: guess λ, compute expected state usage with the forward and backward variables (E-step), re-estimate λ from those expectations (M-step), repeat until P(O | λ) stops increasing. Each iteration never decreases the likelihood, but it can stop at a local maximum.</p>
+<div class="fx">
+<div class="f">Backward:  β_T(i) = 1;   β_t(i) = Σⱼ a_ij bⱼ(o_{t+1}) β_{t+1}(j)</div>
+<div class="f">State posterior:  γ_t(i) = α_t(i) β_t(i) / P(O)</div>
+<div class="f">Transition posterior:  ξ_t(i, j) = α_t(i) a_ij bⱼ(o_{t+1}) β_{t+1}(j) / P(O)</div>
+<div class="f">M-step:  π̂ᵢ = γ₁(i);   â_ij = Σ_t ξ_t(i,j) / Σ_t γ_t(i)  (t = 1..T−1);   b̂ⱼ(k) = Σ_{t: o_t = k} γ_t(j) / Σ_t γ_t(j)</div>
+</div>
+<p class="note">Reference for the formulas: L. R. Rabiner, "A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition", Proc. IEEE 77(2), 1989.</p>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Write the Baum–Welch algorithm as numbered steps and say how it relates to EM.</p>
+<ol><li>Initialise λ = (A, B, π) (random or informed guess).</li><li>E-step: run Forward (α) and Backward (β); compute γ_t(i) and ξ_t(i, j).</li><li>M-step: re-estimate π, A, B with the ratios above (expected counts ÷ expected totals).</li><li>Compute P(O | λ); if the increase is below a tolerance, stop, else go to step 2.</li></ol>
+<p class="ans">Baum–Welch = EM for HMMs: E-step = expected state/transition counts via forward–backward; M-step = normalised counts.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem on the course umbrella model</span></div><div class="body">
+<p class="q">Umbrella model, O = U, U. Compute the backward values β and the state posteriors γ for both days.</p>
+<div class="calc">α (topic 34): α₁ = (S 0.06, R 0.32);  α₂ = (S 0.0176, R 0.1632);  P(O) = 0.1808
+β₂(S) = β₂(R) = 1
+β₁(S) = a_SS b_S(U) β₂(S) + a_SR b_R(U) β₂(R) = 0.8×0.1 + 0.2×0.8 = 0.08 + 0.16 = 0.24
+β₁(R) = 0.4×0.1 + 0.6×0.8 = 0.04 + 0.48 = 0.52
+Check: Σ πⱼ bⱼ(U) β₁(j) = 0.06×0.24 + 0.32×0.52 = 0.0144 + 0.1664 = 0.1808 ✓
+γ₁(S) = 0.06×0.24/0.1808 = 0.0796     γ₁(R) = 0.32×0.52/0.1808 = 0.9204
+γ₂(S) = 0.0176×1/0.1808 = 0.0973     γ₂(R) = 0.1632/0.1808 = 0.9027</div>
+<p class="ans">γ₁ = (0.080, 0.920), γ₂ = (0.097, 0.903): both days were almost certainly rainy.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem (continues Example 2)</span></div><div class="body">
+<p class="q">Compute ξ₁(i, j) and one M-step re-estimate of π and A from the single sequence U, U. Comment on the result.</p>
+<div class="calc">ξ₁(i,j) = α₁(i) a_ij bⱼ(U) β₂(j) / P(O)
+ξ(S,S) = 0.06×0.8×0.1/0.1808 = 0.0048/0.1808 = 0.0265
+ξ(S,R) = 0.06×0.2×0.8/0.1808 = 0.0096/0.1808 = 0.0531
+ξ(R,S) = 0.32×0.4×0.1/0.1808 = 0.0128/0.1808 = 0.0708
+ξ(R,R) = 0.32×0.6×0.8/0.1808 = 0.1536/0.1808 = 0.8496      (sum = 1 ✓)
+π̂ = γ₁ = (0.080, 0.920)
+â(S→S) = 0.0265/0.0796 = 0.333   â(S→R) = 0.0531/0.0796 = 0.667
+â(R→S) = 0.0708/0.9204 = 0.077   â(R→R) = 0.8496/0.9204 = 0.923
+B: only "U" was observed, so b̂(U) = 1 for both states</div>
+<p class="ans">New π ≈ (0.08, 0.92); new A ≈ [0.333 0.667; 0.077 0.923].</p>
+<p class="mean">With one two-day sequence the model "learns" that it nearly always rains and umbrellas always appear — Baum–Welch needs many long sequences, otherwise it overfits just like any maximum-likelihood method.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Thinking Baum–Welch finds the global optimum (only a local one).</li><li>Mixing γ (one state) with ξ (a pair of consecutive states).</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Learning problem → Baum–Welch = EM. E: forward–backward → γ, ξ. M: π = γ₁, a_ij = Σξ/Σγ, b_j(k) = Σγ[o=k]/Σγ. Repeat; likelihood never decreases; local optimum.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t35"><span>← Previous · 35</span>Decoding problem: the Viterbi algorithm</a><a class="next" href="#t37"><span>Next → · 37</span>Perceptron: neuron model, step function, learning rule and logic gates</a></nav></article>
+<h2 class="subhead">F · Artificial Neural Networks</h2>
+
+<article class="topic" id="t37">
+<div class="th"><span class="tno">37</span><div><h2>Perceptron: neuron model, step function, learning rule and logic gates</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Perceptron_Neural_Networks.pdf</span></div></div></div>
+<p class="why">Question 8 of October 2025 (6 marks).</p>
+
+<h3>Concept</h3>
+<p>A <b>biological neuron</b> receives signals through <b>dendrites</b>, combines them in the cell body, and fires along the <b>axon</b> through <b>synapses</b> if the total exceeds a threshold — "all-or-none" behaviour (your notes). Rosenblatt's <b>perceptron</b> (1958) copies this: inputs xᵢ (dendrites) are multiplied by <b>weights</b> wᵢ (synapse strengths), summed with a <b>bias</b> b (the negative of the threshold), and passed through a <b>step activation</b> (firing).</p>
+<div class="fx">
+<div class="f">Net input:  y = Σᵢ wᵢxᵢ + b</div>
+<div class="f">Step activation:  o = 1 if y ≥ 0, else 0       (Q8's convention)</div>
+<div class="f">Learning rule:  wᵢ ← wᵢ + η (t − o) xᵢ ,   b ← b + η (t − o)</div>
+<div class="d">t = target, o = output, η = learning rate. If o = t nothing changes. If the perceptron said 0 but should say 1, weights of active inputs grow; if it said 1 but should say 0, they shrink. The perceptron convergence theorem: if the data are linearly separable, this rule finds a separating line in a finite number of updates.</div>
+</div>
+<div class="tw"><table><thead><tr><th>Biological</th><th>Artificial</th></tr></thead><tbody><tr><td>Dendrites</td><td>Inputs xᵢ</td></tr><tr><td>Synapse strength</td><td>Weight wᵢ</td></tr><tr><td>Cell body (soma) summation</td><td>Net input Σwᵢxᵢ + b</td></tr><tr><td>Firing threshold</td><td>Bias / activation function</td></tr><tr><td>Axon output</td><td>Output o</td></tr></tbody></table></div>
+<h3>Training algorithm</h3>
+<ol><li>Initialise weights and bias (zeros, small random values, or given).</li><li>For each training pattern: compute y and o.</li><li>If o ≠ t, update every weight and the bias with the rule.</li><li>One pass over all patterns = one epoch (iteration). Repeat until an epoch has no errors (convergence) or a maximum is reached.</li></ol>
+
+<div class="sim" id="sim-t37-1" data-sim="perceptron" data-title="Perceptron trainer" data-desc="Starts from the October 2025 Q8 weights (−3, −1, 1). Step through the patterns and watch the boundary move after each update." data-opts='{"gate": "NAND"}'><p class="sim-desc">Interactive simulator: Perceptron trainer (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic — October 2025 Q8 (6 marks), full solution</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">A perceptron implements NAND: (0,0)→1, (0,1)→1, (1,0)→1, (1,1)→0. w₁ = −3, w₂ = −1, b = 1.0, η = 1, output 1 if y ≥ 0 else 0. (a) Compute y and o for all patterns in the first iteration. (b) Identify misclassifications. (c) Update the weights and bias.</p>
+<div class="tw"><table style="max-width:560px"><thead><tr><th>x₁</th><th>x₂</th><th>y = −3x₁ − x₂ + 1</th><th>o</th><th>t</th><th>Result</th></tr></thead><tbody>
+<tr><td>0</td><td>0</td><td>0 + 0 + 1 = 1</td><td>1</td><td>1</td><td>correct</td></tr>
+<tr><td>0</td><td>1</td><td>0 − 1 + 1 = 0</td><td>1 (0 ≥ 0)</td><td>1</td><td>correct</td></tr>
+<tr class="hl"><td>1</td><td>0</td><td>−3 + 0 + 1 = −2</td><td>0</td><td>1</td><td>misclassified</td></tr>
+<tr><td>1</td><td>1</td><td>−3 − 1 + 1 = −3</td><td>0</td><td>0</td><td>correct</td></tr></tbody></table></div>
+<div class="calc">(c) For (1, 0): t − o = 1 − 0 = 1
+    w₁ = −3 + 1×1×1 = −2
+    w₂ = −1 + 1×1×0 = −1     (x₂ = 0, so w₂ does not change)
+    b  =  1 + 1×1   = 2
+Check with new weights (y = −2x₁ − x₂ + 2):
+    (0,0): 2 → 1 ✓   (0,1): 1 → 1 ✓   (1,0): 0 → 1 ✓   (1,1): −1 → 0 ✓</div>
+<p class="ans">(a) y = 1, 0, −2, −3; o = 1, 1, 0, 0. (b) Only (1, 0) is misclassified. (c) w₁ = −2, w₂ = −1, b = 2 — which now implements NAND correctly.</p>
+<p class="mean">Trap: y = 0 for (0, 1) gives output 1 because the step fires at y ≥ 0. Note that (1,1) is still correct after the update (y = −1), so the perceptron has converged.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Train a perceptron for OR: (0,0)→0, (0,1)→1, (1,0)→1, (1,1)→1, starting from w₁ = 0.2, w₂ = −0.3, b = −0.4, η = 0.5, output 1 if y ≥ 0. Update after each pattern.</p>
+<div class="tw"><table><thead><tr><th>Epoch</th><th>x</th><th>t</th><th class="num">y</th><th>o</th><th>Update → (w₁, w₂, b)</th></tr></thead><tbody>
+<tr><td>1</td><td>(0,0)</td><td>0</td><td class="num">−0.4</td><td>0</td><td>(0.2, −0.3, −0.4)</td></tr>
+<tr class="hl"><td>1</td><td>(0,1)</td><td>1</td><td class="num">−0.7</td><td>0</td><td>w₂ += 0.5, b += 0.5 → (0.2, 0.2, 0.1)</td></tr>
+<tr><td>1</td><td>(1,0)</td><td>1</td><td class="num">0.3</td><td>1</td><td>—</td></tr>
+<tr><td>1</td><td>(1,1)</td><td>1</td><td class="num">0.5</td><td>1</td><td>—</td></tr>
+<tr class="hl"><td>2</td><td>(0,0)</td><td>0</td><td class="num">0.1</td><td>1</td><td>b −= 0.5 → (0.2, 0.2, −0.4)</td></tr>
+<tr class="hl"><td>2</td><td>(0,1)</td><td>1</td><td class="num">−0.2</td><td>0</td><td>→ (0.2, 0.7, 0.1)</td></tr>
+<tr><td>2</td><td>(1,0), (1,1)</td><td>1</td><td class="num">0.3, 1.0</td><td>1</td><td>—</td></tr>
+<tr class="hl"><td>3</td><td>(0,0)</td><td>0</td><td class="num">0.1</td><td>1</td><td>→ (0.2, 0.7, −0.4)</td></tr>
+<tr><td>3</td><td>(0,1)</td><td>1</td><td class="num">0.3</td><td>1</td><td>—</td></tr>
+<tr class="hl"><td>3</td><td>(1,0)</td><td>1</td><td class="num">−0.2</td><td>0</td><td>→ (0.7, 0.7, 0.1)</td></tr>
+<tr><td>3</td><td>(1,1)</td><td>1</td><td class="num">1.5</td><td>1</td><td>—</td></tr>
+<tr class="hl"><td>4</td><td>(0,0)</td><td>0</td><td class="num">0.1</td><td>1</td><td>→ (0.7, 0.7, −0.4)</td></tr>
+<tr><td>4</td><td>others</td><td>1</td><td class="num">0.3, 0.3, 1.0</td><td>1</td><td>—</td></tr>
+<tr><td>5</td><td>all four</td><td></td><td class="num">−0.4, 0.3, 0.3, 1.0</td><td>0,1,1,1</td><td>no errors → converged</td></tr></tbody></table></div>
+<p class="ans">Converges in epoch 5 with w₁ = 0.7, w₂ = 0.7, b = −0.4 (boundary 0.7x₁ + 0.7x₂ = 0.4).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Train a perceptron for AND ((1,1)→1, others →0) from w₁ = w₂ = b = 0 with η = 1 and output 1 if y ≥ 0. Give the weights after every epoch, the final boundary, and explain why the first epoch already changes the bias.</p>
+<div class="calc">Epoch 1: (0,0) y=0 → o=1, t=0 → b = −1;  (0,1) y=−1 ok;  (1,0) y=−1 ok;
+         (1,1) y=−1 → o=0, t=1 → w=(1,1), b=0          end: (1, 1, 0)
+Epoch 2: (0,0) y=0 → wrong → b=−1;  (0,1) y=0 → wrong → w₂=0, b=−2;
+         (1,0) y=−1 ok;  (1,1) y=−1 → wrong → w=(2,1), b=−1   end: (2, 1, −1)
+Epoch 3: (0,0) ok;  (0,1) y=0 wrong → (2,0,−2);  (1,0) y=0 wrong → (1,0,−3);
+         (1,1) y=−2 wrong → (2,1,−2)                          end: (2, 1, −2)
+Epoch 4: (0,0) ok; (0,1) y=−1 ok; (1,0) y=0 wrong → (1,1,−3);
+         (1,1) y=−1 wrong → (2,2,−2)                          end: (2, 2, −2)
+Epoch 5: (0,0) ok; (0,1) y=0 wrong → (2,1,−3); (1,0) y=−1 ok; (1,1) y=0 ok   end: (2, 1, −3)
+Epoch 6: y = −3, −2, −1, 0 → o = 0, 0, 0, 1 → no errors → converged</div>
+<p class="ans">Final w₁ = 2, w₂ = 1, b = −3; boundary 2x₁ + x₂ = 3 separates (1,1) from the rest. Convergence after 6 epochs.</p>
+<p class="mean">With all-zero weights every net input is 0, and the "≥ 0" rule outputs 1, so (0,0) is wrong immediately and the bias drops. The boundary found is one of infinitely many valid lines — the perceptron stops at the first one, unlike an SVM, which finds the widest.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Treating y = 0 as output 0 when the rule is "≥ 0".</li><li>Forgetting to update the bias (its input is always 1).</li><li>Updating the weight of an input that is 0 (it never changes).</li><li>Stopping after one epoch when the question says "until convergence".</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>y = Σwx + b; o = step(y). Update only on errors: w += η(t−o)x, b += η(t−o). Converges if linearly separable. NAND: (−2, −1, 2) after Q8's update.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t36"><span>← Previous · 36</span>Learning problem: the Baum–Welch algorithm</a><a class="next" href="#t38"><span>Next → · 38</span>Linear separability and the limitations of the perceptron (XOR)</a></nav></article>
+
+<article class="topic" id="t38">
+<div class="th"><span class="tno">38</span><div><h2>Linear separability and the limitations of the perceptron (XOR)</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Perceptron_Neural_Networks.pdf · MLP.pdf</span></div></div></div>
+<p class="why">The standard follow-up to Q8.</p>
+
+<h3>Concept</h3>
+<p>Two classes are <b>linearly separable</b> if one straight line (hyperplane) puts all of one class on one side and all of the other class on the other. A single perceptron's boundary w₁x₁ + w₂x₂ + b = 0 is a straight line, so it can learn only linearly separable problems. AND, OR, NAND and NOR are separable; <b>XOR</b> and XNOR are not. Minsky and Papert's 1969 book <i>Perceptrons</i> made this limitation famous and slowed neural-network research until multi-layer networks and backpropagation (1986).</p>
+<p><b>Limitations of a single-layer perceptron</b> (your MLP notes): cannot solve non-linearly separable problems; output is only binary (no probability); sensitive to input scaling; basic form handles only two classes; never converges on non-separable data (the weights cycle).</p>
+
+<div class="sim" id="sim-t38-1" data-sim="perceptron" data-title="The perceptron vs XOR" data-desc="No straight line separates XOR, so training never settles: the boundary keeps jumping for 20 epochs." data-opts='{"gate": "XOR"}'><p class="sim-desc">Interactive simulator: The perceptron vs XOR (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem (standard proof)</span></div><div class="body">
+<p class="q">Prove that no single perceptron (output 1 if w₁x₁ + w₂x₂ + b ≥ 0) can compute XOR: (0,0)→0, (0,1)→1, (1,0)→1, (1,1)→0.</p>
+<div class="calc">Required:
+(0,0)→0:  b < 0                     … (1)
+(0,1)→1:  w₂ + b ≥ 0                … (2)
+(1,0)→1:  w₁ + b ≥ 0                … (3)
+(1,1)→0:  w₁ + w₂ + b < 0           … (4)
+Add (2) and (3): w₁ + w₂ + 2b ≥ 0  →  w₁ + w₂ + b ≥ −b
+From (1), −b > 0, so w₁ + w₂ + b > 0 — contradicts (4).</div>
+<p class="ans">No weights satisfy all four conditions, so XOR is not linearly separable.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Show that a two-layer network of step units solves XOR with h₁ = step(x₁ + x₂ − 0.5), h₂ = step(−x₁ − x₂ + 1.5), o = step(h₁ + h₂ − 1.5).</p>
+<div class="tw"><table style="max-width:520px"><thead><tr><th>x₁</th><th>x₂</th><th>h₁ (OR)</th><th>h₂ (NAND)</th><th>h₁ + h₂ − 1.5</th><th>o (AND)</th><th>XOR</th></tr></thead><tbody>
+<tr><td>0</td><td>0</td><td>0 (−0.5)</td><td>1 (1.5)</td><td>−0.5</td><td>0</td><td>0</td></tr>
+<tr><td>0</td><td>1</td><td>1 (0.5)</td><td>1 (0.5)</td><td>0.5</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0.5</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>1 (1.5)</td><td>0 (−0.5)</td><td>−0.5</td><td>0</td><td>0</td></tr></tbody></table></div>
+<p class="ans">XOR = AND(OR, NAND). The hidden layer draws two lines; the output unit combines the regions.</p>
+<p class="mean">This is exactly why hidden layers matter: they transform the inputs into a space where the problem is linearly separable — the same idea as the SVM kernel trick.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">(i) Of the 16 Boolean functions of two inputs, how many can a single perceptron represent? Name the ones it cannot. (ii) What happens if the perceptron learning rule is run on XOR? (iii) List the limitations of the perceptron and how the MLP overcomes each.</p>
+<ol>
+<li>14 of 16. Only XOR and XNOR are not linearly separable (the two "diagonal" patterns).</li>
+<li>The convergence theorem no longer applies: some pattern is always misclassified, so the weights keep changing and cycle forever; training never reaches an error-free epoch.</li>
+<li>Limitations and fixes: linear boundary → hidden layers give non-linear boundaries; hard 0/1 output → sigmoid/softmax outputs give probabilities; step function not differentiable → smooth activations allow gradient descent (backpropagation); two classes only → several output units.</li>
+</ol>
+<p class="ans">14 functions; XOR and XNOR are impossible; the rule cycles on XOR; MLPs with differentiable activations fix the limitations.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Saying "a perceptron cannot learn XOR because of a bad learning rate" — it is impossible for any weights.</li><li>Calling NAND non-separable.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Single perceptron = one straight line → only linearly separable functions. XOR/XNOR impossible (proof by contradiction). Two layers solve XOR: AND(OR, NAND).</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t37"><span>← Previous · 37</span>Perceptron: neuron model, step function, learning rule and logic gates</a><a class="next" href="#t39"><span>Next → · 39</span>Multi-layer perceptron: architecture, forward propagation, backpropagation, activations</a></nav></article>
+
+<article class="topic" id="t39">
+<div class="th"><span class="tno">39</span><div><h2>Multi-layer perceptron: architecture, forward propagation, backpropagation, activations</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">MLP.pdf · Perceptron_Neural_Networks.pdf</span></div></div></div>
+<p class="why">One forward and backward pass is a feasible 6-mark numerical.</p>
+
+<h3>Architecture</h3>
+<p>An <b>MLP</b> has an <b>input layer</b> (one node per feature, no computation), one or more <b>hidden layers</b> of neurons with non-linear activations, and an <b>output layer</b>. It is <b>fully connected and feed-forward</b>: every node feeds every node of the next layer, with no loops.</p>
+<figure class="fig">
+<svg viewBox="0 0 420 220" role="img" aria-label="MLP with 2 inputs, 3 hidden neurons and 1 output, fully connected, with forward and backward arrows">
+<g stroke="var(--ink-3)" stroke-width="1"><path d="M70 70L200 40M70 70L200 110M70 70L200 180M70 150L200 40M70 150L200 110M70 150L200 180M200 40L330 110M200 110L330 110M200 180L330 110"/></g>
+<g fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2"><circle cx="70" cy="70" r="20"/><circle cx="70" cy="150" r="20"/></g>
+<g fill="var(--surface)" stroke="var(--accent)" stroke-width="2"><circle cx="200" cy="40" r="20"/><circle cx="200" cy="110" r="20"/><circle cx="200" cy="180" r="20"/></g>
+<g fill="var(--surface)" stroke="var(--u2)" stroke-width="2"><circle cx="330" cy="110" r="20"/></g>
+<g font-size="12" text-anchor="middle"><text x="70" y="74" style="fill:var(--ink)">x₁</text><text x="70" y="154" style="fill:var(--ink)">x₂</text><text x="200" y="44" style="fill:var(--ink)">h₁</text><text x="200" y="114" style="fill:var(--ink)">h₂</text><text x="200" y="184" style="fill:var(--ink)">h₃</text><text x="330" y="114" style="fill:var(--ink)">o</text>
+<text x="70" y="206" font-size="10">input</text><text x="200" y="214" font-size="10">hidden (W¹, b¹, σ)</text><text x="330" y="150" font-size="10">output (W², b², σ)</text></g>
+<g font-size="11"><text x="372" y="60" style="fill:var(--accent)">forward →</text><text x="352" y="190" style="fill:var(--u2)">← backward (δ)</text></g>
+</svg>
+<figcaption>Forward propagation computes outputs layer by layer; backpropagation sends error signals δ back to compute every weight's gradient.</figcaption>
+</figure>
+<div class="fx">
+<div class="f">Forward:  z⁽¹⁾ = W⁽¹⁾x + b⁽¹⁾,  h = σ(z⁽¹⁾),  z⁽²⁾ = W⁽²⁾h + b⁽²⁾,  ŷ = σ(z⁽²⁾)</div>
+<div class="f">Loss (one output):  E = ½(t − ŷ)²</div>
+<div class="f">Output delta:  δ_o = (ŷ − t) · ŷ(1 − ŷ)              (sigmoid output)</div>
+<div class="f">Hidden delta:  δ_hⱼ = (Σ_k δ_k w_jk) · hⱼ(1 − hⱼ)</div>
+<div class="f">Gradients:  ∂E/∂w_jk = δ_k · (input to that weight);   ∂E/∂b_k = δ_k</div>
+<div class="f">Gradient descent:  w ← w − η ∂E/∂w</div>
+<div class="d">Backpropagation is the chain rule applied layer by layer from the output backward. MLP.pdf: forward pass → compute gradients → backpropagation → update weights; repeat for many epochs.</div>
+</div>
+<div class="tw"><table><thead><tr><th>Activation</th><th>Formula</th><th>Range</th><th>Derivative</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Step</td><td>1 if z ≥ 0 else 0</td><td>{0, 1}</td><td>0 (undefined at 0)</td><td>Perceptron; cannot be trained by gradients</td></tr>
+<tr><td>Sigmoid</td><td>1/(1 + e^−z)</td><td>(0, 1)</td><td>σ(1 − σ)</td><td>Probabilities; vanishing gradient for large |z|</td></tr>
+<tr><td>tanh</td><td>(e^z − e^−z)/(e^z + e^−z)</td><td>(−1, 1)</td><td>1 − tanh²</td><td>Zero-centred</td></tr>
+<tr><td>ReLU</td><td>max(0, z)</td><td>[0, ∞)</td><td>1 if z &gt; 0 else 0</td><td>Default for hidden layers; fast</td></tr>
+<tr><td>Linear</td><td>z</td><td>(−∞, ∞)</td><td>1</td><td>Regression outputs</td></tr></tbody></table></div>
+<p><b>Learning algorithms</b>: batch gradient descent (all samples per update), stochastic GD (one sample per update), mini-batch GD (small batches — the usual choice), plus momentum and adaptive variants (e.g. Adam).</p>
+
+<div class="sim" id="sim-t39-1" data-sim="mlp" data-title="A neural network learns XOR" data-desc="A 2–3–1 sigmoid network trained by backpropagation. The background is the network&#x27;s output, so you watch a non-linear boundary form." data-opts='{}'><p class="sim-desc">Interactive simulator: A neural network learns XOR (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A 2-2-1 network with sigmoid activations: W⁽¹⁾ = [0.2 0.4; −0.3 0.1], b⁽¹⁾ = (0.1, −0.1), W⁽²⁾ = (0.5, −0.4), b⁽²⁾ = 0.2. Compute the output for x = (1, 0.5).</p>
+<div class="calc">z₁ = 0.2(1) + 0.4(0.5) + 0.1 = 0.5        h₁ = σ(0.5)   = 0.6225
+z₂ = −0.3(1) + 0.1(0.5) − 0.1 = −0.35      h₂ = σ(−0.35) = 0.4134
+z_o = 0.5(0.6225) − 0.4(0.4134) + 0.2 = 0.3113 − 0.1654 + 0.2 = 0.3459
+ŷ = σ(0.3459) = 0.5856</div>
+<p class="ans">ŷ = 0.586.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem (continues Example 1)</span></div><div class="body">
+<p class="q">The target is t = 1 and η = 0.5. Perform one backpropagation step for all weights and biases and show that the error drops.</p>
+<div class="calc">E = ½(1 − 0.5856)² = 0.0859
+δ_o = (ŷ − t)ŷ(1 − ŷ) = (−0.4144)(0.5856)(0.4144) = −0.1006
+∂E/∂W⁽²⁾ = δ_o·h = (−0.1006×0.6225, −0.1006×0.4134) = (−0.0626, −0.0416);  ∂E/∂b⁽²⁾ = −0.1006
+δ_h1 = δ_o·w₁⁽²⁾·h₁(1−h₁) = −0.1006 × 0.5 × 0.2350 = −0.01182
+δ_h2 = δ_o·w₂⁽²⁾·h₂(1−h₂) = −0.1006 × (−0.4) × 0.2425 = 0.00975
+∂E/∂W⁽¹⁾ = δ_h xᵀ: row 1 (−0.01182, −0.00591), row 2 (0.00975, 0.00488)
+Updates (w − 0.5·gradient):
+W⁽²⁾ = (0.5313, −0.3792)    b⁽²⁾ = 0.2503
+W⁽¹⁾ = [0.2059 0.4030; −0.3049 0.0976]    b⁽¹⁾ = (0.1059, −0.1049)
+New forward pass: ŷ = 0.6051 → E = ½(1 − 0.6051)² = 0.0780</div>
+<p class="ans">After one step the output rises from 0.586 to 0.605 and the error falls from 0.0859 to 0.0780.</p>
+<p class="mean">Signs make sense: the output was too low, so weights from strongly active hidden units grew; the hidden unit connected through a negative weight (h₂) had its input weights reduced.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: Matt Mazur, "A Step by Step Backpropagation Example" (2015), <a href="https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/">mattmazur.com</a></span></div><div class="body">
+<p class="q">Inputs i₁ = 0.05, i₂ = 0.10; targets o₁ = 0.01, o₂ = 0.99. Weights w₁ = 0.15, w₂ = 0.20 (into h₁), w₃ = 0.25, w₄ = 0.30 (into h₂), w₅ = 0.40, w₆ = 0.45 (into o₁), w₇ = 0.50, w₈ = 0.55 (into o₂); biases b₁ = 0.35 (hidden), b₂ = 0.60 (output); sigmoid everywhere; E = Σ ½(target − out)²; η = 0.5. Compute the forward pass, total error, ∂E/∂w₅ and the new w₅.</p>
+<div class="calc">net_h1 = 0.15(0.05) + 0.20(0.10) + 0.35 = 0.3775   → out_h1 = 0.593270
+net_h2 = 0.25(0.05) + 0.30(0.10) + 0.35 = 0.3925   → out_h2 = 0.596884
+net_o1 = 0.40(0.593270) + 0.45(0.596884) + 0.60 = 1.105906 → out_o1 = 0.751365
+net_o2 = 0.50(0.593270) + 0.55(0.596884) + 0.60 = 1.224921 → out_o2 = 0.772928
+E_o1 = ½(0.01 − 0.751365)² = 0.274811;   E_o2 = ½(0.99 − 0.772928)² = 0.023560
+E_total = 0.298371
+∂E/∂w₅ = ∂E/∂out_o1 × ∂out_o1/∂net_o1 × ∂net_o1/∂w₅
+       = (0.751365 − 0.01) × 0.751365(1 − 0.751365) × 0.593270
+       = 0.741365 × 0.186816 × 0.593270 = 0.082167
+w₅⁺ = 0.40 − 0.5 × 0.082167 = 0.358916</div>
+<p class="ans">E_total = 0.298371; ∂E/∂w₅ = 0.082167; w₅ becomes 0.358916 — matching Mazur's published values.</p>
+<p class="mean">Mazur continues: w₆⁺ = 0.408666, w₇⁺ = 0.511301, w₈⁺ = 0.561370, w₁⁺ = 0.149781; after one update the error falls to 0.291028, and after 10,000 updates to 0.0000351.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Using the updated output-layer weights when computing hidden deltas — use the old ones.</li><li>Forgetting the derivative ŷ(1 − ŷ) of the sigmoid.</li><li>Dropping the minus sign in w ← w − η∂E/∂w.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>MLP = input + hidden (non-linear) + output, fully connected feed-forward. Forward: z = Wx + b, h = σ(z). Backward: δ_o = (ŷ−t)ŷ(1−ŷ); δ_h = (Σδw)h(1−h); ∂E/∂w = δ·input; w −= η·grad.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t38"><span>← Previous · 38</span>Linear separability and the limitations of the perceptron (XOR)</a><a class="next" href="#t40"><span>Next → · 40</span>Maximum likelihood estimation: likelihood and log-likelihood</a></nav></article>
+<h2 class="subhead">G · Parameter Estimation</h2>
+
+<article class="topic" id="t40">
+<div class="th"><span class="tno">40</span><div><h2>Maximum likelihood estimation: likelihood and log-likelihood</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr X">From outside sources</span><span class="files">Not in your folder</span></div></div></div>
+<p class="why">CO3 (parameter estimation or prediction) carried 6 marks in October 2025.</p>
+
+<h3>Concept</h3>
+<p>A model has unknown parameters θ (a coin's bias, a Gaussian's mean and variance). Having observed data D = (x₁, …, x_n), the <b>likelihood</b> L(θ) = P(D | θ) says how probable the data are for each value of θ. <b>Maximum likelihood estimation (MLE)</b> picks the θ that makes the observed data most probable.</p>
+<div class="fx">
+<div class="f">Likelihood (i.i.d. data):  L(θ) = Πᵢ P(xᵢ | θ)</div>
+<div class="f">Log-likelihood:  ℓ(θ) = ln L(θ) = Σᵢ ln P(xᵢ | θ)</div>
+<div class="f">MLE:  θ̂ = argmax_θ ℓ(θ)  →  solve dℓ/dθ = 0 (check it is a maximum)</div>
+<div class="f">Bernoulli (h heads in n):  p̂ = h/n        Gaussian:  μ̂ = x̄,  σ̂² = (1/n)Σ(xᵢ − x̄)²        Poisson:  λ̂ = x̄</div>
+<div class="d">Why logs? Products of many small numbers underflow, sums do not; logs turn products into sums that are easy to differentiate; ln is increasing, so the maximiser is unchanged. Likelihood is a function of θ for fixed data — not a probability distribution over θ.</div>
+</div>
+<p>Steps: (1) write L(θ); (2) take logs; (3) differentiate and set to zero; (4) solve for θ; (5) check the second derivative is negative. Least squares regression is MLE under Gaussian noise; logistic regression's cross-entropy is the negative log-likelihood.</p>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A coin gives 7 heads in 10 tosses. Write the likelihood, evaluate it at p = 0.5, 0.7 and 0.9, and derive the MLE.</p>
+<div class="calc">L(p) = p⁷(1 − p)³
+L(0.5) = 0.5¹⁰ = 0.000977     L(0.7) = 0.7⁷ × 0.3³ = 0.08235 × 0.027 = 0.002224     L(0.9) = 0.000478
+ℓ(p) = 7 ln p + 3 ln(1 − p)
+dℓ/dp = 7/p − 3/(1 − p) = 0  →  7(1 − p) = 3p  →  7 = 10p  →  p̂ = 0.7
+d²ℓ/dp² = −7/p² − 3/(1−p)² < 0 → maximum ✓</div>
+<p class="ans">p̂ = 0.7 = 7/10, the observed proportion of heads.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Data 2, 4, 4, 4, 5, 5, 7, 9 come from a normal distribution N(μ, σ²). Derive and compute the MLEs of μ and σ².</p>
+<div class="calc">ℓ(μ, σ²) = −(n/2) ln(2πσ²) − (1/(2σ²)) Σ(xᵢ − μ)²
+∂ℓ/∂μ  = (1/σ²) Σ(xᵢ − μ) = 0                 → μ̂ = x̄
+∂ℓ/∂σ² = −n/(2σ²) + Σ(xᵢ − μ)²/(2σ⁴) = 0      → σ̂² = (1/n) Σ(xᵢ − x̄)²
+μ̂ = 40/8 = 5
+Σ(x − 5)² = 9 + 1 + 1 + 1 + 0 + 0 + 4 + 16 = 32
+σ̂² = 32/8 = 4  →  σ̂ = 2</div>
+<p class="ans">μ̂ = 5, σ̂² = 4 (σ̂ = 2).</p>
+<p class="mean">The MLE of the variance divides by n and is slightly biased; the unbiased sample variance divides by n − 1 (32/7 = 4.571). The difference vanishes for large n.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Calls arriving per minute follow a Poisson distribution P(x | λ) = e^(−λ)λ^x / x!. Observed counts: 2, 3, 1, 4, 0. Derive the MLE of λ and compute it. Then predict P(no calls in a minute).</p>
+<div class="calc">L(λ) = Πᵢ e^(−λ) λ^(xᵢ) / xᵢ!
+ℓ(λ) = −nλ + (Σxᵢ) ln λ − Σ ln(xᵢ!)
+dℓ/dλ = −n + (Σxᵢ)/λ = 0  →  λ̂ = Σxᵢ / n = x̄
+d²ℓ/dλ² = −Σxᵢ/λ² < 0 → maximum
+λ̂ = (2 + 3 + 1 + 4 + 0)/5 = 10/5 = 2
+P(x = 0 | λ̂) = e^(−2) = 0.135</div>
+<p class="ans">λ̂ = 2 calls/minute; P(no calls) ≈ 0.135.</p>
+<p class="mean">With only five minutes of data the estimate is uncertain — the motivation for Bayesian estimation (topic 41), which adds a prior.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Adding likelihoods instead of multiplying (or multiplying log-likelihoods instead of adding).</li><li>Calling L(θ) "the probability of θ".</li><li>Dividing by n − 1 when asked for the MLE of σ².</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>L(θ) = ΠP(xᵢ|θ); ℓ = ΣlnP; set dℓ/dθ = 0. Bernoulli p̂ = h/n; Gaussian μ̂ = x̄, σ̂² = Σ(x−x̄)²/n; Poisson λ̂ = x̄. MLE can overfit small samples.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t39"><span>← Previous · 39</span>Multi-layer perceptron: architecture, forward propagation, backpropagation, activations</a><a class="next" href="#t41"><span>Next → · 41</span>Bayesian estimation: prior and posterior; MLE vs Bayesian</a></nav></article>
+
+<article class="topic" id="t41">
+<div class="th"><span class="tno">41</span><div><h2>Bayesian estimation: prior and posterior; MLE vs Bayesian</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr X">From outside sources</span><span class="files">Not in your folder</span></div></div></div>
+<p class="why">Part of CO3 and a classic comparison question.</p>
+
+<h3>Concept</h3>
+<p>MLE treats θ as a fixed unknown number. <b>Bayesian estimation</b> treats θ as a random variable: we start with a <b>prior</b> P(θ) expressing belief before seeing data, then use Bayes' theorem to get the <b>posterior</b> P(θ | D) after seeing data.</p>
+<div class="fx">
+<div class="f">P(θ | D) = P(D | θ) P(θ) / P(D)          posterior ∝ likelihood × prior</div>
+<div class="f">MAP estimate:  θ_MAP = argmax_θ P(D | θ) P(θ)</div>
+<div class="f">Posterior mean:  E[θ | D];   predictive:  P(x_new | D) = ∫ P(x_new | θ) P(θ | D) dθ</div>
+<div class="f">Beta–Binomial:  prior Beta(a, b), h heads, k tails → posterior Beta(a + h, b + k)</div>
+<div class="f">   mean = (a + h)/(a + b + h + k),   MAP = (a + h − 1)/(a + b + h + k − 2)</div>
+<div class="f">Gaussian mean (σ² known), prior N(μ₀, τ²):  1/τ_n² = 1/τ² + n/σ²,   μ_n = τ_n² (μ₀/τ² + n x̄/σ²)</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>MLE</th><th>Bayesian estimation</th></tr></thead><tbody>
+<tr><td>θ is</td><td>Fixed unknown constant</td><td>Random variable with a distribution</td></tr>
+<tr><td>Uses</td><td>Likelihood only</td><td>Likelihood × prior</td></tr>
+<tr><td>Output</td><td>One point estimate</td><td>A full posterior (point estimates: MAP or posterior mean)</td></tr>
+<tr><td>Small data</td><td>Can overfit (e.g. 3 heads in 3 → p̂ = 1)</td><td>Prior regularises toward sensible values</td></tr>
+<tr><td>Large data</td><td colspan="2">Both agree: the likelihood dominates the prior</td></tr>
+<tr><td>Uncertainty</td><td>Not directly</td><td>Built in (posterior spread)</td></tr>
+<tr><td>Cost</td><td>Cheap</td><td>Can need integration</td></tr>
+<tr><td>Link</td><td colspan="2">MAP with a Gaussian prior on weights = Ridge regression; with a Laplace prior = LASSO</td></tr></tbody></table></div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Prior belief about a coin's bias p is Beta(2, 2) (centred on 0.5). We observe 7 heads and 3 tails. Find the posterior, its mean, the MAP estimate, and compare with the MLE.</p>
+<div class="calc">Posterior = Beta(2 + 7, 2 + 3) = Beta(9, 5)
+Posterior mean = 9/(9 + 5) = 9/14 = 0.643
+MAP = (9 − 1)/(9 + 5 − 2) = 8/12 = 0.667
+MLE = 7/10 = 0.700</div>
+<p class="ans">Posterior Beta(9, 5); mean 0.643; MAP 0.667; MLE 0.700.</p>
+<p class="mean">The prior acts like 2 imaginary heads and 2 tails, pulling the estimate toward 0.5.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A coin is one of three types: p = 0.3, 0.5 or 0.8, with prior probabilities 0.25, 0.50, 0.25. Tosses give H, H, T. Find the posterior over types, the MAP type, the MLE type and P(next toss is H).</p>
+<div class="calc">Likelihood p²(1 − p):  0.3 → 0.09×0.7 = 0.063;  0.5 → 0.125;  0.8 → 0.64×0.2 = 0.128
+Prior × likelihood: 0.25×0.063 = 0.01575;  0.5×0.125 = 0.0625;  0.25×0.128 = 0.0320
+Evidence = 0.01575 + 0.0625 + 0.032 = 0.11025
+Posterior: 0.3 → 0.143;  0.5 → 0.567;  0.8 → 0.290
+MLE type = 0.8 (largest likelihood 0.128);  MAP type = 0.5 (largest posterior)
+P(H next) = 0.143×0.3 + 0.567×0.5 + 0.290×0.8 = 0.043 + 0.283 + 0.232 = 0.559</div>
+<p class="ans">Posterior (0.143, 0.567, 0.290); MAP p = 0.5 but MLE p = 0.8; predictive P(H) = 0.559.</p>
+<p class="mean">The data alone slightly favour 0.8, but the prior's preference for a fair coin outweighs three tosses. More data would shift the posterior.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Exam scores are N(μ, σ² = 100). Prior on μ: N(50, 25). Four students score with mean x̄ = 60. Find the posterior of μ, compare with the MLE, and explain what happens as n grows.</p>
+<div class="calc">Posterior precision = 1/τ² + n/σ² = 1/25 + 4/100 = 0.04 + 0.04 = 0.08 → τ_n² = 12.5
+Posterior mean = 12.5 × (50/25 + 4×60/100) = 12.5 × (2 + 2.4) = 55
+MLE = x̄ = 60</div>
+<p class="ans">Posterior N(55, 12.5); MLE 60.</p>
+<p class="mean">The posterior mean is a precision-weighted average of the prior mean (50) and the data mean (60); here they get equal weight (0.04 each). As n grows, n/σ² dominates, the posterior mean → x̄ and its variance → 0: Bayesian and MLE agree with enough data.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting to normalise the posterior (divide by the evidence).</li><li>Confusing MAP (mode of the posterior) with the posterior mean.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Posterior ∝ likelihood × prior. MAP = argmax posterior. Beta(a,b) + h,k → Beta(a+h, b+k). Prior matters for small data; with large data Bayesian ≈ MLE.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t40"><span>← Previous · 40</span>Maximum likelihood estimation: likelihood and log-likelihood</a><a class="next" href="#t42"><span>Next → · 42</span>Expectation–Maximization (EM): E-step, M-step, applications</a></nav></article>
+
+<article class="topic" id="t42">
+<div class="th"><span class="tno">42</span><div><h2>Expectation–Maximization (EM): E-step, M-step, applications</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr X">From outside sources</span><span class="files">Not in your folder</span></div></div></div>
+<p class="why">Named in the syllabus; usually examined as the steps plus a small two-coin or mixture trace.</p>
+
+<h3>Concept</h3>
+<p>MLE is easy when all variables are observed. When some are <b>hidden (latent)</b> — which coin produced each set of tosses, which Gaussian produced each point, which HMM state produced each observation — the likelihood becomes hard to maximise directly. <b>EM</b> alternates two easy steps:</p>
+<ol>
+<li><b>Initialise</b> parameters θ⁽⁰⁾.</li>
+<li><b>E-step (Expectation)</b>: using the current θ, compute the probability (responsibility) of each hidden value for each data point — a "soft" completion of the missing data.</li>
+<li><b>M-step (Maximization)</b>: re-estimate θ by MLE, treating the responsibilities as fractional counts.</li>
+<li>Repeat until the log-likelihood (or θ) stops changing.</li>
+</ol>
+<div class="fx">
+<div class="f">Gaussian mixture E-step:  r_ik = π_k N(xᵢ | μ_k, σ_k²) / Σ_j π_j N(xᵢ | μ_j, σ_j²)</div>
+<div class="f">M-step:  N_k = Σᵢ r_ik,   μ_k = Σᵢ r_ik xᵢ / N_k,   σ_k² = Σᵢ r_ik (xᵢ − μ_k)² / N_k,   π_k = N_k / n</div>
+<div class="f">N(x | μ, σ²) = (1/√(2πσ²)) exp(−(x − μ)²/(2σ²))</div>
+<div class="d">Properties: the likelihood never decreases from one iteration to the next; it converges to a local (not necessarily global) maximum, so restarts from different initial values help. Applications: Gaussian mixture clustering (soft K-means), Baum–Welch for HMMs (topic 36), missing-data imputation, topic models, image segmentation.</div>
+</div>
+
+<div class="sim" id="sim-t42-1" data-sim="em" data-title="EM fits a Gaussian mixture" data-desc="Data 1, 2, 3, 7, 8, 9 from topic 42. Alternate E-steps (soft assignments) and M-steps (new means, variances, weights); the log-likelihood only goes up." data-opts='{}'><p class="sim-desc">Interactive simulator: EM fits a Gaussian mixture (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A two-component 1-D Gaussian mixture has μ₁ = 2, μ₂ = 5, σ₁² = σ₂² = 4, π₁ = π₂ = 0.5. Do the E-step for the point x = 3.</p>
+<div class="calc">1/√(2π·4) = 1/√25.133 = 0.19947
+N(3 | 2, 4) = 0.19947 × exp(−(1)²/8) = 0.19947 × 0.8825 = 0.17603
+N(3 | 5, 4) = 0.19947 × exp(−(2)²/8) = 0.19947 × 0.6065 = 0.12098
+Weighted: 0.5 × 0.17603 = 0.08802;  0.5 × 0.12098 = 0.06049;  sum = 0.14851
+r₁ = 0.08802/0.14851 = 0.593;  r₂ = 0.407</div>
+<p class="ans">x = 3 belongs 59.3% to component 1 and 40.7% to component 2.</p>
+<p class="mean">Unlike K-means' hard assignment, EM splits the point between clusters according to probability.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: Do &amp; Batzoglou, "What is the expectation maximization algorithm?", <i>Nature Biotechnology</i> 26, 897–899 (2008), <a href="https://www.nature.com/articles/nbt1406">nature.com/articles/nbt1406</a>; numbers also in the walkthrough at <a href="https://dev.to/berkan_sesen/the-em-algorithm-an-intuitive-guide-with-the-coin-toss-example-4ldh">dev.to</a></span></div><div class="body">
+<p class="q">Two coins A and B with unknown biases. Five sets of 10 tosses were made, each with one coin, but we do not know which: HTTTHHTHTH (5 H), HHHHTHHHHH (9 H), HTHHHHHTHH (8 H), HTHTTTHHTT (4 H), THHHTHHHTH (7 H). Start from θ_A = 0.6, θ_B = 0.5 and perform one EM iteration.</p>
+<div class="calc">E-step for set 1 (5 H, 5 T):
+  L_A = 0.6⁵ × 0.4⁵ = 0.000796;   L_B = 0.5¹⁰ = 0.000977
+  w_A = 0.000796/(0.000796 + 0.000977) = 0.45,  w_B = 0.55
+  expected counts: A gets 0.45×5 = 2.2 H, 2.2 T;  B gets 2.8 H, 2.8 T
+Same for every set:
+  Set  H   w_A   w_B    A: H    T     B: H    T
+  1    5   0.45  0.55     2.2   2.2      2.8   2.8
+  2    9   0.80  0.20     7.2   0.8      1.8   0.2
+  3    8   0.73  0.27     5.9   1.5      2.1   0.5
+  4    4   0.35  0.65     1.4   2.1      2.6   3.9
+  5    7   0.65  0.35     4.5   1.9      2.5   1.1
+  Totals                 21.3   8.6     11.7   8.4
+M-step:
+  θ_A = 21.3/(21.3 + 8.6) = 0.71
+  θ_B = 11.7/(11.7 + 8.4) = 0.58</div>
+<p class="ans">After one iteration θ_A ≈ 0.71, θ_B ≈ 0.58. Repeating, EM converges to θ_A ≈ 0.80, θ_B ≈ 0.52 after about 10 iterations — as reported in the paper.</p>
+<p class="mean">If we knew which coin made each set (B, A, A, B, A), plain MLE would give θ_A = 24/30 = 0.80 and θ_B = 9/20 = 0.45. EM recovers θ_A without that information.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem (continues Example 1)</span></div><div class="body">
+<p class="q">Data x = 1, 2, 3, 7, 8, 9 and the initial mixture of Example 1. Complete one full EM iteration (E-step for all points, then the M-step) and interpret the change.</p>
+<div class="calc">E-step responsibilities r₁ (r₂ = 1 − r₁):
+  x:   1      2      3      7      8      9
+  r₁: 0.867  0.755  0.593  0.068  0.033  0.016
+M-step:
+  N₁ = 0.867+0.755+0.593+0.068+0.033+0.016 = 2.331;   N₂ = 6 − 2.331 = 3.669
+  μ₁ = (0.867·1 + 0.755·2 + 0.593·3 + 0.068·7 + 0.033·8 + 0.016·9)/2.331 = 5.035/2.331 = 2.160
+  μ₂ = Σ r₂x / N₂ = (30 − 5.035)/3.669 = 24.965/3.669 = 6.804
+  σ₁² = Σ r₁(x − 2.160)² / 2.331 = 2.170;   σ₂² = 6.049
+  π₁ = 2.331/6 = 0.389;   π₂ = 0.611</div>
+<p class="ans">After one iteration: μ = (2.16, 6.80), σ² = (2.17, 6.05), π = (0.39, 0.61).</p>
+<p class="mean">Component 2 moved from 5 toward the right-hand group {7, 8, 9}; further iterations pull μ₂ to about 8, μ₁ to about 2 and the weights to 0.5 each.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Assigning each point wholly to one component in the E-step (that is K-means).</li><li>Forgetting to weight the M-step averages by the responsibilities.</li><li>Claiming EM always finds the global maximum.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>EM handles hidden variables. E-step: responsibilities with current θ. M-step: weighted MLE. Repeat; likelihood never decreases; local optimum. Uses: GMMs, Baum–Welch, missing data.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t41"><span>← Previous · 41</span>Bayesian estimation: prior and posterior; MLE vs Bayesian</a><a class="next" href="unit-3.html#t43"><span>Next → · 43</span>K-means: initial centroids, assignment, update, convergence</a></nav></article>
+
+<footer><span>Sources are named under every example. "Course material" means a file in your ML_theory folder. "Practice problem" means a problem written for this guide, with every number checked by calculation.</span>
+<span><a href="index.html">Back to the study guide</a></span></footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var side=document.getElementById('sidenav'), bd=document.getElementById('sn-backdrop'),
+      tog=document.getElementById('sn-toggle'), cls=document.getElementById('sn-close'),
+      wide=window.matchMedia('(min-width:1100px)');
+  function openNav(){side.classList.add('open'); bd.hidden=false; tog.setAttribute('aria-expanded','true'); var f=document.getElementById('navfilter'); if(f) f.focus();}
+  function closeNav(){side.classList.remove('open'); bd.hidden=true; tog.setAttribute('aria-expanded','false');}
+  tog.addEventListener('click',function(){side.classList.contains('open')?closeNav():openNav();});
+  cls.addEventListener('click',function(){closeNav(); tog.focus();});
+  bd.addEventListener('click',closeNav);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&side.classList.contains('open')){closeNav();tog.focus();}});
+  side.addEventListener('click',function(e){var a=e.target.closest('a'); if(a && !wide.matches) closeNav();});
+  // filter
+  var f=document.getElementById('navfilter'), empty=document.getElementById('sn-empty');
+  var units=[].slice.call(side.querySelectorAll('.sn-unit')), opened=units.map(function(u){return u.open;});
+  f.addEventListener('input',function(){
+    var q=f.value.trim().toLowerCase(), any=false;
+    units.forEach(function(u,i){
+      var shown=0;
+      u.querySelectorAll('.sn-link').forEach(function(a){var ok=!q||a.textContent.toLowerCase().indexOf(q)>-1; a.hidden=!ok; if(ok) shown++;});
+      u.querySelectorAll('.sn-sec').forEach(function(s){var n=s.nextElementSibling, vis=false; while(n&&n.classList.contains('sn-link')){if(!n.hidden)vis=true; n=n.nextElementSibling;} s.hidden=!vis;});
+      u.hidden=shown===0; if(shown) any=true;
+      u.open=q?shown>0:opened[i];
+    });
+    empty.hidden=any;
+  });
+  // highlight the topic being read
+  var links={}; side.querySelectorAll('.sn-link[data-t]').forEach(function(a){if(!a.classList.contains('other')) links[a.dataset.t]=a;});
+  var current=null;
+  function mark(id){
+    if(current===id||!links[id]) return; if(current&&links[current]) links[current].removeAttribute('aria-current');
+    current=id; var a=links[id]; a.setAttribute('aria-current','true');
+    if(wide.matches){var top=a.offsetTop, h=side.clientHeight; if(top<side.scrollTop+60||top>side.scrollTop+h-60) side.scrollTop=top-h/3;}
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting) mark(e.target.id);});},{rootMargin:'-20% 0px -70% 0px'});
+    document.querySelectorAll('article.topic').forEach(function(t){io.observe(t);});
+  }
+  var h=location.hash.replace('#',''); if(links[h]) mark(h); else { var first=document.querySelector('article.topic'); if(first) mark(first.id); }
+})();
+</script>
+
+<script src="sims.js" defer></script>
+</body>
+</html>

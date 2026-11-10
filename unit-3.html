@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>23CSE301 Unit III Topics</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: textbook chapter — sticky unit nav, topic index, one reading column of topic articles with worked-example boxes */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef1f6; --line:#d9dee7; --grid:#e4e8ef;
+  --ink:#18202e; --ink-2:#4a5466; --ink-3:#6b7486;
+  --accent:#4b3fb5; --accent-soft:#e9e7fb;
+  --u1:#2a78d6; --u2:#eb6834; --u3:#1baf7a;
+  --p-high:#d03b3b; --p-mid:#ec835a; --p-low:#fab219;
+  --ans-bg:#e8f4ec; --ans-line:#2f8f4e;
+  --pos:#4b3fb5; --neg:#4a5466;
+  --f-display:"Zilla Slab", "Rockwell", Georgia, serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+    --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+    --accent:#9d93f0; --accent-soft:#2a2650;
+    --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+    --ans-bg:#17301f; --ans-line:#4cb36c;
+    --pos:#9d93f0; --neg:#b4bccb;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+  --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+  --accent:#9d93f0; --accent-soft:#2a2650;
+  --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+  --ans-bg:#17301f; --ans-line:#4cb36c;
+  --pos:#9d93f0; --neg:#b4bccb;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.62;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 72px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--surface)}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(1.9rem,4.6vw,2.7rem);font-weight:700}
+h2{font-size:1.6rem;font-weight:700}
+h3{font-size:1.12rem;font-weight:600;margin-top:6px}
+p{margin:0}
+a{color:var(--accent)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.topnav{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)))}
+.topnav .wrap{display:flex;gap:4px 18px;flex-wrap:wrap;align-items:center;padding:10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px))}
+.topnav strong{font-family:var(--f-mono);font-size:.82rem;margin-right:auto}
+.topnav a{font-size:.92rem;text-decoration:none;color:var(--ink-2)}
+.topnav a[aria-current="page"]{color:var(--accent);font-weight:600}
+header.hero{padding-block:36px 18px;display:grid;gap:12px}
+.lede{color:var(--ink-2);max-width:66ch}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.toc ol{margin:0;padding:0;list-style:none;columns:2 300px;column-gap:28px}
+.toc li{break-inside:avoid;padding:3px 0;font-size:.94rem;display:flex;gap:8px;align-items:baseline}
+.toc li .n{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-3);min-width:22px}
+.toc a{text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.86rem;color:var(--ink-2)}
+.subhead{margin-top:44px;padding-bottom:6px;border-bottom:2px solid var(--ink);font-family:var(--f-mono);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+article.topic{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 22px 18px;display:grid;gap:14px;scroll-margin-top:64px;min-width:0}
+.th{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.tno{font-family:var(--f-display);font-size:2.2rem;font-weight:700;line-height:1;color:var(--ink-3)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:6px}
+.pr{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:1px 9px 1px 7px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.pr::before{content:"";width:9px;height:9px;border-radius:50%}
+.pr.h::before{background:var(--p-high)} .pr.m::before{background:var(--p-mid)} .pr.l::before{background:var(--p-low)}
+.sr{font-family:var(--f-mono);font-size:.72rem;font-weight:600;border-radius:4px;padding:1px 6px;white-space:nowrap}
+.sr.M{background:var(--accent-soft);color:var(--accent)} .sr.P{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--ink-3)} .sr.X{color:var(--p-high);border:1px solid var(--p-high)}
+.files{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-3)}
+.why{font-size:.92rem;color:var(--ink-2);border-left:3px solid var(--line);padding-left:10px}
+.topic p,.topic li{max-width:72ch}
+.topic ul,.topic ol{margin:0;padding-left:1.25em;display:grid;gap:4px}
+.fx{background:var(--surface-2);border-radius:8px;padding:12px 14px;display:grid;gap:8px;overflow-x:auto}
+.fx .f{font-family:var(--f-mono);font-size:.92rem;white-space:nowrap;color:var(--ink)}
+.fx .d{font-size:.9rem;color:var(--ink-2)}
+.tw{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:.9rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);font-weight:600;background:var(--surface-2)}
+td.num,th.num{text-align:right}
+tr.hl td{background:var(--accent-soft)}
+figure.fig{margin:0;display:grid;gap:6px;justify-items:center;background:var(--surface-2);border-radius:8px;padding:12px}
+figure.fig figcaption{font-size:.84rem;color:var(--ink-2);max-width:62ch;text-align:center}
+svg{display:block;max-width:100%;height:auto}
+svg text{font-family:var(--f-mono);fill:var(--ink-2)}
+section.ex{border:1px solid var(--line);border-radius:10px;overflow:hidden;display:grid}
+.exh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;padding:9px 14px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.lvl{font-family:var(--f-mono);font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.lvl.b{color:var(--u3)} .lvl.i{color:var(--u1)} .lvl.e{color:var(--p-high)}
+.src{font-size:.82rem;color:var(--ink-2)}
+.ex .body{padding:14px;display:grid;gap:10px;min-width:0}
+.q{font-weight:600}
+.gf{display:grid;gap:4px;font-size:.94rem}
+.gf div{display:grid;grid-template-columns:78px 1fr;gap:10px}
+.gf b{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);padding-top:3px;font-weight:600}
+.calc{font-family:var(--f-mono);font-size:.88rem;background:var(--surface-2);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre;line-height:1.55}
+.ans{background:var(--ans-bg);border-left:4px solid var(--ans-line);border-radius:6px;padding:9px 12px;font-weight:600}
+.mean{font-size:.94rem;color:var(--ink-2)}
+.pit,.rev{border-radius:8px;padding:12px 14px;display:grid;gap:6px;font-size:.94rem}
+.pit{border:1.5px solid var(--p-high)}
+.pit > b{color:var(--p-high);font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.rev{background:var(--accent-soft)}
+.rev > b{color:var(--accent);font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.note{font-size:.88rem;color:var(--ink-2)}
+.toplink{font-size:.84rem;justify-self:end}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-3);display:grid;gap:6px}
+@media (max-width:640px){ article.topic{padding:16px 14px} .gf div{grid-template-columns:1fr;gap:0} .tno{font-size:1.7rem} body{font-size:16px} }
+
+/* navigation panel */
+[hidden]{display:none!important}
+.topnav .wrap{max-width:1320px}
+.layout{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:36px}
+.layout > main{min-width:0}
+.sn-toggle{display:inline-flex;align-items:center;gap:6px;font:600 .86rem var(--f-body);color:var(--surface);background:var(--accent);border:0;border-radius:6px;padding:5px 11px;cursor:pointer}
+.sn-toggle:focus-visible,.sn-close:focus-visible,.sn-link:focus-visible,#navfilter:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sidenav{background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:10px;padding:14px 12px 18px;overflow-y:auto;overscroll-behavior:contain;
+  position:fixed;z-index:30;top:0;bottom:0;left:0;width:min(330px,88vw);
+  padding-top:calc(14px + env(safe-area-inset-top, 0px));padding-bottom:calc(18px + env(safe-area-inset-bottom, 0px));padding-left:calc(12px + env(safe-area-inset-left, 0px));
+  transform:translateX(-105%);transition:transform .2s ease;visibility:hidden}
+.sidenav.open{transform:none;visibility:visible;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.sn-backdrop{position:fixed;inset:0;z-index:25;background:rgba(10,12,20,.45)}
+.sn-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sn-close{background:none;border:1px solid var(--line);border-radius:6px;color:var(--ink-2);font-size:.9rem;padding:3px 9px;cursor:pointer}
+#navfilter{width:100%;font:.92rem var(--f-body);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:7px 10px}
+.sn-unit{border-top:1px solid var(--line);padding-top:6px}
+.sn-unit > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:700;font-size:1.02rem;padding:4px 2px}
+.sn-unit > summary::-webkit-details-marker{display:none}
+.sn-unit > summary::after{content:"▸";margin-left:auto;color:var(--ink-3);font-size:.8rem;transition:transform .15s}
+.sn-unit[open] > summary::after{transform:rotate(90deg)}
+.sn-unit small{font-family:var(--f-body);font-weight:400;font-size:.78rem;color:var(--ink-3)}
+.sw{width:11px;height:11px;border-radius:3px;display:inline-block;flex:none}
+.sn-sec{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:9px 4px 3px}
+.sn-link{display:grid;grid-template-columns:20px 9px 1fr;gap:6px;align-items:baseline;padding:4px 6px;border-radius:5px;text-decoration:none;color:var(--ink-2);font-size:.86rem;line-height:1.35}
+.sn-link .n{font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3)}
+.sn-link .pd{width:7px;height:7px;border-radius:50%;align-self:center}
+.pd.h{background:var(--p-high)} .pd.m{background:var(--p-mid)} .pd.l{background:var(--p-low)}
+.sn-link:hover{background:var(--surface-2);color:var(--ink)}
+.sn-link[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.sn-link.other{color:var(--ink-3)}
+.sn-empty{font-size:.86rem;color:var(--ink-3);padding:4px}
+.sn-home{font-size:.86rem;font-weight:600;text-decoration:none;margin-top:4px}
+nav.pn{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px;font-size:.88rem}
+nav.pn a{text-decoration:none;font-weight:600;max-width:48%}
+nav.pn a.next{margin-left:auto;text-align:right}
+nav.pn span{display:block;font-family:var(--f-mono);font-size:.68rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+@media (min-width:1100px){
+  .layout{grid-template-columns:280px minmax(0,1fr)}
+  .sidenav{position:sticky;z-index:auto;top:calc(env(safe-area-inset-top, 0px) + 50px);bottom:auto;align-self:start;width:auto;max-height:calc(100vh - 66px);transform:none;visibility:visible;
+    border:1px solid var(--line);border-radius:10px;margin-top:20px;padding:14px 12px 18px;box-shadow:none}
+  .sn-close,.sn-toggle,.sn-backdrop{display:none!important}
+  .toc{display:none}
+  .wrap.main{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} .sidenav,.sn-unit > summary::after{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topnav" aria-label="Pages"><div class="wrap"><button class="sn-toggle" id="sn-toggle" type="button" aria-controls="sidenav" aria-expanded="false">☰ Topics</button><strong>23CSE301 · ML</strong><a href="index.html">Study guide</a><a href="unit-1.html">Unit I</a><a href="unit-2.html">Unit II</a><a href="unit-3.html" aria-current="page">Unit III</a><a href="lab.html">Simulator Lab</a></div></nav><div class="layout">
+<aside class="sidenav" id="sidenav" aria-label="All topics"><div class="sn-head"><span class="eyebrow">All 52 topics</span><button class="sn-close" id="sn-close" type="button" aria-label="Close topics">✕</button></div><input id="navfilter" type="search" placeholder="Find a topic…" aria-label="Find a topic" autocomplete="off"><details class="sn-unit"><summary><span class="sw" style="background:var(--u1)"></span>Unit I <small>Introduction and Fundamentals</small></summary><div class="sn-sec">A · Introduction to Machine Learning</div><a class="sn-link other" href="unit-1.html#t01" data-t="t01" title="Important"><span class="n">01</span><span class="pd m"></span><span>What ML is and the types of machine learning</span></a><a class="sn-link other" href="unit-1.html#t02" data-t="t02" title="Important"><span class="n">02</span><span class="pd m"></span><span>Features and feature representation</span></a><a class="sn-link other" href="unit-1.html#t03" data-t="t03" title="Important"><span class="n">03</span><span class="pd m"></span><span>Class boundaries and decision boundaries</span></a><a class="sn-link other" href="unit-1.html#t04" data-t="t04" title="Important"><span class="n">04</span><span class="pd m"></span><span>Training, validation and testing; cross-validation</span></a><a class="sn-link other" href="unit-1.html#t05" data-t="t05" title="Very important"><span class="n">05</span><span class="pd h"></span><span>Generalization; underfitting, good fit and overfitting  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t06" data-t="t06" title="Important"><span class="n">06</span><span class="pd m"></span><span>Loss functions and cost functions</span></a><a class="sn-link other" href="unit-1.html#t07" data-t="t07" title="Additional"><span class="n">07</span><span class="pd l"></span><span>Explainability in machine learning</span></a><a class="sn-link other" href="unit-1.html#t08" data-t="t08" title="Additional"><span class="n">08</span><span class="pd l"></span><span>Algorithmic bias</span></a><a class="sn-link other" href="unit-1.html#t09" data-t="t09" title="Additional"><span class="n">09</span><span class="pd l"></span><span>Data privacy and algorithmic privacy</span></a><div class="sn-sec">B · Dimensionality Reduction</div><a class="sn-link other" href="unit-1.html#t10" data-t="t10" title="Important"><span class="n">10</span><span class="pd m"></span><span>Curse of dimensionality  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t11" data-t="t11" title="Important"><span class="n">11</span><span class="pd m"></span><span>Principal Component Analysis (PCA)  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t12" data-t="t12" title="Important"><span class="n">12</span><span class="pd m"></span><span>Linear Discriminant Analysis (LDA)</span></a><a class="sn-link other" href="unit-1.html#t13" data-t="t13" title="Important"><span class="n">13</span><span class="pd m"></span><span>Feature selection: forward, backward and bidirectional</span></a><div class="sn-sec">C · Classification: K-Nearest Neighbour</div><a class="sn-link other" href="unit-1.html#t14" data-t="t14" title="Very important"><span class="n">14</span><span class="pd h"></span><span>KNN algorithm, choosing K and the effect of K  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t15" data-t="t15" title="Very important"><span class="n">15</span><span class="pd h"></span><span>Distance metrics: Euclidean, Manhattan, Minkowski  <span class="simtag">sim</span></span></a><div class="sn-sec">D · Regression</div><a class="sn-link other" href="unit-1.html#t16" data-t="t16" title="Important"><span class="n">16</span><span class="pd m"></span><span>Linear regression: least squares and gradient descent  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t17" data-t="t17" title="Very important"><span class="n">17</span><span class="pd h"></span><span>Logistic regression: sigmoid, odds, log-odds and odds ratio  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t18" data-t="t18" title="Very important"><span class="n">18</span><span class="pd h"></span><span>Regularization: LASSO (L1), Ridge (L2) and the effect of λ  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t19" data-t="t19" title="Very important"><span class="n">19</span><span class="pd h"></span><span>Bias–variance trade-off  <span class="simtag">sim</span></span></a><div class="sn-sec">E · Performance Metrics</div><a class="sn-link other" href="unit-1.html#t20" data-t="t20" title="Important"><span class="n">20</span><span class="pd m"></span><span>Confusion matrix, accuracy, precision, recall, F1, specificity</span></a><a class="sn-link other" href="unit-1.html#t21" data-t="t21" title="Important"><span class="n">21</span><span class="pd m"></span><span>ROC curve and AUC  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-1.html#t22" data-t="t22" title="Important"><span class="n">22</span><span class="pd m"></span><span>Regression metrics: RMSE, MAPE, R² (with MAE and MSE)</span></a></details><details class="sn-unit"><summary><span class="sw" style="background:var(--u2)"></span>Unit II <small>Supervised Learning</small></summary><div class="sn-sec">A · Decision Trees</div><a class="sn-link other" href="unit-2.html#t23" data-t="t23" title="Very important"><span class="n">23</span><span class="pd h"></span><span>Tree structure, entropy, information gain and ID3  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t24" data-t="t24" title="Important"><span class="n">24</span><span class="pd m"></span><span>Gini index (CART) and gain ratio (C4.5)  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t25" data-t="t25" title="Important"><span class="n">25</span><span class="pd m"></span><span>Tree construction and pruning</span></a><div class="sn-sec">B · Support Vector Machines</div><a class="sn-link other" href="unit-2.html#t26" data-t="t26" title="Very important"><span class="n">26</span><span class="pd h"></span><span>Hyperplane, maximum marginal hyperplane, margin and support vectors  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t27" data-t="t27" title="Very important"><span class="n">27</span><span class="pd h"></span><span>SVM numerical: the augmented-vector (α) method</span></a><a class="sn-link other" href="unit-2.html#t28" data-t="t28" title="Important"><span class="n">28</span><span class="pd m"></span><span>Hard margin vs soft margin (C and slack ξ)  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t29" data-t="t29" title="Important"><span class="n">29</span><span class="pd m"></span><span>Non-linear SVM and the kernel trick: linear, polynomial, RBF, sigmoid</span></a><div class="sn-sec">C · Naive Bayes</div><a class="sn-link other" href="unit-2.html#t30" data-t="t30" title="Important"><span class="n">30</span><span class="pd m"></span><span>Bayes theorem: prior, likelihood, posterior, conditional independence  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t31" data-t="t31" title="Important"><span class="n">31</span><span class="pd m"></span><span>Gaussian, Multinomial and Bernoulli Naive Bayes; Laplace smoothing</span></a><div class="sn-sec">D · Markov Models</div><a class="sn-link other" href="unit-2.html#t32" data-t="t32" title="Very important"><span class="n">32</span><span class="pd h"></span><span>Markov property, states, initial and transition probabilities, sequence probability  <span class="simtag">sim</span></span></a><div class="sn-sec">E · Hidden Markov Models</div><a class="sn-link other" href="unit-2.html#t33" data-t="t33" title="Very important"><span class="n">33</span><span class="pd h"></span><span>HMM: hidden states, observations, A, B, π; Markov model vs HMM; applications</span></a><a class="sn-link other" href="unit-2.html#t34" data-t="t34" title="Important"><span class="n">34</span><span class="pd m"></span><span>Evaluation problem: the Forward algorithm  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t35" data-t="t35" title="Important"><span class="n">35</span><span class="pd m"></span><span>Decoding problem: the Viterbi algorithm  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t36" data-t="t36" title="Additional"><span class="n">36</span><span class="pd l"></span><span>Learning problem: the Baum–Welch algorithm</span></a><div class="sn-sec">F · Artificial Neural Networks</div><a class="sn-link other" href="unit-2.html#t37" data-t="t37" title="Very important"><span class="n">37</span><span class="pd h"></span><span>Perceptron: neuron model, step function, learning rule and logic gates  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t38" data-t="t38" title="Important"><span class="n">38</span><span class="pd m"></span><span>Linear separability and the limitations of the perceptron (XOR)  <span class="simtag">sim</span></span></a><a class="sn-link other" href="unit-2.html#t39" data-t="t39" title="Important"><span class="n">39</span><span class="pd m"></span><span>Multi-layer perceptron: architecture, forward propagation, backpropagation, activations  <span class="simtag">sim</span></span></a><div class="sn-sec">G · Parameter Estimation</div><a class="sn-link other" href="unit-2.html#t40" data-t="t40" title="Important"><span class="n">40</span><span class="pd m"></span><span>Maximum likelihood estimation: likelihood and log-likelihood</span></a><a class="sn-link other" href="unit-2.html#t41" data-t="t41" title="Important"><span class="n">41</span><span class="pd m"></span><span>Bayesian estimation: prior and posterior; MLE vs Bayesian</span></a><a class="sn-link other" href="unit-2.html#t42" data-t="t42" title="Important"><span class="n">42</span><span class="pd m"></span><span>Expectation–Maximization (EM): E-step, M-step, applications  <span class="simtag">sim</span></span></a></details><details class="sn-unit" open><summary><span class="sw" style="background:var(--u3)"></span>Unit III <small>Unsupervised and Ensemble Learning</small></summary><div class="sn-sec">A · Clustering</div><a class="sn-link" href="#t43" data-t="t43" title="Very important"><span class="n">43</span><span class="pd h"></span><span>K-means: initial centroids, assignment, update, convergence  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t44" data-t="t44" title="Important"><span class="n">44</span><span class="pd m"></span><span>Elbow method, WCSS and cluster evaluation</span></a><a class="sn-link" href="#t45" data-t="t45" title="Very important"><span class="n">45</span><span class="pd h"></span><span>Hierarchical clustering: agglomerative, divisive, linkages, dendrograms  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t46" data-t="t46" title="Additional"><span class="n">46</span><span class="pd l"></span><span>Ward&#x27;s method</span></a><div class="sn-sec">B · Ensemble Learning</div><a class="sn-link" href="#t47" data-t="t47" title="Very important"><span class="n">47</span><span class="pd h"></span><span>Base, weak and strong learners; meta-model; voting and averaging  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t48" data-t="t48" title="Important"><span class="n">48</span><span class="pd m"></span><span>Bagging: bootstrap sampling, parallel training, aggregation, variance  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t49" data-t="t49" title="Very important"><span class="n">49</span><span class="pd h"></span><span>Random Forest: bootstrap rows, random features, majority vote</span></a><a class="sn-link" href="#t50" data-t="t50" title="Very important"><span class="n">50</span><span class="pd h"></span><span>Boosting and AdaBoost: error, α, weight update, normalization, final prediction  <span class="simtag">sim</span></span></a><div class="sn-sec">C · Reinforcement Learning</div><a class="sn-link" href="#t51" data-t="t51" title="Important"><span class="n">51</span><span class="pd m"></span><span>Agent, environment, state, action, reward, policy, value function, Q-value  <span class="simtag">sim</span></span></a><a class="sn-link" href="#t52" data-t="t52" title="Important"><span class="n">52</span><span class="pd m"></span><span>Exploration vs exploitation; applications  <span class="simtag">sim</span></span></a></details><p class="sn-empty" id="sn-empty" hidden>No topic matches.</p><a class="sn-home" href="index.html">← Back to the study guide</a></aside><div class="sn-backdrop" id="sn-backdrop" hidden></div>
+<main class="wrap main">
+<header class="hero"><span class="eyebrow">23CSE301 Machine Learning · Unit III</span>
+<h1>Unit III: Unsupervised and Ensemble Learning</h1>
+<p class="lede">Every Unit III topic from the syllabus, taught from the basics: concept, formulas, how it works, then three fully solved examples (basic, intermediate, exam level) with the source of each problem. Theory and hand calculation only. Topics tagged  include an interactive simulator.</p>
+<div class="legend"><span class="pr h">Very important</span><span class="pr m">Important</span><span class="pr l">Additional</span><span class="sr M">In your materials</span><span class="sr P">Partial</span><span class="sr X">From outside sources</span></div>
+</header>
+<nav class="toc" aria-label="Topics in this unit"><span class="eyebrow">10 topics · 30 solved examples</span><ol><li><span class="n">43</span><a href="#t43">K-means: initial centroids, assignment, update, convergence</a></li><li><span class="n">44</span><a href="#t44">Elbow method, WCSS and cluster evaluation</a></li><li><span class="n">45</span><a href="#t45">Hierarchical clustering: agglomerative, divisive, linkages, dendrograms</a></li><li><span class="n">46</span><a href="#t46">Ward's method</a></li><li><span class="n">47</span><a href="#t47">Base, weak and strong learners; meta-model; voting and averaging</a></li><li><span class="n">48</span><a href="#t48">Bagging: bootstrap sampling, parallel training, aggregation, variance</a></li><li><span class="n">49</span><a href="#t49">Random Forest: bootstrap rows, random features, majority vote</a></li><li><span class="n">50</span><a href="#t50">Boosting and AdaBoost: error, α, weight update, normalization, final prediction</a></li><li><span class="n">51</span><a href="#t51">Agent, environment, state, action, reward, policy, value function, Q-value</a></li><li><span class="n">52</span><a href="#t52">Exploration vs exploitation; applications</a></li></ol></nav>
+<h2 class="subhead">A · Clustering</h2>
+
+<article class="topic" id="t43">
+<div class="th"><span class="tno">43</span><div><h2>K-means: initial centroids, assignment, update, convergence</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Clustering (2).pdf</span></div></div></div>
+<p class="why">Question 6(a) of October 2025.</p>
+
+<h3>Concept</h3>
+<p><b>Clustering</b> is unsupervised: group points so that points in the same cluster are more similar to each other than to points in other clusters. Your notes distinguish <b>hard</b> clustering (each point in exactly one cluster) from <b>soft</b> clustering (membership probabilities), and four model families: connectivity (hierarchical), centroid (K-means), distribution (Gaussian mixtures/EM) and density (DBSCAN).</p>
+<p><b>K-means</b> is the standard centroid method. It partitions n points into K clusters by minimising the within-cluster sum of squares (WCSS).</p>
+<ol>
+<li>Choose K and initial centroids (given, random points, or K-means++).</li>
+<li><b>Assignment</b>: compute the distance from every point to every centroid; assign each point to the nearest.</li>
+<li><b>Update</b>: recompute each centroid as the mean of the points assigned to it.</li>
+<li><b>Convergence</b>: repeat 2–3 until no point changes cluster (centroids stop moving) or a maximum number of iterations.</li>
+</ol>
+<div class="fx">
+<div class="f">Centroid:  c_k = (1/|C_k|) Σ_{x ∈ C_k} x</div>
+<div class="f">Objective:  WCSS = Σ_k Σ_{x ∈ C_k} ‖x − c_k‖²</div>
+<div class="d">Each assignment and each update can only lower WCSS, so K-means always converges — but to a local minimum that depends on the initial centroids. Weaknesses: K must be chosen in advance; sensitive to outliers and scaling; assumes roughly spherical, similar-sized clusters.</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>KNN</th><th>K-means</th></tr></thead><tbody>
+<tr><td>Type</td><td>Supervised classification/regression</td><td>Unsupervised clustering</td></tr>
+<tr><td>K means</td><td>Number of neighbours that vote</td><td>Number of clusters</td></tr>
+<tr><td>Training</td><td>None (lazy)</td><td>Iterative centroid updates</td></tr>
+<tr><td>Needs labels</td><td>Yes</td><td>No</td></tr>
+<tr><td>Output</td><td>Label of a query point</td><td>Cluster assignment of every point</td></tr></tbody></table></div>
+
+<div class="sim" id="sim-t43-1" data-sim="kmeans" data-title="K-means animator" data-desc="Assign → update, one step at a time, with the distance table of October 2025 Q6(a). Switch to the course A1–A8 data or random blobs." data-opts='{"data": "paper"}'><p class="sim-desc">Interactive simulator: K-means animator (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic — October 2025 Q6(a) (3 marks), full solution</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">Points P1 (1,7), P2 (5,8), P3 (1,1), P4 (2,8), P5 (6,7), P6 (2,2); initial centres C1 = (1,7), C2 = (5,8), C3 = (1,1). Perform one iteration: clusters and updated centroids.</p>
+<div class="tw"><table style="max-width:560px"><thead><tr><th>Point</th><th class="num">d to C1 (1,7)</th><th class="num">d to C2 (5,8)</th><th class="num">d to C3 (1,1)</th><th>Cluster</th></tr></thead><tbody>
+<tr><td>P1 (1,7)</td><td class="num">0</td><td class="num">√17 = 4.12</td><td class="num">6</td><td>C1</td></tr>
+<tr><td>P2 (5,8)</td><td class="num">4.12</td><td class="num">0</td><td class="num">√65 = 8.06</td><td>C2</td></tr>
+<tr><td>P3 (1,1)</td><td class="num">6</td><td class="num">8.06</td><td class="num">0</td><td>C3</td></tr>
+<tr><td>P4 (2,8)</td><td class="num">√2 = 1.41</td><td class="num">3</td><td class="num">√50 = 7.07</td><td>C1</td></tr>
+<tr><td>P5 (6,7)</td><td class="num">5</td><td class="num">√2 = 1.41</td><td class="num">√61 = 7.81</td><td>C2</td></tr>
+<tr><td>P6 (2,2)</td><td class="num">√26 = 5.10</td><td class="num">√45 = 6.71</td><td class="num">√2 = 1.41</td><td>C3</td></tr></tbody></table></div>
+<div class="calc">Example distance: d(P4, C2) = √[(2−5)² + (8−8)²] = √9 = 3
+C1 = {P1, P4} → ((1+2)/2, (7+8)/2) = (1.5, 7.5)
+C2 = {P2, P5} → ((5+6)/2, (8+7)/2) = (5.5, 7.5)
+C3 = {P3, P6} → ((1+2)/2, (1+2)/2) = (1.5, 1.5)
+Check iteration 2: every point is √0.5 = 0.71 from its own centroid and farther from the others → no changes → stable</div>
+<p class="ans">Clusters {P1, P4}, {P2, P5}, {P3, P6}; centroids (1.5, 7.5), (5.5, 7.5), (1.5, 1.5). These are already the final stable clusters (WCSS = 6 × 0.5 = 3).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, Clustering (2).pdf (A1–A8 example)</span></div><div class="body">
+<p class="q">Points A1 (2,10), A2 (2,5), A3 (8,4), A4 (5,8), A5 (7,5), A6 (6,4), A7 (1,2), A8 (4,9); K = 3 with initial centres A1, A4, A7. Run K-means to convergence.</p>
+<div class="calc">Iteration 1 (distances to (2,10), (5,8), (1,2)):
+A1: 0, 3.61, 8.06 → C1       A2: 5.00, 4.24, 3.16 → C3      A3: 8.49, 5.00, 7.28 → C2
+A4: 3.61, 0, 7.21 → C2       A5: 7.07, 3.61, 6.71 → C2      A6: 7.21, 4.12, 5.39 → C2
+A7: 8.06, 7.21, 0 → C3       A8: 2.24, 1.41, 7.62 → C2
+C1 = {A1} → (2, 10);  C2 = {A3,A4,A5,A6,A8} → (30/5, 30/5) = (6, 6);  C3 = {A2,A7} → (1.5, 3.5)
+Iteration 2: A8 moves to C1 (2.24 vs 3.61) → C1 = {A1,A8} → (3, 9.5); C2 = {A3,A4,A5,A6} → (6.5, 5.25); C3 unchanged
+Iteration 3: A4 moves to C1 (2.50 vs 3.13) → C1 = {A1,A4,A8} → (3.67, 9); C2 = {A3,A5,A6} → (7, 4.33)
+Iteration 4: no changes → converged</div>
+<p class="ans">Final clusters {A1, A4, A8}, {A3, A5, A6}, {A2, A7} with centroids (3.67, 9), (7, 4.33), (1.5, 3.5).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem (classic 1-D exercise)</span></div><div class="body">
+<p class="q">Cluster {2, 4, 10, 12, 3, 20, 30, 11, 25} into K = 2 groups starting from m₁ = 2, m₂ = 4. Break ties toward the first cluster. Show every iteration.</p>
+<div class="calc">It 1: m=(2, 4): 2→1, 3→1 (tie: |3−2| = |3−4| = 1), rest → 2
+      K1 = {2,3} → 2.5;  K2 = {4,10,11,12,20,25,30} → 112/7 = 16
+It 2: m=(2.5, 16): 4 → 1 (1.5 vs 12)  K1 = {2,3,4} → 3;  K2 = {10,11,12,20,25,30} → 108/6 = 18
+It 3: m=(3, 18): 10 → 1 (7 vs 8)      K1 = {2,3,4,10} → 4.75;  K2 = {11,12,20,25,30} → 98/5 = 19.6
+It 4: m=(4.75, 19.6): 11 → 1 (6.25 vs 8.6), 12 → 1 (7.25 vs 7.6)
+      K1 = {2,3,4,10,11,12} → 42/6 = 7;  K2 = {20,25,30} → 25
+It 5: m=(7, 25): no change → converged</div>
+<p class="ans">K1 = {2, 3, 4, 10, 11, 12} (mean 7), K2 = {20, 25, 30} (mean 25), after 4 updates.</p>
+<p class="mean">Points migrate one or two at a time from the big cluster as its mean drifts right. A poor start (both seeds at the low end) costs extra iterations but still converges.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Updating the centroid after each single assignment when the question expects batch updates.</li><li>Running more iterations than asked ("one iteration only" in Q6a).</li><li>Using Manhattan distance when the method uses Euclidean (or vice versa) without saying so.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Choose K, seeds → assign to nearest centroid → recompute means → repeat until stable. Minimises WCSS; local optimum; sensitive to K, seeds, outliers, scale.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="unit-2.html#t42"><span>← Previous · 42</span>Expectation–Maximization (EM): E-step, M-step, applications</a><a class="next" href="#t44"><span>Next → · 44</span>Elbow method, WCSS and cluster evaluation</a></nav></article>
+
+<article class="topic" id="t44">
+<div class="th"><span class="tno">44</span><div><h2>Elbow method, WCSS and cluster evaluation</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Clustering (2).pdf</span></div></div></div>
+<p class="why">An easy add-on to any K-means numerical.</p>
+
+<h3>Concept</h3>
+<p>K-means needs K in advance. <b>WCSS</b> (within-cluster sum of squares, also "inertia") measures compactness; it always decreases as K grows (K = n gives 0), so we cannot simply minimise it. The <b>elbow method</b>: compute WCSS for K = 1, 2, 3, …, plot it, and choose the K where the curve bends — after which extra clusters give only small improvements.</p>
+<div class="fx">
+<div class="f">WCSS(K) = Σ_k Σ_{x ∈ C_k} ‖x − c_k‖²</div>
+<div class="f">Silhouette of point i:  s(i) = (b(i) − a(i)) / max(a(i), b(i))</div>
+<div class="d">a(i) = mean distance to the other points of its own cluster; b(i) = mean distance to the points of the nearest other cluster. s ranges −1 to 1: near 1 well clustered, 0 on a border, negative probably misassigned. Average silhouette over all points evaluates a clustering; pick K with the highest average. Other measures: Davies–Bouldin index (lower is better); with true labels, purity or adjusted Rand index.</div>
+</div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem on October 2025 Q6(a)'s result</span></div><div class="body">
+<p class="q">Compute the WCSS of the Q6(a) clustering: {P1 (1,7), P4 (2,8)} with centroid (1.5, 7.5); {P2 (5,8), P5 (6,7)} with (5.5, 7.5); {P3 (1,1), P6 (2,2)} with (1.5, 1.5).</p>
+<div class="calc">Each point is ±0.5 from its centroid in both coordinates:
+‖x − c‖² = 0.5² + 0.5² = 0.5 for every point
+WCSS = 6 × 0.5 = 3.0</div>
+<p class="ans">WCSS = 3.0.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Seven points (1,1), (1.5,2), (3,4), (5,7), (3.5,5), (4.5,5), (3.5,4.5). The best K-means solutions give WCSS = 37.07 (K = 1), 8.53 (K = 2), 2.50 (K = 3), 1.29 (K = 4). Verify the K = 2 value and choose K by the elbow method.</p>
+<div class="calc">K = 2: clusters {(1,1), (1.5,2)} and the other five
+  c₁ = (1.25, 1.5): (0.0625 + 0.25) × 2 = 0.625
+  c₂ = (19.5/5, 25.5/5) = (3.9, 5.1):
+     (3,4): 0.81 + 1.21 = 2.02   (5,7): 1.21 + 3.61 = 4.82   (3.5,5): 0.16 + 0.01 = 0.17
+     (4.5,5): 0.36 + 0.01 = 0.37   (3.5,4.5): 0.16 + 0.36 = 0.52   → 7.90
+  WCSS = 0.625 + 7.90 = 8.525 ✓
+Drops: K 1→2: 28.5;  2→3: 6.0;  3→4: 1.2</div>
+<figure class="fig">
+<svg viewBox="0 0 300 200" role="img" aria-label="Elbow plot: WCSS falls steeply from K=1 to K=2, then flattens">
+<rect x="40" y="10" width="240" height="150" fill="var(--surface)" stroke="var(--line)"/>
+<path d="M70 13L130 126.5L190 150.4L250 155.3" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<g fill="var(--accent)"><circle cx="70" cy="13" r="5"/><circle cx="130" cy="126.5" r="7" fill="var(--p-high)"/><circle cx="190" cy="150.4" r="5"/><circle cx="250" cy="155.3" r="5"/></g>
+<g font-size="10" text-anchor="middle"><text x="70" y="178">1</text><text x="130" y="178">2</text><text x="190" y="178">3</text><text x="250" y="178">4</text><text x="160" y="195">K</text><text x="92" y="18">37.07</text><text x="156" y="122">8.53 (elbow)</text><text x="204" y="144">2.50</text><text x="262" y="148">1.29</text></g>
+</svg>
+<figcaption>The curve bends sharply at K = 2.</figcaption>
+</figure>
+<p class="ans">Choose K = 2: going from 1 to 2 clusters removes 77% of the WCSS; later clusters add little (K = 3 is a defensible second choice).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Clusters A = {a (1,1), b (1,2), c (2,1)} and B = {d (6,6), e (7,6)}. Compute the silhouette of point a and interpret. Why is the elbow method alone sometimes not enough?</p>
+<div class="calc">a(a) = [d(a,b) + d(a,c)]/2 = (1 + 1)/2 = 1
+b(a) = [d(a,d) + d(a,e)]/2 = (√50 + √61)/2 = (7.071 + 7.810)/2 = 7.441
+s(a) = (7.441 − 1)/7.441 = 0.866</div>
+<p class="ans">s(a) = 0.87: a sits comfortably inside its own cluster, far from the other.</p>
+<p class="mean">The elbow is often not sharp (WCSS can fall smoothly), and WCSS ignores separation between clusters. The silhouette uses both cohesion (a) and separation (b), so it gives a second, more objective opinion on K.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Choosing the K with the smallest WCSS (always the largest K).</li><li>Using distances instead of squared distances in WCSS.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>WCSS = Σ‖x − c‖²; decreases with K. Elbow = bend in the WCSS-vs-K plot. Silhouette s = (b − a)/max(a, b), closer to 1 is better.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t43"><span>← Previous · 43</span>K-means: initial centroids, assignment, update, convergence</a><a class="next" href="#t45"><span>Next → · 45</span>Hierarchical clustering: agglomerative, divisive, linkages, dendrograms</a></nav></article>
+
+<article class="topic" id="t45">
+<div class="th"><span class="tno">45</span><div><h2>Hierarchical clustering: agglomerative, divisive, linkages, dendrograms</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">clustering.pdf · hierarchical_clustering_solution.pdf · Clustering (2).pdf</span></div></div></div>
+<p class="why">Question 6(b) of October 2025.</p>
+
+<h3>Concept</h3>
+<p>Hierarchical clustering builds a tree of nested clusters instead of one flat partition, so K need not be fixed in advance.</p>
+<ul>
+<li><b>Agglomerative (bottom-up)</b>: start with every point as its own cluster; repeatedly merge the two closest clusters until one remains.</li>
+<li><b>Divisive (top-down)</b>: start with one cluster of all points; repeatedly split until every point is alone.</li>
+</ul>
+<p>A <b>dendrogram</b> records the merges: leaves are points, each join is drawn at the height (distance) at which the merge happened. Cutting the dendrogram horizontally at some height gives a flat clustering — the number of vertical lines cut is the number of clusters.</p>
+<div class="fx">
+<div class="f">Single linkage:    D(A, B) = min_{a∈A, b∈B} d(a, b)        (closest pair)</div>
+<div class="f">Complete linkage:  D(A, B) = max_{a∈A, b∈B} d(a, b)        (farthest pair)</div>
+<div class="f">Average linkage:   D(A, B) = (1/(|A||B|)) Σ_a Σ_b d(a, b)   (mean of all pairs)</div>
+<div class="f">Ward:              merge the pair that least increases total WCSS (topic 46)</div>
+</div>
+<h3>Agglomerative algorithm</h3>
+<ol><li>Compute the n × n distance matrix (symmetric, zero diagonal).</li><li>Find the smallest off-diagonal entry; merge those two clusters; record the height.</li><li>Update the matrix: replace the two rows/columns with one, using the linkage rule.</li><li>Repeat until one cluster remains; draw the dendrogram.</li></ol>
+<div class="tw"><table><thead><tr><th></th><th>Single</th><th>Complete</th><th>Average</th></tr></thead><tbody>
+<tr><td>Distance</td><td>Minimum</td><td>Maximum</td><td>Mean</td></tr>
+<tr><td>Cluster shape</td><td>Long, chain-like</td><td>Compact, similar diameter</td><td>In between</td></tr>
+<tr><td>Weakness</td><td>Chaining: two groups joined by a bridge of points</td><td>Sensitive to outliers</td><td>More computation</td></tr>
+<tr><td>Strength</td><td>Finds non-spherical shapes</td><td>Well-separated tight clusters</td><td>Robust compromise</td></tr></tbody></table></div>
+<p>Cost: O(n²) memory for the matrix and roughly O(n³) time naively — fine for small data, slow for large (your notes' comparison with K-means).</p>
+
+<div class="sim" id="sim-t45-1" data-sim="hier" data-title="Build a dendrogram" data-desc="Merge clusters step by step for October 2025 Q6(b) (Manhattan, single linkage) or the course data, and switch linkage to compare." data-opts='{"data": "q6b", "linkage": "single"}'><p class="sim-desc">Interactive simulator: Build a dendrogram (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic — October 2025 Q6(b) (3 marks), full solution</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">Points P1 (2,3), P2 (3,3), P3 (6,6), P4 (8,8). Apply agglomerative clustering with single linkage and Manhattan distance; draw the dendrogram.</p>
+<div class="calc">Manhattan distances d = |x₁ − x₂| + |y₁ − y₂|:
+       P1   P2   P3   P4
+P1     0    1    7   11
+P2     1    0    6   10
+P3     7    6    0    4
+P4    11   10    4    0
+Step 1: smallest = d(P1,P2) = 1 → merge {P1,P2} at height 1
+  D({P1,P2}, P3) = min(7, 6) = 6;   D({P1,P2}, P4) = min(11, 10) = 10;   d(P3,P4) = 4
+Step 2: smallest = 4 → merge {P3,P4} at height 4
+  D({P1,P2}, {P3,P4}) = min(7, 11, 6, 10) = 6
+Step 3: merge everything at height 6</div>
+<figure class="fig">
+<svg viewBox="0 0 300 210" role="img" aria-label="Dendrogram: P1 and P2 join at 1, P3 and P4 join at 4, the two groups join at 6">
+<path d="M40 180V20" stroke="var(--ink-3)"/>
+<g font-size="10" text-anchor="end"><text x="34" y="184">0</text><text x="34" y="157">1</text><text x="34" y="77">4</text><text x="34" y="24">6</text></g>
+<g stroke="var(--accent)" stroke-width="2.5" fill="none"><path d="M80 180V153.3H130V180"/><path d="M190 180V73.3H240V180"/><path d="M105 153.3V20H215V73.3"/></g>
+<g font-size="11" text-anchor="middle"><text x="80" y="198" style="fill:var(--ink)">P1</text><text x="130" y="198" style="fill:var(--ink)">P2</text><text x="190" y="198" style="fill:var(--ink)">P3</text><text x="240" y="198" style="fill:var(--ink)">P4</text></g>
+<path d="M44 46.7H280" stroke="var(--p-high)" stroke-dasharray="5 4"/><text x="278" y="40" font-size="10" text-anchor="end" style="fill:var(--p-high)">cut at 5 → 2 clusters</text>
+</svg>
+<figcaption>Heights are the merge distances 1, 4 and 6.</figcaption>
+</figure>
+<p class="ans">Merges: {P1,P2} at 1, {P3,P4} at 4, all at 6. Cutting between 4 and 6 gives two clusters {P1,P2} and {P3,P4}.</p>
+<p class="mean">"Analyse the effect": P1, P2 are near-identical, so they join first and low; the large jump from 4 to 6 shows two well-separated natural groups.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, hierarchical_clustering_solution.pdf</span></div><div class="body">
+<p class="q">X = {5, 15, 20, 30, 50, 55, 70, 80}, single linkage, d(x, y) = |x − y|. Give the merge sequence and the three clusters from the dendrogram.</p>
+<div class="calc">Step  Merge                      Distance
+1     {15} + {20}                 5
+2     {50} + {55}                 5
+3     {5} + {15,20}              10    (min(10, 15) = 10)
+4     {5,15,20} + {30}           10    (min(25, 15, 10) = 10)
+5     {70} + {80}                10
+6     {50,55} + {70,80}          15    (min(20, 30, 15, 25) = 15)
+7     {5,15,20,30} + {50,…,80}   20    (|30 − 50| = 20)
+Cut at height 12.5 (between 10 and 15): {5,15,20,30}, {50,55}, {70,80}</div>
+<p class="ans">Three clusters: {5, 15, 20, 30}, {50, 55}, {70, 80}.</p>
+<p class="mean">Ties (two merges at 5, three at 10) are drawn at the same height. Single linkage uses the closest pair, never means or centroids.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: course material, clustering.pdf (5-object distance matrix), extended here to complete and average linkage</span></div><div class="body">
+<p class="q">Distance matrix of objects 1–5: d(1,2) = 2, d(1,3) = 6, d(1,4) = 10, d(1,5) = 9, d(2,3) = 3, d(2,4) = 9, d(2,5) = 8, d(3,4) = 7, d(3,5) = 5, d(4,5) = 4. Cluster with single, complete and average linkage and compare.</p>
+<div class="calc">All three first merge {1,2} at 2.
+SINGLE: D({1,2},3) = min(6,3) = 3; D({1,2},4) = 9; D({1,2},5) = 8
+  → {1,2,3} at 3;  then {4,5} at 4;  then D({1,2,3},{4,5}) = min(10, 9, 9, 8, 7, 5) = 5 → all at 5
+COMPLETE: D({1,2},3) = max(6,3) = 6; D({1,2},4) = 10; D({1,2},5) = 9; d(4,5) = 4
+  → {4,5} at 4;  D({4,5},3) = max(7,5) = 7;  D({1,2},3) = 6 → {1,2,3} at 6
+  → D({1,2,3},{4,5}) = max(10,9,9,8,7,5) = 10 → all at 10
+AVERAGE: D({1,2},3) = (6+3)/2 = 4.5; D({1,2},4) = 9.5; D({1,2},5) = 8.5; d(4,5) = 4
+  → {4,5} at 4;  D({4,5},3) = (7+5)/2 = 6;  D({4,5},{1,2}) = (10+9+9+8)/4 = 9
+  → {1,2,3} at 4.5;  final D = (10+9+9+8+7+5)/6 = 48/6 = 8 → all at 8</div>
+<div class="tw"><table style="max-width:480px"><thead><tr><th>Linkage</th><th>Merge heights</th><th>Final join</th></tr></thead><tbody>
+<tr><td>Single</td><td>2, 3, 4, 5</td><td>5</td></tr><tr><td>Complete</td><td>2, 4, 6, 10</td><td>10</td></tr><tr><td>Average</td><td>2, 4, 4.5, 8</td><td>8</td></tr></tbody></table></div>
+<p class="ans">Same two final groups {1,2,3} and {4,5} for all three, but very different heights: single linkage compresses the tree (max 5), complete stretches it (max 10), average sits between (8).</p>
+<p class="mean">With single linkage object 3 joins {1,2} before {4,5} forms; with complete and average it joins later. The order of merges, and so where you cut, depends on the linkage.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Using centroid distances for single linkage.</li><li>Not updating the whole matrix after a merge.</li><li>Drawing dendrogram heights by step number instead of merge distance.</li><li>Using Euclidean distance when Manhattan is asked (Q6b).</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Agglomerative: merge closest pair, update matrix, repeat. Single = min, complete = max, average = mean. Dendrogram heights = merge distances; cut to get K clusters. Divisive = top-down splits.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t44"><span>← Previous · 44</span>Elbow method, WCSS and cluster evaluation</a><a class="next" href="#t46"><span>Next → · 46</span>Ward&#x27;s method</a></nav></article>
+
+<article class="topic" id="t46">
+<div class="th"><span class="tno">46</span><div><h2>Ward's method</h2>
+<div class="meta"><span class="pr l">Additional</span><span class="sr P">Partial</span><span class="files">entire_Machine Learning.pptx (named)</span></div></div></div>
+<p class="why">Named once in your materials; the arithmetic is heavier than the other linkages, so expect theory or a small case.</p>
+
+<h3>Concept</h3>
+<p><b>Ward's minimum-variance method</b> is an agglomerative linkage that, at each step, merges the two clusters whose union causes the smallest increase in total within-cluster sum of squares (WCSS) — the same quantity K-means minimises. It tends to produce compact, similar-sized, roughly spherical clusters.</p>
+<div class="fx">
+<div class="f">Merge cost:  Δ(A, B) = SSE(A ∪ B) − SSE(A) − SSE(B) = (n_A n_B / (n_A + n_B)) · ‖c_A − c_B‖²</div>
+<div class="d">c_A, c_B = centroids, n_A, n_B = sizes. Two single points cost d²/2. Because it uses centroids and squared Euclidean distance, Ward needs numeric features and Euclidean geometry.</div>
+</div>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Cluster A = {(1,1), (2,1)}, B = {(5,4), (6,5)}, C = {(1,3)}. Which pair does Ward merge next?</p>
+<div class="calc">c_A = (1.5, 1), c_B = (5.5, 4.5), c_C = (1, 3)
+Δ(A,B) = (2·2/4) × [(4)² + (3.5)²] = 1 × (16 + 12.25) = 28.25
+Δ(A,C) = (2·1/3) × [(0.5)² + (2)²] = 0.667 × 4.25 = 2.833
+Δ(B,C) = (2·1/3) × [(4.5)² + (1.5)²] = 0.667 × 22.5 = 15.0</div>
+<p class="ans">Merge A and C (smallest increase, 2.833).</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Verify the Example 1 cost directly: compute SSE(A), SSE(C) and SSE(A ∪ C).</p>
+<div class="calc">SSE(A) = (1 − 1.5)² + (2 − 1.5)² + 0 + 0 = 0.5;   SSE(C) = 0
+A ∪ C = {(1,1), (2,1), (1,3)} → centroid (4/3, 5/3)
+SSE = [(1/3)² + (2/3)²] + [(2/3)² + (2/3)²] + [(1/3)² + (4/3)²] = 5/9 + 8/9 + 17/9 = 30/9 = 3.333
+Increase = 3.333 − 0.5 − 0 = 2.833 ✓</div>
+<p class="ans">The shortcut formula and the direct calculation agree: Δ = 2.833.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Cluster {1, 2, 6, 7, 15} with Ward's method; give the merge heights and compare with single linkage.</p>
+<div class="calc">Ward (cost = n_A n_B/(n_A+n_B) × (mean difference)²):
+{1}+{2}: ½ × 1 = 0.5      {6}+{7}: ½ × 1 = 0.5     (merge both)
+{1,2}+{6,7}: (2·2/4)(1.5 − 6.5)² = 1 × 25 = 25
+{6,7}+{15}:  (2·1/3)(6.5 − 15)² = 0.667 × 72.25 = 48.2
+{1,2}+{15}:  0.667 × 13.5² = 121.5            → merge {1,2,6,7} at 25
+{1,2,6,7}+{15}: (4·1/5)(4 − 15)² = 0.8 × 121 = 96.8
+Single linkage: {1,2} at 1, {6,7} at 1, {1,2}+{6,7} at 4 (|2 − 6|), +{15} at 8 (|7 − 15|)</div>
+<p class="ans">Ward heights 0.5, 0.5, 25, 96.8; single-linkage heights 1, 1, 4, 8. Same merge order, but Ward's heights grow much faster for distant groups, making the dendrogram's natural cut (15 as an outlier group) very clear.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Forgetting the size factor n_A n_B/(n_A + n_B).</li><li>Using unsquared distances.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Ward merges the pair with the smallest increase in WCSS: Δ = (n_A n_B/(n_A+n_B))‖c_A − c_B‖². Compact, balanced clusters; Euclidean only.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t45"><span>← Previous · 45</span>Hierarchical clustering: agglomerative, divisive, linkages, dendrograms</a><a class="next" href="#t47"><span>Next → · 47</span>Base, weak and strong learners; meta-model; voting and averaging</a></nav></article>
+<h2 class="subhead">B · Ensemble Learning</h2>
+
+<article class="topic" id="t47">
+<div class="th"><span class="tno">47</span><div><h2>Base, weak and strong learners; meta-model; voting and averaging</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Ensemble_Learning_PowerPoint_Compatible.pptx · Regression.pdf</span></div></div></div>
+<p class="why">Question 4(a) of October 2025.</p>
+
+<h3>Concept</h3>
+<p><b>Ensemble learning</b> trains several models and combines their outputs, because "a single model may overfit, underfit, or make unstable predictions" (your ensemble deck). If the models make different, partly independent mistakes, combining them cancels many of those mistakes — the "wisdom of crowds".</p>
+<ul>
+<li><b>Base learner</b>: each individual model inside the ensemble (e.g. each decision tree in a Random Forest).</li>
+<li><b>Weak learner</b>: a model only slightly better than random guessing (accuracy just above 50% for two classes), e.g. a decision stump (one-split tree).</li>
+<li><b>Strong learner</b>: a model with high accuracy; boosting proves that many weak learners can be combined into a strong one.</li>
+<li><b>Meta-model (combiner)</b>: the rule or model that combines base-learner outputs — majority vote, weighted vote, averaging, or a trained model in <b>stacking</b>.</li>
+</ul>
+<div class="fx">
+<div class="f">Hard (majority) voting:  ŷ = mode{h₁(x), …, h_M(x)}</div>
+<div class="f">Soft voting:  ŷ = argmax_c (1/M) Σ_m P_m(c | x)</div>
+<div class="f">Weighted voting:  ŷ = argmax_c Σ_m w_m · [h_m(x) = c]</div>
+<div class="f">Averaging (regression):  ŷ = (1/M) Σ_m h_m(x)</div>
+<div class="f">Majority of M independent classifiers each with accuracy p:  P(correct) = Σ_{k > M/2} C(M,k) p^k (1−p)^(M−k)</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 -14 440 164" role="img" aria-label="Ensemble: data feeds models 1 to 3, a combiner votes or averages, giving the final prediction">
+<defs><marker id="m47" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>
+<g font-size="11" text-anchor="middle">
+<rect x="10" y="55" width="70" height="40" rx="6" fill="var(--surface)" stroke="var(--ink-2)"/><text x="45" y="79">Data</text>
+<rect x="130" y="10" width="90" height="32" rx="6" fill="var(--surface)" stroke="var(--accent)"/><text x="175" y="30">Model 1</text>
+<rect x="130" y="59" width="90" height="32" rx="6" fill="var(--surface)" stroke="var(--accent)"/><text x="175" y="79">Model 2</text>
+<rect x="130" y="108" width="90" height="32" rx="6" fill="var(--surface)" stroke="var(--accent)"/><text x="175" y="128">Model 3</text>
+<rect x="270" y="50" width="80" height="50" rx="6" fill="var(--surface)" stroke="var(--u2)" stroke-width="2"/><text x="310" y="72">Vote /</text><text x="310" y="88">average</text>
+<rect x="380" y="58" width="52" height="34" rx="17" fill="var(--ans-bg)" stroke="var(--ans-line)"/><text x="406" y="79">ŷ</text></g>
+<g stroke="var(--ink-2)" stroke-width="1.5" fill="none" marker-end="url(#m47)"><path d="M80 70L128 28"/><path d="M80 75H128"/><path d="M80 80L128 122"/><path d="M220 26L268 62"/><path d="M220 75H268"/><path d="M220 124L268 90"/><path d="M350 75H378"/></g>
+<text x="175" y="-3" font-size="10" text-anchor="middle">base learners</text><text x="310" y="114" font-size="10" text-anchor="middle">meta-model</text>
+</svg>
+<figcaption>Base learners make predictions; the meta-model combines them.</figcaption>
+</figure>
+
+<div class="sim" id="sim-t47-1" data-sim="vote" data-title="Why majority voting helps" data-desc="Accuracy of a majority vote of independent classifiers, each correct with probability p." data-opts='{}'><p class="sim-desc">Interactive simulator: Why majority voting helps (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">(i) Five classifiers label an email Spam, Ham, Spam, Spam, Ham. Hard-vote result? (ii) Three classifiers give P(spam) = 0.90, 0.40, 0.45. What do hard and soft voting decide?</p>
+<div class="calc">(i) Spam 3 votes, Ham 2 → Spam
+(ii) Hard: 0.90 → Spam, 0.40 → Ham, 0.45 → Ham → Ham (2–1)
+     Soft: mean P(spam) = (0.90 + 0.40 + 0.45)/3 = 1.75/3 = 0.583 > 0.5 → Spam</div>
+<p class="ans">(i) Spam. (ii) Hard voting says Ham, soft voting says Spam.</p>
+<p class="mean">Soft voting lets one very confident model outweigh two unsure ones.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Each base classifier is correct with probability 0.7, and their errors are independent. What is the accuracy of a majority vote of 3, 5 and 11 classifiers?</p>
+<div class="calc">M = 3:  P = C(3,2)(0.7)²(0.3) + (0.7)³ = 3(0.147) + 0.343 = 0.441 + 0.343 = 0.784
+M = 5:  P = C(5,3)(0.7)³(0.3)² + C(5,4)(0.7)⁴(0.3) + (0.7)⁵
+          = 10(0.03087) + 5(0.07203) + 0.16807 = 0.3087 + 0.36015 + 0.16807 = 0.837
+M = 11: P = Σ_{k=6..11} C(11,k)(0.7)^k(0.3)^(11−k) = 0.922</div>
+<p class="ans">0.784, 0.837, 0.922 — all above a single model's 0.7.</p>
+<p class="mean">The gain depends on independence: identical models make identical mistakes and gain nothing. That is why bagging and Random Forest deliberately make their trees different.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level — October 2025 Q4(a) (2 marks) plus weighted voting</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">(a) An email provider's spam filter is a Random Forest whose base learners are trained in parallel on random subsets of data and features and combined by majority vote. Identify the base learner and the meta-model and explain their relationship. (b) Three classifiers with weights 0.6, 0.25, 0.15 predict A, B, B. What does weighted voting decide?</p>
+<ol>
+<li><b>Base learner</b>: each decision tree, trained on its own bootstrap sample of emails using a random subset of features (words, sender, links…) at each split; each outputs Spam or Ham.</li>
+<li><b>Meta-model</b>: the majority-voting combiner — it takes every tree's vote and outputs the class with the most votes.</li>
+<li><b>Relationship</b>: the base learners are diverse, individually high-variance predictors; the meta-model aggregates them so that their uncorrelated errors cancel, producing a more accurate and stable final classifier than any single tree.</li>
+</ol>
+<div class="calc">(b) A: 0.6;  B: 0.25 + 0.15 = 0.40 → A</div>
+<p class="ans">(a) Trees = base learners; majority vote = meta-model; the vote aggregates diverse trees into one robust classifier. (b) A, although the plain majority says B.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Calling Random Forest's meta-model "another decision tree" — it is a vote (a trained meta-model is stacking).</li><li>Saying ensembles always help: correlated models give little benefit.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Base learner = each model; weak = slightly better than chance; strong = accurate; meta-model = combiner (vote/average/stacking). Hard vs soft vs weighted voting. Gains need diversity.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t46"><span>← Previous · 46</span>Ward&#x27;s method</a><a class="next" href="#t48"><span>Next → · 48</span>Bagging: bootstrap sampling, parallel training, aggregation, variance</a></nav></article>
+
+<article class="topic" id="t48">
+<div class="th"><span class="tno">48</span><div><h2>Bagging: bootstrap sampling, parallel training, aggregation, variance</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">Ensemble_Learning_PowerPoint_Compatible.pptx · Regression.pdf</span></div></div></div>
+<p class="why">The standard comparison partner of boosting.</p>
+
+<h3>Concept</h3>
+<p><b>Bagging = Bootstrap AGGregatING</b> (Breiman, 1996).</p>
+<ol>
+<li><b>Bootstrap sampling</b>: from the n training rows draw B samples of size n <b>with replacement</b>. Each sample repeats some rows and leaves others out.</li>
+<li><b>Parallel training</b>: train one base model (usually a deep, unpruned tree) on each sample, independently — they can run at the same time.</li>
+<li><b>Aggregation</b>: majority vote (classification) or average (regression).</li>
+</ol>
+<p>Rows not drawn into a model's sample are its <b>out-of-bag (OOB)</b> rows; predicting each row with only the models that did not see it gives a free validation estimate.</p>
+<div class="fx">
+<div class="f">P(a given row is never drawn) = (1 − 1/n)ⁿ → e^(−1) = 0.368 as n grows</div>
+<div class="f">So each bootstrap sample contains ≈ 63.2% distinct rows</div>
+<div class="f">Variance of the average of B models, each variance σ², pairwise correlation ρ:  ρσ² + (1 − ρ)σ²/B</div>
+<div class="d">Averaging reduces variance but leaves bias unchanged, so bagging helps unstable, high-variance learners (deep trees) and does little for stable ones (linear regression, KNN with large K).</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>Bagging</th><th>Boosting</th></tr></thead><tbody>
+<tr><td>Training</td><td>Parallel, independent</td><td>Sequential, each depends on the previous</td></tr>
+<tr><td>Data</td><td>Bootstrap samples</td><td>Re-weighted samples (focus on mistakes)</td></tr>
+<tr><td>Base learners</td><td>Strong, high-variance (deep trees)</td><td>Weak, high-bias (stumps)</td></tr>
+<tr><td>Combination</td><td>Equal vote / average</td><td>Weighted vote (α)</td></tr>
+<tr><td>Mainly reduces</td><td>Variance</td><td>Bias (and variance)</td></tr>
+<tr><td>Overfitting risk</td><td>Low</td><td>Can overfit noisy data</td></tr>
+<tr><td>Example</td><td>Random Forest</td><td>AdaBoost, Gradient Boosting</td></tr></tbody></table></div>
+
+<div class="sim" id="sim-t48-1" data-sim="bootstrap" data-title="Bootstrap sampling" data-desc="Draw rows with replacement and watch about 63% of them make it into each sample; the rest are out-of-bag." data-opts='{}'><p class="sim-desc">Interactive simulator: Bootstrap sampling (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A training set has n = 10 rows. (i) What is the probability that row 7 is not in a bootstrap sample? (ii) How many distinct rows does a sample contain on average? (iii) Show one possible bootstrap sample of {x₁, …, x₅}.</p>
+<div class="calc">(i) (1 − 1/10)¹⁰ = 0.9¹⁰ = 0.349
+(ii) 10 × (1 − 0.349) = 6.5 distinct rows (about 63–65%)
+(iii) e.g. {x₂, x₄, x₄, x₁, x₅} — x₄ twice, x₃ out-of-bag</div>
+<p class="ans">0.349; about 6.5 distinct rows; e.g. {x₂, x₄, x₄, x₁, x₅}.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Three bagged trees. Rows each tree did not see (OOB) and its predictions: Tree 1 OOB {r1: A, r4: B}; Tree 2 OOB {r1: A, r2: B, r5: A}; Tree 3 OOB {r2: A, r3: B, r4: B}. True labels r1 A, r2 B, r3 A, r4 B, r5 A. Compute the OOB error.</p>
+<div class="calc">r1: votes A, A → A (true A) ✓
+r2: votes B, A → tie → say first-seen B (true B) ✓   [ties are rare with many trees]
+r3: vote B → B (true A) ✗
+r4: votes B, B → B (true B) ✓
+r5: vote A → A (true A) ✓
+OOB error = 1/5 = 0.20</div>
+<p class="ans">OOB error = 20% — an honest error estimate without a separate validation set.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem (formula from Hastie, Tibshirani &amp; Friedman, <i>Elements of Statistical Learning</i>, §15.2)</span></div><div class="body">
+<p class="q">Each bagged tree has prediction variance σ² = 4 and pairwise correlation ρ = 0.3. Compute the variance of the bagged average for B = 1, 10, 100 and B → ∞. What does this say about how Random Forest improves on plain bagging?</p>
+<div class="calc">Var = ρσ² + (1 − ρ)σ²/B = 1.2 + 2.8/B
+B = 1:   1.2 + 2.8   = 4.00
+B = 10:  1.2 + 0.28  = 1.48
+B = 100: 1.2 + 0.028 = 1.228
+B → ∞:   1.2</div>
+<p class="ans">4.00 → 1.48 → 1.23 → 1.20. Adding trees removes the second term, but the floor ρσ² = 1.2 remains.</p>
+<p class="mean">The only way below the floor is to reduce ρ — make the trees less alike. Random Forest does exactly that by giving each split only a random subset of features (topic 49).</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Sampling without replacement (that is not a bootstrap).</li><li>Saying bagging reduces bias.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Bootstrap (with replacement, ~63.2% unique) → train in parallel → vote/average. Reduces variance; OOB rows give a free error estimate. Var = ρσ² + (1−ρ)σ²/B.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t47"><span>← Previous · 47</span>Base, weak and strong learners; meta-model; voting and averaging</a><a class="next" href="#t49"><span>Next → · 49</span>Random Forest: bootstrap rows, random features, majority vote</a></nav></article>
+
+<article class="topic" id="t49">
+<div class="th"><span class="tno">49</span><div><h2>Random Forest: bootstrap rows, random features, majority vote</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Ensemble_Learning_PowerPoint_Compatible.pptx · Regression.pdf · Classification.pdf</span></div></div></div>
+<p class="why">Question 4(a) of October 2025.</p>
+
+<h3>Concept</h3>
+<p>A <b>Random Forest</b> is bagging with decision trees plus one extra source of randomness. Your deck: "randomness is added in two places: rows and features".</p>
+<ol>
+<li>For each of B trees, draw a bootstrap sample of the rows.</li>
+<li>Grow a deep decision tree on it; at <b>every split</b>, consider only a random subset of m features (typically m = √p for classification, p/3 for regression) and choose the best split among them.</li>
+<li>Do not prune.</li>
+<li>Predict by <b>majority vote</b> (classification) or <b>averaging</b> (regression).</li>
+</ol>
+<p>Why random features? If one feature is very strong, every bagged tree would split on it first and the trees would be highly correlated (Regression.pdf: "each tree in a random forest can pick only from a random subset of features … forces even more variation"). Uncorrelated trees "protect each other from their individual errors".</p>
+<div class="tw"><table><thead><tr><th></th><th>Decision tree</th><th>Random Forest</th></tr></thead><tbody>
+<tr><td>Models</td><td>One</td><td>Hundreds of trees</td></tr>
+<tr><td>Variance</td><td>High (overfits)</td><td>Much lower</td></tr>
+<tr><td>Interpretability</td><td>Readable rules</td><td>Black box (feature importance only)</td></tr>
+<tr><td>Accuracy</td><td>Moderate</td><td>Usually high</td></tr>
+<tr><td>Speed</td><td>Fast</td><td>Slower, but trees train in parallel</td></tr></tbody></table></div>
+<div class="tw"><table><thead><tr><th></th><th>Bagging (of trees)</th><th>Random Forest</th></tr></thead><tbody>
+<tr><td>Row sampling</td><td>Bootstrap</td><td>Bootstrap</td></tr>
+<tr><td>Feature sampling</td><td>All features at every split</td><td>Random m features at every split</td></tr>
+<tr><td>Tree correlation</td><td>Higher</td><td>Lower</td></tr>
+<tr><td>Variance reduction</td><td>Good</td><td>Better</td></tr></tbody></table></div>
+<figure class="fig">
+<svg viewBox="0 0 440 170" role="img" aria-label="Random forest: training data split into bootstrap samples, each grows a tree with random feature subsets, majority vote gives the class">
+<defs><marker id="m49" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>
+<g font-size="10" text-anchor="middle">
+<rect x="10" y="65" width="80" height="40" rx="6" fill="var(--surface)" stroke="var(--ink-2)"/><text x="50" y="82">Training</text><text x="50" y="96">data</text>
+<g fill="var(--surface)" stroke="var(--accent)"><rect x="130" y="10" width="110" height="36" rx="6"/><rect x="130" y="67" width="110" height="36" rx="6"/><rect x="130" y="124" width="110" height="36" rx="6"/></g>
+<text x="185" y="25">bootstrap rows +</text><text x="185" y="38">random features → tree 1</text>
+<text x="185" y="82">bootstrap rows +</text><text x="185" y="95">random features → tree 2</text>
+<text x="185" y="139">… tree B</text><text x="185" y="152">(independent)</text>
+<rect x="280" y="62" width="80" height="46" rx="6" fill="var(--surface)" stroke="var(--u2)" stroke-width="2"/><text x="320" y="82">Majority</text><text x="320" y="96">vote</text>
+<rect x="385" y="68" width="48" height="34" rx="17" fill="var(--ans-bg)" stroke="var(--ans-line)"/><text x="409" y="89">class</text></g>
+<g stroke="var(--ink-2)" stroke-width="1.4" fill="none" marker-end="url(#m49)"><path d="M90 80L128 30"/><path d="M90 85H128"/><path d="M90 90L128 140"/><path d="M240 28L278 72"/><path d="M240 85H278"/><path d="M240 142L278 98"/><path d="M360 85H383"/></g>
+</svg>
+<figcaption>Two kinds of randomness (rows and features) make the trees diverse; the vote combines them.</figcaption>
+</figure>
+
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A dataset has p = 16 features. How many features does each split consider in a Random Forest classifier and regressor? Seven trees vote Spam, Ham, Spam, Spam, Ham, Spam, Ham. What is the prediction?</p>
+<div class="calc">Classification: m = √16 = 4;   Regression: m = 16/3 ≈ 5
+Votes: Spam 4, Ham 3 → Spam</div>
+<p class="ans">m = 4 (classification), about 5 (regression); prediction Spam.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A Random Forest regressor with five trees predicts house prices (₹ lakh) 52, 48, 55, 50, 60. (i) Give the forest prediction. (ii) The single best tree on validation had RMSE 8.2 and the forest 5.1. Explain the difference.</p>
+<div class="calc">(i) (52 + 48 + 55 + 50 + 60)/5 = 265/5 = 53</div>
+<p class="ans">(i) ₹53 lakh. (ii) Averaging cancels part of each tree's error. Individual deep trees have low bias but high variance; averaging de-correlated trees cuts the variance (topic 48, Example 3), so RMSE falls from 8.2 to 5.1.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">A forest of three trees reports impurity decrease per feature (weighted by samples): Tree 1 — X₁ 0.20, X₂ 0.15, X₃ 0.05; Tree 2 — X₁ 0.10, X₂ 0.05, X₃ 0.15; Tree 3 — X₁ 0.00, X₂ 0.25, X₃ 0.05. Compute the mean-decrease-in-impurity importance of each feature and rank them. Why do Random Forests need such a measure?</p>
+<div class="calc">Totals: X₁ = 0.20 + 0.10 + 0.00 = 0.30
+        X₂ = 0.15 + 0.05 + 0.25 = 0.45
+        X₃ = 0.05 + 0.15 + 0.05 = 0.25
+Sum = 1.00 → normalised importance X₂ 45%, X₁ 30%, X₃ 25%</div>
+<p class="ans">Ranking: X₂ (0.45) &gt; X₁ (0.30) &gt; X₃ (0.25).</p>
+<p class="mean">A forest of hundreds of trees cannot be read like one tree, so importance scores are the main way to explain it (topic 07). Note X₁ was unused by Tree 3 — random feature selection means no single tree sees everything.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Saying features are sampled once per tree — standard Random Forest samples them at every split.</li><li>Pruning the trees (they are grown deep on purpose).</li><li>Forgetting that RF is a bagging method.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>RF = bagged deep trees + random m features per split (√p classification, p/3 regression) + majority vote/average. Lower correlation → lower variance than plain bagging. Feature importance for interpretation.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t48"><span>← Previous · 48</span>Bagging: bootstrap sampling, parallel training, aggregation, variance</a><a class="next" href="#t50"><span>Next → · 50</span>Boosting and AdaBoost: error, α, weight update, normalization, final prediction</a></nav></article>
+
+<article class="topic" id="t50">
+<div class="th"><span class="tno">50</span><div><h2>Boosting and AdaBoost: error, α, weight update, normalization, final prediction</h2>
+<div class="meta"><span class="pr h">Very important</span><span class="sr M">In your materials</span><span class="files">Ensemble_Learning_PowerPoint_Compatible.pptx</span></div></div></div>
+<p class="why">Question 4(b) of October 2025 (4 marks).</p>
+
+<h3>Concept</h3>
+<p><b>Boosting</b> trains weak learners <b>sequentially</b>; each new learner concentrates on the samples the previous ones got wrong ("misclassified samples get higher weight in the next round"). <b>AdaBoost</b> (Adaptive Boosting, Freund &amp; Schapire 1997) does this with sample weights.</p>
+<ol>
+<li>Initialise weights wᵢ = 1/n for all n samples.</li>
+<li>For t = 1 … T:
+<ol type="a"><li>Train a weak learner h_t (often a decision stump) on the weighted data.</li>
+<li>Weighted error ε_t = Σ wᵢ over misclassified samples.</li>
+<li>Classifier weight α_t = ½ ln((1 − ε_t)/ε_t).</li>
+<li>Update: wᵢ ← wᵢ · e^(−α_t) if correct, wᵢ · e^(+α_t) if wrong.</li>
+<li>Normalise: divide every weight by Z_t = Σ (updated weights) so they sum to 1.</li></ol></li>
+<li>Final prediction: H(x) = sign( Σ_t α_t h_t(x) ).</li>
+</ol>
+<div class="fx">
+<div class="f">α = ½ ln((1 − ε)/ε)              ε = 0.5 → α = 0;  ε → 0 → α large;  ε &gt; 0.5 → α &lt; 0</div>
+<div class="f">wᵢ ← wᵢ · e^(−α yᵢ h(xᵢ)) / Z       (yᵢh(xᵢ) = +1 if correct, −1 if wrong)</div>
+<div class="f">After normalising, the misclassified samples always carry exactly half the total weight.</div>
+</div>
+<figure class="fig">
+<svg viewBox="0 0 440 130" role="img" aria-label="Boosting: weak learner 1, reweight, weak learner 2, reweight, weak learner 3, weighted vote gives the strong model">
+<defs><marker id="m50" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>
+<g font-size="10" text-anchor="middle">
+<g fill="var(--surface)" stroke="var(--accent)"><rect x="10" y="40" width="80" height="40" rx="6"/><rect x="130" y="40" width="80" height="40" rx="6"/><rect x="250" y="40" width="80" height="40" rx="6"/></g>
+<text x="50" y="58">weak learner 1</text><text x="50" y="71">α₁</text><text x="170" y="58">weak learner 2</text><text x="170" y="71">α₂</text><text x="290" y="58">weak learner 3</text><text x="290" y="71">α₃</text>
+<text x="110" y="30">reweight</text><text x="230" y="30">reweight</text>
+<rect x="355" y="40" width="78" height="40" rx="6" fill="var(--ans-bg)" stroke="var(--ans-line)"/><text x="394" y="58">sign(Σ αₜhₜ)</text><text x="394" y="71">strong model</text>
+<text x="220" y="118">mistakes of each round get heavier weights in the next</text></g>
+<g stroke="var(--ink-2)" stroke-width="1.5" fill="none" marker-end="url(#m50)"><path d="M90 60H128"/><path d="M210 60H248"/><path d="M330 60H353"/></g>
+</svg>
+<figcaption>Sequential training: each learner sees the data re-weighted by its predecessor's mistakes.</figcaption>
+</figure>
+
+<div class="sim" id="sim-t50-1" data-sim="adaboost" data-title="AdaBoost weight updates" data-desc="Each round fits a decision stump, raises the weights of its mistakes (red) and lowers the rest. Choose October 2025 Q4(b) to replay the paper&#x27;s update." data-opts='{"data": "line"}'><p class="sim-desc">Interactive simulator: AdaBoost weight updates (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: course material, Ensemble_Learning_PowerPoint_Compatible.pptx ("error = 0.20 → α ≈ 0.693"), extended</span></div><div class="body">
+<p class="q">Compute α for weak learners with error 0.1, 0.2, 0.3 and 0.5. What does each value mean?</p>
+<div class="calc">ε = 0.1: α = ½ ln(0.9/0.1) = ½ ln 9   = ½(2.1972) = 1.0986
+ε = 0.2: α = ½ ln(0.8/0.2) = ½ ln 4   = ½(1.3863) = 0.6931
+ε = 0.3: α = ½ ln(0.7/0.3) = ½ ln 2.333 = ½(0.8473) = 0.4236
+ε = 0.5: α = ½ ln(1)       = 0</div>
+<p class="ans">α = 1.099, 0.693, 0.424, 0.</p>
+<p class="mean">Smaller error → larger say in the final vote. A learner no better than a coin (ε = 0.5) gets no vote at all.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate — October 2025 Q4(b) (4 marks), full solution</span><span class="src">Source: 23CSE301 end-semester paper, October 2025</span></div><div class="body">
+<p class="q">Six samples A–F with initial weights 1/6. Round 1 classifies A, B, C, E correctly and misclassifies D and F; ε = 0.33. Using wᵢ ← wᵢ·e^(±α)/Z with α = ½ ln((1 − ε)/ε), find the normalised weights for round 2 and say which samples gain influence.</p>
+<div class="gf"><div><b>Given</b><span>wᵢ = 1/6 = 0.16667; ε = 0.33; correct: A, B, C, E; wrong: D, F</span></div><div><b>Find</b><span>α, new weights, Z, normalised weights</span></div></div>
+<div class="calc">Step 1  α = ½ ln((1 − 0.33)/0.33) = ½ ln(2.0303) = ½(0.7082) = 0.3541
+Step 2  e^(−α) = e^(−0.3541) = 0.7018;   e^(+α) = 1.4249
+Step 3  Correct (A,B,C,E): 0.16667 × 0.7018 = 0.11697
+        Wrong (D,F):       0.16667 × 1.4249 = 0.23748
+Step 4  Z = 4(0.11697) + 2(0.23748) = 0.46787 + 0.47496 = 0.94284
+Step 5  Correct: 0.11697/0.94284 = 0.1241
+        Wrong:   0.23748/0.94284 = 0.2519
+Check: 4(0.1241) + 2(0.2519) = 0.4964 + 0.5038 = 1.000 ✓</div>
+<div class="tw"><table style="max-width:420px"><thead><tr><th>Sample</th><th>Round 1</th><th>Round 2</th><th>Change</th></tr></thead><tbody>
+<tr><td>A, B, C, E</td><td class="num">0.1667</td><td class="num">0.1241</td><td>↓ (correct)</td></tr>
+<tr class="hl"><td>D, F</td><td class="num">0.1667</td><td class="num">0.2519</td><td>↑ (misclassified)</td></tr></tbody></table></div>
+<p class="ans">α = 0.354; round-2 weights A, B, C, E = 0.124 each; D, F = 0.252 each.</p>
+<p class="mean">D and F gain influence because they were misclassified: their weights are multiplied by e^α &gt; 1, so the next weak learner is pushed to classify them correctly. (With the exact ε = 2/6, the weights would be exactly 0.125 and 0.25 — the wrong ones always end up holding half the weight.)</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">Ten points x = 1, …, 10 with labels + + + − − − + + + −. Weak learners are stumps "predict s if x &lt; θ, else −s". Run three rounds of AdaBoost and show that the combined classifier makes no training errors.</p>
+<div class="calc">Round 1 (all wᵢ = 0.1): best stump: x < 3.5 → +, else − ; wrong: 7, 8, 9
+  ε₁ = 0.3,  α₁ = ½ ln(0.7/0.3) = 0.4236
+  correct: 0.1 × e^(−0.4236) = 0.06547;  wrong: 0.1 × e^(0.4236) = 0.15275
+  Z = 7(0.06547) + 3(0.15275) = 0.9165 → correct 0.0714, wrong 0.1667
+Round 2: best stump: x < 9.5 → +, else − ; wrong: 4, 5, 6 (weights 0.0714 each)
+  ε₂ = 3 × 0.0714 = 0.2143,  α₂ = ½ ln(0.7857/0.2143) = 0.6496
+  new weights: x = 1,2,3,10 → 0.0455;  4,5,6 → 0.1667;  7,8,9 → 0.1061
+Round 3: best stump: x < 6.5 → −, else + ; wrong: 1, 2, 3, 10 (0.0455 each)
+  ε₃ = 4 × 0.0455 = 0.1818,  α₃ = ½ ln(0.8182/0.1818) = 0.7520
+Final H(x) = sign(0.4236 h₁ + 0.6496 h₂ + 0.7520 h₃):
+  x = 1–3:  +0.4236 + 0.6496 − 0.7520 = +0.321 → +  ✓
+  x = 4–6:  −0.4236 + 0.6496 − 0.7520 = −0.526 → −  ✓
+  x = 7–9:  −0.4236 + 0.6496 + 0.7520 = +0.978 → +  ✓
+  x = 10:   −0.4236 − 0.6496 + 0.7520 = −0.321 → −  ✓</div>
+<p class="ans">After three rounds the weighted vote classifies all ten points correctly, although each stump alone makes 3 or 4 errors.</p>
+<p class="mean">No single threshold can separate + + + − − − + + + −; boosting builds the needed three-region rule from three one-threshold stumps. Each round's α grows (0.42, 0.65, 0.75) because each stump fits the re-weighted data better.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Using e^(+α) for correct samples (the signs are swapped).</li><li>Forgetting to normalise by Z.</li><li>Using ln without the ½, or log₁₀ instead of ln.</li><li>Forgetting that a learner with ε &gt; 0.5 gets negative α.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>w = 1/n → train stump → ε = Σw(wrong) → α = ½ln((1−ε)/ε) → w·e^(∓α) → ÷Z → repeat. H = sign(Σαh). Wrong samples end with half the weight. Sequential, reduces bias, sensitive to noise.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t49"><span>← Previous · 49</span>Random Forest: bootstrap rows, random features, majority vote</a><a class="next" href="#t51"><span>Next → · 51</span>Agent, environment, state, action, reward, policy, value function, Q-value</a></nav></article>
+<h2 class="subhead">C · Reinforcement Learning</h2>
+
+<article class="topic" id="t51">
+<div class="th"><span class="tno">51</span><div><h2>Agent, environment, state, action, reward, policy, value function, Q-value</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">23CSE301_ML_RL.pdf (self-study module) · Intro_ML.pdf</span></div></div></div>
+<p class="why">A self-study module with worked examples exists in your folder; expect theory plus a short calculation.</p>
+
+<h3>Concept</h3>
+<p>In <b>reinforcement learning</b> an <b>agent</b> learns by interacting with an <b>environment</b>: it observes a <b>state</b>, takes an <b>action</b>, receives a <b>reward</b> and a new state, and repeats. No one tells it the correct action; it must discover which actions maximise long-term reward by trial and error (your Intro notes: "rewards by performing correctly and penalties for performing incorrectly").</p>
+<figure class="fig">
+<svg viewBox="0 0 420 170" role="img" aria-label="Agent-environment loop: agent sends action to environment; environment returns new state and reward">
+<defs><marker id="m51" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>
+<rect x="150" y="10" width="120" height="44" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="210" y="37" text-anchor="middle" font-size="13" style="fill:var(--ink);font-weight:600">Agent (policy π)</text>
+<rect x="150" y="116" width="120" height="44" rx="8" fill="var(--surface)" stroke="var(--u2)" stroke-width="2"/><text x="210" y="143" text-anchor="middle" font-size="13" style="fill:var(--ink);font-weight:600">Environment</text>
+<g stroke="var(--ink-2)" stroke-width="1.6" fill="none" marker-end="url(#m51)"><path d="M270 32H340V138H272"/><path d="M150 132H80V40H148"/><path d="M150 146H60V24H148"/></g>
+<g font-size="10"><text x="346" y="90">action Aₜ</text><text x="84" y="35">state Sₜ₊₁</text><text x="64" y="19">reward Rₜ₊₁</text></g>
+</svg>
+<figcaption>The loop repeats every time step; the agent's goal is to maximise the total discounted reward.</figcaption>
+</figure>
+<div class="tw"><table><thead><tr><th>Term</th><th>Meaning</th><th>Example (robot vacuum)</th></tr></thead><tbody>
+<tr><td>Agent</td><td>The learner and decision-maker</td><td>The vacuum's controller</td></tr>
+<tr><td>Environment</td><td>Everything the agent interacts with</td><td>The house</td></tr>
+<tr><td>State s</td><td>The situation the agent observes</td><td>Position, battery level, dirt sensor</td></tr>
+<tr><td>Action a</td><td>A choice the agent can make</td><td>Move, turn, return to dock</td></tr>
+<tr><td>Reward r</td><td>Immediate numeric feedback</td><td>+1 per dirt patch, −10 if the battery dies</td></tr>
+<tr><td>Policy π(a | s)</td><td>The agent's strategy: which action in which state</td><td>"If battery &lt; 15%, return to dock"</td></tr>
+<tr><td>Return Gₜ</td><td>Total discounted future reward</td><td>Rₜ₊₁ + γRₜ₊₂ + γ²Rₜ₊₃ + …</td></tr>
+<tr><td>Value V^π(s)</td><td>Expected return from state s following π</td><td>How good it is to be in the kitchen at 50% battery</td></tr>
+<tr><td>Q-value Q^π(s, a)</td><td>Expected return from taking a in s, then following π</td><td>How good "move left" is from here</td></tr></tbody></table></div>
+<div class="fx">
+<div class="f">Return:  Gₜ = Rₜ₊₁ + γRₜ₊₂ + γ²Rₜ₊₃ + … = Σ_k γᵏ Rₜ₊ₖ₊₁,   0 ≤ γ ≤ 1 (discount factor)</div>
+<div class="f">Bellman (fixed policy, Markov reward process):  V(s) = R(s) + γ Σ_{s′} P(s′ | s) V(s′)   ⇒ V = (I − γP)⁻¹ R</div>
+<div class="f">Optimal:  Q*(s, a) = Σ_{s′} P(s′|s,a)[R + γ max_{a′} Q*(s′, a′)],   π*(s) = argmax_a Q*(s, a)</div>
+<div class="f">Q-learning update:  Q(s,a) ← Q(s,a) + α [ r + γ max_{a′} Q(s′,a′) − Q(s,a) ]</div>
+<div class="f">SARSA update:      Q(s,a) ← Q(s,a) + α [ r + γ Q(s′,a′) − Q(s,a) ]   (a′ = action actually taken)</div>
+<div class="d">The environment is modelled as a Markov Decision Process (S, A, P, R, γ) — the Markov property of topic 32 with actions and rewards added. Q-learning is off-policy (learns the greedy policy while exploring); SARSA is on-policy.</div>
+</div>
+<div class="tw"><table><thead><tr><th></th><th>Supervised</th><th>Unsupervised</th><th>Reinforcement</th></tr></thead><tbody>
+<tr><td>Feedback</td><td>Correct label per example</td><td>None</td><td>Delayed reward</td></tr><tr><td>Data</td><td>Fixed labelled dataset</td><td>Fixed unlabelled dataset</td><td>Generated by the agent's own actions</td></tr><tr><td>Goal</td><td>Predict labels</td><td>Find structure</td><td>Maximise cumulative reward</td></tr></tbody></table></div>
+<p><b>Applications</b>: game playing (chess, Go, Atari), robotics and locomotion, autonomous driving decisions, recommendation and ad placement, resource and traffic-signal control, dialogue systems, fine-tuning language models from human feedback.</p>
+
+<div class="sim" id="sim-t51-1" data-sim="grid" data-title="Q-learning gridworld" data-desc="An agent learns to reach +10 and avoid the −10 pits. Arrows show its greedy policy; colours show max Q." data-opts='{}'><p class="sim-desc">Interactive simulator: Q-learning gridworld (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">An episode gives rewards R₁ = 1, R₂ = 0, R₃ = 0, R₄ = 10. Compute the return G₀ with γ = 0.9 and with γ = 0.5. What does γ control?</p>
+<div class="calc">γ = 0.9: G₀ = 1 + 0.9(0) + 0.81(0) + 0.729(10) = 1 + 7.29 = 8.29
+γ = 0.5: G₀ = 1 + 0 + 0 + 0.125(10) = 2.25</div>
+<p class="ans">8.29 with γ = 0.9; 2.25 with γ = 0.5.</p>
+<p class="mean">γ sets how far-sighted the agent is: with γ = 0.5 the delayed reward of 10 is worth little, so a short-sighted agent might prefer quick small rewards.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: course material, 23CSE301_ML_RL.pdf, §2 Worked Example</span></div><div class="body">
+<p class="q">A 2-state Markov reward process has P = [0.5 0.5; 0.2 0.8], R = (2.0, 0.0), γ = 0.9. Solve the Bellman equation for V(s₀) and V(s₁) and check the answer.</p>
+<div class="calc">V = R + γPV  ⇒  (I − γP)V = R
+I − 0.9P = [1 − 0.45  −0.45; −0.18  1 − 0.72] = [0.55 −0.45; −0.18 0.28]
+det = 0.55×0.28 − (−0.45)(−0.18) = 0.154 − 0.081 = 0.073
+(I − γP)⁻¹ = (1/0.073)[0.28 0.45; 0.18 0.55]
+V(s₀) = (0.28×2 + 0.45×0)/0.073 = 0.56/0.073 = 7.6712
+V(s₁) = (0.18×2 + 0.55×0)/0.073 = 0.36/0.073 = 4.9315
+Check: 2 + 0.9(0.5×7.6712 + 0.5×4.9315) = 2 + 0.9(6.3014) = 7.6712 ✓</div>
+<p class="ans">V(s₀) = 7.671, V(s₁) = 4.932 (matching the module).</p>
+<p class="mean">s₁ earns nothing itself but is worth 4.93 because it often returns to s₀, which pays 2. Exact inversion only works for small, fully known models; otherwise use value iteration, Monte Carlo or TD/Q-learning.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: course material, 23CSE301_ML_RL.pdf, §5 Worked Example (Q-learning vs SARSA)</span></div><div class="body">
+<p class="q">Q(s₁, Right) = 2.0. The agent takes Right, receives R = 1.0 and lands in s₂, where Q(s₂, Stay) = 1.2 and Q(s₂, Right) = 3.5. γ = 0.9, α = 0.5. (i) Q-learning update. (ii) SARSA update if the exploring policy actually picks Stay next. (iii) Explain the difference.</p>
+<div class="calc">(i) Q-learning: target = R + γ max(1.2, 3.5) = 1.0 + 0.9×3.5 = 4.15
+    Q_new = 2.0 + 0.5(4.15 − 2.0) = 2.0 + 1.075 = 3.075
+(ii) SARSA: target = R + γ Q(s₂, Stay) = 1.0 + 0.9×1.2 = 2.08
+    Q_new = 2.0 + 0.5(2.08 − 2.0) = 2.04</div>
+<p class="ans">Q-learning → 3.075; SARSA → 2.04.</p>
+<p class="mean">Same experience, different targets. Q-learning assumes the best next action will be taken (off-policy: it learns the optimal policy while exploring); SARSA uses the action the exploring policy really took (on-policy). With a fully greedy policy the two coincide.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Confusing reward (immediate) with value (expected long-term return).</li><li>Using max in SARSA or the actual next action in Q-learning.</li><li>Forgetting to discount rewards.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Agent–environment loop: s → a → r, s′. Policy π, return G = ΣγᵏR, V(s), Q(s,a). Bellman: V = R + γPV. Q-learning: Q += α[r + γ max Q′ − Q]. MDP = (S, A, P, R, γ).</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t50"><span>← Previous · 50</span>Boosting and AdaBoost: error, α, weight update, normalization, final prediction</a><a class="next" href="#t52"><span>Next → · 52</span>Exploration vs exploitation; applications</a></nav></article>
+
+<article class="topic" id="t52">
+<div class="th"><span class="tno">52</span><div><h2>Exploration vs exploitation; applications</h2>
+<div class="meta"><span class="pr m">Important</span><span class="sr M">In your materials</span><span class="files">23CSE301_ML_RL.pdf (§6)</span></div></div></div>
+<p class="why">A short-answer staple of RL questions.</p>
+
+<h3>Concept</h3>
+<p>An agent learns the value only of actions it tries. <b>Exploitation</b> means choosing the action that currently looks best; <b>exploration</b> means trying other actions to improve its estimates. Pure exploitation can get stuck on a mediocre action whose rivals were never sampled properly; pure exploration never uses what it has learned (your RL module). The simplest model is the <b>multi-armed bandit</b>: k slot machines with unknown payouts.</p>
+<div class="fx">
+<div class="f">ε-greedy: with probability 1 − ε take argmax_a Q(a); with probability ε take a uniformly random action</div>
+<div class="f">   ⇒ P(greedy action) = 1 − ε + ε/k,   P(each other action) = ε/k</div>
+<div class="f">Incremental sample average:  Q_n = Q_{n−1} + (1/n)(R_n − Q_{n−1})</div>
+<div class="f">UCB (upper confidence bound):  choose argmax_a [ Q(a) + c √(ln t / N(a)) ]</div>
+<div class="f">Softmax (Boltzmann):  P(a) = e^(Q(a)/τ) / Σ_b e^(Q(b)/τ)</div>
+<div class="d">ε is often decayed (start near 1, end near 0): explore early, exploit later. UCB adds a bonus to rarely tried actions — "optimism in the face of uncertainty". Reference: Sutton &amp; Barto, <i>Reinforcement Learning: An Introduction</i>, 2nd ed., Ch. 2, <a href="http://incompleteideas.net/book/the-book-2nd.html">incompleteideas.net/book/the-book-2nd.html</a>.</div>
+</div>
+<p>Everyday analogy: always ordering your favourite dish (exploit) versus trying a new one that might be better (explore).</p>
+
+<div class="sim" id="sim-t52-1" data-sim="bandit" data-title="Four-armed bandit" data-desc="ε-greedy, greedy and UCB compete to find the best slot machine (arm 3)." data-opts='{}'><p class="sim-desc">Interactive simulator: Four-armed bandit (needs JavaScript).</p></div>
+<section class="ex"><div class="exh"><span class="lvl b">Example 1 · Basic</span><span class="src">Source: practice problem</span></div><div class="body">
+<p class="q">An agent has k = 4 actions and uses ε-greedy with ε = 0.1. What is the probability of choosing the greedy action and each non-greedy action?</p>
+<div class="calc">P(greedy) = 1 − 0.1 + 0.1/4 = 0.9 + 0.025 = 0.925
+P(each other) = 0.1/4 = 0.025      Check: 0.925 + 3(0.025) = 1 ✓</div>
+<p class="ans">0.925 for the greedy action, 0.025 for each of the other three.</p>
+<p class="mean">The random choice can land on the greedy action too, which is why it gets 0.925, not 0.9.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl i">Example 2 · Intermediate</span><span class="src">Source: practice problem (method from Sutton &amp; Barto, §2.4)</span></div><div class="body">
+<p class="q">An arm is pulled four times with rewards 4, 6, 5, 9. Update its estimate Q incrementally after each pull, starting from Q₀ = 0.</p>
+<div class="calc">n=1: Q = 0 + (1/1)(4 − 0) = 4
+n=2: Q = 4 + (1/2)(6 − 4) = 5
+n=3: Q = 5 + (1/3)(5 − 5) = 5
+n=4: Q = 5 + (1/4)(9 − 5) = 6</div>
+<p class="ans">Q = 4, 5, 5, 6 — the running mean of the rewards (24/4 = 6), computed without storing them.</p>
+<p class="mean">The form "new = old + step × (target − old)" is the same shape as the Q-learning update in topic 51.</p>
+</div></section>
+
+<section class="ex"><div class="exh"><span class="lvl e">Example 3 · Exam level</span><span class="src">Source: practice problem (UCB from Sutton &amp; Barto, §2.7)</span></div><div class="body">
+<p class="q">After t = 15 pulls, three arms have estimates Q = (0.8, 0.6, 0.5) from N = (10, 3, 2) pulls. (i) Which arm does a greedy agent choose? (ii) Which does UCB with c = 2 choose? (iii) Explain the difference and give two real applications of this trade-off.</p>
+<div class="calc">ln 15 = 2.708
+Arm 1: 0.8 + 2√(2.708/10) = 0.8 + 2(0.5204) = 1.841
+Arm 2: 0.6 + 2√(2.708/3)  = 0.6 + 2(0.9501) = 2.500
+Arm 3: 0.5 + 2√(2.708/2)  = 0.5 + 2(1.1636) = 2.827</div>
+<p class="ans">(i) Greedy picks arm 1 (highest Q = 0.8). (ii) UCB picks arm 3 (2.827).</p>
+<p class="mean">Arm 3 has been tried only twice, so its estimate is very uncertain; UCB's bonus rewards that uncertainty, so it explores arm 3 before committing to arm 1. As N grows the bonus shrinks and UCB settles on the truly best arm. Applications: A/B testing of web pages or ads (try new versions vs show the current best), clinical trial allocation, recommendation systems (suggest familiar items vs new ones), game-playing agents.</p>
+</div></section>
+
+<div class="pit"><b>Common mistakes</b><ul><li>Writing P(greedy) = 1 − ε (forgetting the ε/k share).</li><li>Saying exploration is wasted effort; it is how the agent finds better actions.</li></ul></div>
+<div class="rev"><b>Quick revision</b><p>Exploit = use best-known action; explore = try others to learn. ε-greedy: 1 − ε + ε/k for greedy. UCB = Q + c√(ln t/N). Decay ε over time. Bandits, A/B tests, recommendations.</p></div>
+<nav class="pn" aria-label="Previous and next topic"><a class="prev" href="#t51"><span>← Previous · 51</span>Agent, environment, state, action, reward, policy, value function, Q-value</a></nav></article>
+
+<footer><span>Sources are named under every example. "Course material" means a file in your ML_theory folder. "Practice problem" means a problem written for this guide, with every number checked by calculation.</span>
+<span><a href="index.html">Back to the study guide</a></span></footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var side=document.getElementById('sidenav'), bd=document.getElementById('sn-backdrop'),
+      tog=document.getElementById('sn-toggle'), cls=document.getElementById('sn-close'),
+      wide=window.matchMedia('(min-width:1100px)');
+  function openNav(){side.classList.add('open'); bd.hidden=false; tog.setAttribute('aria-expanded','true'); var f=document.getElementById('navfilter'); if(f) f.focus();}
+  function closeNav(){side.classList.remove('open'); bd.hidden=true; tog.setAttribute('aria-expanded','false');}
+  tog.addEventListener('click',function(){side.classList.contains('open')?closeNav():openNav();});
+  cls.addEventListener('click',function(){closeNav(); tog.focus();});
+  bd.addEventListener('click',closeNav);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&side.classList.contains('open')){closeNav();tog.focus();}});
+  side.addEventListener('click',function(e){var a=e.target.closest('a'); if(a && !wide.matches) closeNav();});
+  // filter
+  var f=document.getElementById('navfilter'), empty=document.getElementById('sn-empty');
+  var units=[].slice.call(side.querySelectorAll('.sn-unit')), opened=units.map(function(u){return u.open;});
+  f.addEventListener('input',function(){
+    var q=f.value.trim().toLowerCase(), any=false;
+    units.forEach(function(u,i){
+      var shown=0;
+      u.querySelectorAll('.sn-link').forEach(function(a){var ok=!q||a.textContent.toLowerCase().indexOf(q)>-1; a.hidden=!ok; if(ok) shown++;});
+      u.querySelectorAll('.sn-sec').forEach(function(s){var n=s.nextElementSibling, vis=false; while(n&&n.classList.contains('sn-link')){if(!n.hidden)vis=true; n=n.nextElementSibling;} s.hidden=!vis;});
+      u.hidden=shown===0; if(shown) any=true;
+      u.open=q?shown>0:opened[i];
+    });
+    empty.hidden=any;
+  });
+  // highlight the topic being read
+  var links={}; side.querySelectorAll('.sn-link[data-t]').forEach(function(a){if(!a.classList.contains('other')) links[a.dataset.t]=a;});
+  var current=null;
+  function mark(id){
+    if(current===id||!links[id]) return; if(current&&links[current]) links[current].removeAttribute('aria-current');
+    current=id; var a=links[id]; a.setAttribute('aria-current','true');
+    if(wide.matches){var top=a.offsetTop, h=side.clientHeight; if(top<side.scrollTop+60||top>side.scrollTop+h-60) side.scrollTop=top-h/3;}
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting) mark(e.target.id);});},{rootMargin:'-20% 0px -70% 0px'});
+    document.querySelectorAll('article.topic').forEach(function(t){io.observe(t);});
+  }
+  var h=location.hash.replace('#',''); if(links[h]) mark(h); else { var first=document.querySelector('article.topic'); if(first) mark(first.id); }
+})();
+</script>
+
+<script src="sims.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>23CSE301 ML Study Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: answer-booklet column — sticky section nav, one reading column, exam-paper question cards with their own diagrams */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface-2:#eef1f6; --line:#d9dee7; --grid:#e4e8ef;
+  --ink:#18202e; --ink-2:#4a5466; --ink-3:#6b7486;
+  --accent:#4b3fb5; --accent-soft:#e9e7fb;
+  --u1:#2a78d6; --u2:#eb6834; --u3:#1baf7a;
+  --p-high:#d03b3b; --p-mid:#ec835a; --p-low:#fab219;
+  --cov-in:#4b3fb5; --cov-part:#a59df0;
+  --pos:#4b3fb5; --neg:#4a5466;
+  --f-display:"Zilla Slab", "Rockwell", Georgia, serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+    --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+    --accent:#9d93f0; --accent-soft:#2a2650;
+    --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+    --cov-in:#9d93f0; --cov-part:#4d4590;
+    --pos:#9d93f0; --neg:#b4bccb;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141a; --surface:#1b1f26; --surface-2:#232833; --line:#2e3542; --grid:#2a303b;
+  --ink:#e8ebf1; --ink-2:#b4bccb; --ink-3:#8c95a6;
+  --accent:#9d93f0; --accent-soft:#2a2650;
+  --u1:#3987e5; --u2:#d95926; --u3:#199e70;
+  --cov-in:#9d93f0; --cov-part:#4d4590;
+  --pos:#9d93f0; --neg:#b4bccb;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 64px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.75rem;font-weight:700}
+h3{font-size:1.25rem;font-weight:600}
+p{margin:0}
+.prose{max-width:68ch}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,summary:focus-visible,.seg:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--f-mono);font-size:.86em}
+.muted{color:var(--ink-2)}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+
+/* nav */
+.topnav{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)))}
+.topnav .wrap{display:flex;gap:4px 18px;flex-wrap:wrap;align-items:center;padding:10px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px))}
+.topnav strong{font-family:var(--f-mono);font-size:.82rem;margin-right:auto;color:var(--ink)}
+.topnav a{font-size:.92rem;text-decoration:none;color:var(--ink-2)}
+.topnav a:hover{color:var(--accent)}
+.topnav a.unitlink{color:var(--accent);font-weight:600}
+.unitcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:6px}
+.unitcard{display:grid;gap:3px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.unitcard:hover{border-color:var(--accent)}
+.unitcard b{font-family:var(--f-display);font-size:1.15rem}
+.sollink{font-size:.86rem;font-weight:600;margin-left:auto;white-space:nowrap}
+
+/* header */
+header.hero{padding-block:44px 28px;display:grid;gap:14px}
+.hero .lede{font-size:1.12rem;color:var(--ink-2);max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--f-mono);font-size:.85rem;color:var(--ink-2);padding-top:6px;border-top:1px solid var(--line)}
+.facts b{color:var(--ink);font-weight:600}
+
+section{padding-block:40px 8px;display:grid;gap:18px;scroll-margin-top:64px}
+section > .sec-head{display:grid;gap:6px}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;padding:2px 9px 2px 7px;border:1px solid var(--line);border-radius:999px;background:var(--surface);white-space:nowrap;color:var(--ink)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.d-high{background:var(--p-high)} .d-mid{background:var(--p-mid)} .d-low{background:var(--p-low)}
+.tag{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-2);background:var(--surface-2);border-radius:4px;padding:1px 6px;white-space:nowrap}
+.src{font-family:var(--f-mono);font-size:.72rem;font-weight:600;border-radius:4px;padding:1px 6px;white-space:nowrap}
+.src-M{background:var(--accent-soft);color:var(--accent)}
+.src-P{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--ink-3)}
+.src-X{background:transparent;color:var(--p-high);border:1px solid var(--p-high)}
+
+/* blueprint chart */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:16px;min-width:0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.9rem;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.bar{display:flex;gap:2px;height:30px}
+.seg{border-radius:2px;position:relative;cursor:default}
+.seg:first-child{border-radius:4px 2px 2px 4px}.seg:last-child{border-radius:2px 4px 4px 2px}
+.bar-labels{display:flex;gap:2px;font-family:var(--f-mono);font-size:.74rem;color:var(--ink-2)}
+.bar-labels div{text-align:center;line-height:1.3}
+.bar-labels b{display:block;color:var(--ink);font-weight:600}
+.axis{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:.7rem;color:var(--ink-3);border-top:1px solid var(--grid);padding-top:3px}
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.hbars{display:grid;gap:7px}
+.hrow{display:grid;grid-template-columns:62px 1fr 34px;gap:10px;align-items:center;font-size:.86rem}
+.hrow .lab{font-family:var(--f-mono);color:var(--ink-2)}
+.hrow .val{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;color:var(--ink)}
+.track{height:12px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.fill{height:100%;background:var(--accent);border-radius:0 4px 4px 0}
+.tooltip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--bg);font-size:.82rem;line-height:1.35;padding:7px 10px;border-radius:6px;max-width:260px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+
+/* question cards */
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;overflow:hidden}
+.qcard .qtext{padding:20px;display:grid;gap:12px;align-content:start;min-width:0}
+.qcard .qfig{padding:16px;background:var(--surface-2);border-left:1px solid var(--line);display:grid;gap:8px;align-content:start;min-width:0}
+.qhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+.qnum{font-family:var(--f-display);font-size:1.9rem;font-weight:700;color:var(--ink);line-height:1}
+.qparts{display:grid;gap:4px;margin:0;padding:0;list-style:none;font-size:.95rem}
+.qparts li{display:grid;grid-template-columns:28px 1fr auto;gap:6px}
+.qparts li span:last-child{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-3);white-space:nowrap}
+.kv{display:grid;gap:8px;font-size:.94rem}
+.kv div{display:grid;grid-template-columns:76px 1fr;gap:10px}
+.kv dt,.kv .k{font-family:var(--f-mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);padding-top:3px}
+.formula{font-family:var(--f-mono);font-size:.86rem;background:var(--surface-2);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:nowrap}
+.redpen{border:1.5px solid var(--p-high);border-radius:8px;padding:10px 12px;font-size:.92rem;display:grid;gap:4px}
+.redpen strong{color:var(--p-high);font-family:var(--f-mono);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase}
+.figcap{font-size:.82rem;color:var(--ink-2);line-height:1.4}
+svg{display:block;max-width:100%;height:auto}
+svg text{font-family:var(--f-mono);fill:var(--ink-2)}
+.tbl-wrap{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:.9rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);font-weight:600}
+.qfig table{background:var(--surface);border-radius:6px;font-size:.84rem}
+.qfig th,.qfig td{padding:5px 8px}
+.samples{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.samples div{background:var(--surface);border:1px solid var(--line);border-radius:6px;text-align:center;padding:8px 2px;font-family:var(--f-mono);font-size:.8rem;display:grid;gap:2px}
+.samples b{font-family:var(--f-display);font-size:1.2rem;color:var(--ink)}
+.samples .wrong{border-color:var(--p-high);border-width:1.5px}
+.samples .wrong i{color:var(--p-high);font-style:normal;font-weight:600}
+.samples .right i{color:var(--ink-3);font-style:normal}
+
+/* materials */
+.cov-list{display:grid;gap:10px}
+.cov-row{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
+.cov-row .lab{font-family:var(--f-mono);font-size:.82rem;color:var(--ink-2)}
+.cov-bar{display:flex;gap:2px;height:26px}
+.cov-bar div{display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:.76rem;font-weight:600;border-radius:2px}
+.cov-bar div:first-child{border-radius:4px 2px 2px 4px}.cov-bar div:last-child{border-radius:2px 4px 4px 2px}
+.c-in{background:var(--cov-in);color:var(--bg)}
+.c-part{background:var(--cov-part);color:var(--ink)}
+.c-miss{background:repeating-linear-gradient(45deg,transparent 0 4px,var(--grid) 4px 6px);border:1.5px solid var(--p-high);color:var(--p-high)}
+.cols-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+ul.plain{margin:0;padding-left:1.1em;display:grid;gap:6px}
+.notes{display:grid;gap:10px}
+.note{display:grid;grid-template-columns:150px 1fr;gap:12px;font-size:.95rem;padding-block:8px;border-top:1px solid var(--line)}
+.note .k{font-family:var(--f-mono);font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);padding-top:3px}
+
+/* checklist */
+.progress{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-size:.92rem;color:var(--ink-2)}
+details.unit{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+details.unit > summary{cursor:pointer;list-style:none;padding:14px 18px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+details.unit > summary::-webkit-details-marker{display:none}
+details.unit > summary::before{content:"▸";color:var(--ink-3);transition:transform .15s}
+details.unit[open] > summary::before{transform:rotate(90deg)}
+details.unit > summary h3{font-size:1.2rem}
+.sub{padding:4px 18px 14px;display:grid;gap:2px}
+.sub h4{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:14px 0 4px;font-weight:600}
+.item{display:grid;grid-template-columns:18px minmax(0,1fr);gap:12px;padding:9px 0;border-top:1px solid var(--line)}
+.box{width:16px;height:16px;border:1.5px solid var(--ink-3);border-radius:3px;margin-top:4px}
+.item .t{font-weight:600}
+.item .t a{color:var(--ink);text-decoration:none}
+.item .t a:hover{color:var(--accent);text-decoration:underline}
+.item .meta{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin-top:4px}
+.item .why{font-size:.9rem;color:var(--ink-2);margin-top:3px}
+.item .files{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-3)}
+
+/* plan */
+ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line)}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--f-mono);font-size:.85rem;color:var(--ink-3)}
+ol.steps li.done::before{color:var(--accent)}
+.state{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-3)}
+li.done .state{color:var(--accent);font-weight:600}
+li.now{background:var(--accent-soft);border-radius:6px;padding-inline:8px;margin-inline:-8px}
+.cmds{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.cmd{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;gap:4px}
+.cmd b{font-family:var(--f-mono);font-size:.86rem;color:var(--accent);letter-spacing:.03em}
+.cmd span{font-size:.9rem;color:var(--ink-2)}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-3)}
+
+@media (max-width:760px){
+  .qcard{grid-template-columns:1fr}
+  .qcard .qfig{border-left:0;border-top:1px solid var(--line)}
+  .note{grid-template-columns:1fr;gap:2px}
+  .kv div{grid-template-columns:1fr;gap:0}
+  .bar-labels{font-size:.64rem}
+  body{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Sections">
+  <div class="wrap">
+    <strong>23CSE301 · ML</strong>
+    <a href="#exam">Exam map</a>
+    <a href="#paper">Oct 2025 paper</a>
+    <a href="#materials">Materials</a>
+    <a href="#coverage">Coverage &amp; gaps</a>
+    <a href="#checklist">Checklist</a>
+    <a href="#plan">Course plan</a>
+    <a href="unit-1.html" class="unitlink">Unit I topics</a>
+    <a href="unit-2.html" class="unitlink">Unit II topics</a>
+    <a href="unit-3.html" class="unitlink">Unit III topics</a>
+    <a href="lab.html" class="unitlink">Simulator Lab</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">Amrita Vishwa Vidyapeetham · B.Tech CSE · Semester V</span>
+  <h1>23CSE301 Machine Learning — Study Guide</h1>
+  <p class="lede">What your course folder covers, what the October 2025 end-semester paper tested, what is missing from the notes, and the order we will study every syllabus topic in. Theory and hand calculation only; no code.</p>
+  <div class="facts">
+    <span><b>50</b> marks</span><span><b>2</b> hours</span><span><b>8</b> compulsory questions</span><span><b>~38</b> marks numerical</span><span><b>34</b> files analysed</span><span>Updated 30 Oct 2026</span>
+  </div>
+  <div class="unitcards">
+    <a class="unitcard" href="unit-1.html"><span class="sw" style="background:var(--u1)"></span><b>Unit I</b><span>Introduction and Fundamentals</span><span class="mono muted">22 topics · 66 solved examples</span></a>
+    <a class="unitcard" href="unit-2.html"><span class="sw" style="background:var(--u2)"></span><b>Unit II</b><span>Supervised Learning</span><span class="mono muted">20 topics · 60 solved examples</span></a>
+    <a class="unitcard" href="unit-3.html"><span class="sw" style="background:var(--u3)"></span><b>Unit III</b><span>Unsupervised and Ensemble Learning</span><span class="mono muted">10 topics · 30 solved examples</span></a>
+    <a class="unitcard" href="lab.html"><span class="sw" style="background:var(--accent)"></span><b>Simulator Lab</b><span>Interactive versions of the key algorithms</span><span class="mono muted">29 simulators · 29 topics</span></a>
+  </div>
+</header>
+
+<!-- ============ EXAM MAP ============ -->
+<section id="exam">
+  <div class="sec-head">
+    <span class="eyebrow">Part 1</span>
+    <h2>Where the 50 marks went in October 2025</h2>
+    <p class="prose muted">Each block is one question, sized by its marks and coloured by syllabus unit. Unit II carried more than half the paper. Hover or tab to a block for its topic.</p>
+  </div>
+  <div class="panel">
+    <div class="legend" id="unit-legend"></div>
+    <div>
+      <div class="bar" id="blueprint" role="img" aria-label="Marks per question in the October 2025 paper, coloured by unit"></div>
+      <div class="bar-labels" id="blueprint-labels" aria-hidden="true"></div>
+      <div class="axis" aria-hidden="true"><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50 marks</span></div>
+    </div>
+    <div class="mini-grid">
+      <div class="hbars" aria-label="Marks by course outcome">
+        <span class="eyebrow">Marks by course outcome</span>
+        <div id="co-bars" class="hbars"></div>
+      </div>
+      <div class="hbars" aria-label="Marks by Bloom's level">
+        <span class="eyebrow">Marks by Bloom's level</span>
+        <div id="btl-bars" class="hbars"></div>
+      </div>
+    </div>
+    <p class="figcap">CO4 is "apply supervised learning techniques for classification". No marks went to CO1 (fundamentals) or CO2 (programming), and nothing was set at BTL1 (recall) or BTL5. The paper rewards applying an algorithm by hand, not reciting definitions.</p>
+  </div>
+</section>
+
+<!-- ============ PAPER ============ -->
+<section id="paper">
+  <div class="sec-head">
+    <span class="eyebrow">Part 2</span>
+    <h2>The October 2025 paper, question by question</h2>
+    <p class="prose muted">What each question tests, the method you need, and where students lose marks. Each card links to its full worked solution on the unit pages. The diagrams here show the question's data only.</p>
+  </div>
+
+  <!-- Q1 -->
+  <article class="qcard" id="q1">
+    <div class="qtext">
+      <div class="qhead"><span class="qnum">Q1</span><h3>ID3 decision tree</h3><span class="tag">[6][CO04][BTL4]</span><span class="chip"><span class="sw" style="background:var(--u2)"></span>Unit II</span><a class="sollink" href="unit-2.html#t23">Full solution: Topic 23 →</a></div>
+      <p>Build the ID3 tree that predicts whether a patient has the disease.</p>
+      <ul class="qparts">
+        <li><span>(a)</span><span>Initial entropy of the dataset</span><span>2 marks</span></li>
+        <li><span>(b)</span><span>Best attribute for the root split</span><span>2 marks</span></li>
+        <li><span>(c)</span><span>State the splitting criterion</span><span>1 mark</span></li>
+        <li><span>(d)</span><span>Draw the final tree</span><span>1 mark</span></li>
+      </ul>
+      <div class="formula">Entropy(S) = −Σ pᵢ log₂ pᵢ &nbsp;·&nbsp; Gain(S,A) = Entropy(S) − Σ (|Sᵥ|/|S|)·Entropy(Sᵥ)</div>
+      <div class="kv">
+        <div><span class="k">Method</span><span>Entropy of S, then information gain for Fever, Cough and Fatigue. The largest gain becomes the root. Expand only the branches that are still impure.</span></div>
+        <div><span class="k">Watch</span><span>Check each branch for purity before expanding. On this data the tree can stop after one split, and students lose time building levels that do not exist.</span></div>
+      </div>
+    </div>
+    <div class="qfig">
+      <span class="eyebrow">Given data</span>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Patient</th><th>Fever</th><th>Cough</th><th>Fatigue</th><th>Disease</th></tr></thead>
+        <tbody>
+          <tr><td>P1</td><td>High</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+          <tr><td>P2</td><td>Normal</td><td>No</td><td>No</td><td>No</td></tr>
+          <tr><td>P3</td><td>High</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>P4</td><td>Low</td><td>No</td><td>Yes</td><td>No</td></tr>
+          <tr><td>P5</td><td>Normal</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+        </tbody>
+      </table></div>
+      <p class="figcap">5 patients, 3 attributes, binary target (3 Yes, 2 No).</p>
+    </div>
+  </article>
+
+  <!-- Q2 -->
+  <article class="qcard" id="q2">
+    <div class="qtext">
+      <div class="qhead"><span class="qnum">Q2</span><h3>Regularization and KNN distance metrics</h3><span class="tag">[6][CO04][BTL2]</span><span class="chip"><span class="sw" style="background:var(--u1)"></span>Unit I</span><a class="sollink" href="unit-1.html#t15">Full solution: Topics 15 &amp; 18 →</a></div>
+      <ul class="qparts">
+        <li><span>(a)</span><span>How increasing λ affects the bias–variance trade-off</span><span>2 marks</span></li>
+        <li><span>(b)</span><span>How Euclidean vs Manhattan distance changes KNN's result, with a 1–2 line scenario where one suits better</span><span>4 marks</span></li>
+      </ul>
+      <div class="formula">Euclidean d = √Σ(xᵢ−yᵢ)² &nbsp;·&nbsp; Manhattan d = Σ|xᵢ−yᵢ| &nbsp;·&nbsp; Minkowski d = (Σ|xᵢ−yᵢ|ᵖ)^(1/p)</div>
+      <div class="kv">
+        <div><span class="k">Method</span><span>Theory, written precisely. Link λ to model complexity, then to bias and variance. For (b), explain that different metrics can rank neighbours differently and so change the vote.</span></div>
+        <div><span class="k">Watch</span><span>Four marks for an explanation means a concrete scenario is expected, such as grid-like city-block movement or high-dimensional data for Manhattan. Mention feature scaling too.</span></div>
+      </div>
+    </div>
+    <div class="qfig">
+      <span class="eyebrow">The two metrics on one grid</span>
+      <svg viewBox="0 0 300 220" role="img" aria-label="Two points on a grid: the Euclidean path is a straight diagonal of length 5; the Manhattan path follows the grid with length 7">
+        <g stroke="var(--grid)" stroke-width="1">
+          <path d="M30 20V200M70 20V200M110 20V200M150 20V200M190 20V200M230 20V200M270 20V200"/>
+          <path d="M30 20H270M30 60H270M30 100H270M30 140H270M30 180H270"/>
+        </g>
+        <path d="M70 180H190V20" fill="none" stroke="var(--u2)" stroke-width="2.5" stroke-dasharray="7 4"/>
+        <path d="M70 180L190 20" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="70" cy="180" r="6" fill="var(--ink)"/><circle cx="190" cy="20" r="6" fill="var(--ink)"/>
+        <text x="58" y="206" font-size="11">A (1,0)</text>
+        <text x="200" y="24" font-size="11">B (4,4)</text>
+        <text x="102" y="92" font-size="11" style="fill:var(--accent)">Euclidean = 5</text>
+        <text x="196" y="120" font-size="11" style="fill:var(--u2)">Manhattan = 3+4 = 7</text>
+      </svg>
+      <p class="figcap">Illustration (not from the paper): Euclidean takes the straight line, Manhattan adds the moves along each axis.</p>
+    </div>
+  </article>
+
+  <!-- Q3 -->
+  <article class="qcard" id="q3">
+    <div class="qtext">
+      <div class="qhead"><span class="qnum">Q3</span><h3>SVM: support vectors and the maximum marginal hyperplane</h3><span class="tag">[8][CO04][BTL4]</span><span class="chip"><span class="sw" style="background:var(--u2)"></span>Unit II</span><a class="sollink" href="unit-2.html#t27">Full solution: Topic 27 →</a></div>
+      <ul class="qparts">
+        <li><span>(a)</span><span>What are support vectors?</span><span>2 marks</span></li>
+        <li><span>(b)</span><span>Design a linear SVM that finds the MMH for the two classes</span><span>6 marks</span></li>
+      </ul>
+      <div class="formula">Σⱼ αⱼ (s̃ⱼ · s̃ᵢ) = yᵢ &nbsp;→&nbsp; w̃ = Σ αᵢ s̃ᵢ &nbsp;→&nbsp; hyperplane w·x + b = 0</div>
+      <div class="kv">
+        <div><span class="k">Method</span><span>The course method (Classification.pdf, slides 137–143): plot the points, choose the support vectors, augment each with a bias input of 1, solve the α equations, form w̃, and read off w and b. Cross-check geometrically: the hyperplane sits midway between the closest opposite points.</span></div>
+        <div><span class="k">Watch</span><span>Show the plot. Examiners award marks for identifying the support vectors visually before any algebra.</span></div>
+      </div>
+      <div class="redpen">
+        <strong>Error in the paper</strong>
+        <span>The positive point (−2, −6) sits far below the negative class. With it, the shaded positive region contains the negative point (−1, 0), so no straight line separates the classes, even though the question says they are linearly separable. It was almost certainly meant to be (−2, 6). In the exam, state the correction in one line and solve with it.</span>
+      </div>
+    </div>
+    <div class="qfig">
+      <span class="eyebrow">Given data, as printed</span>
+      <svg viewBox="0 0 360 380" role="img" aria-label="Scatter of the SVM data. Positive points cluster at the top; the printed point minus 2, minus 6 lies at the bottom, and the region spanned by the positive points covers the negative point minus 1, 0.">
+        <g stroke="var(--grid)" stroke-width="1">
+          <path d="M40 20V344M90 20V344M140 20V344M190 20V344M240 20V344M290 20V344M340 20V344"/>
+          <path d="M40 63.2H340M40 128H340M40 192.8H340M40 257.6H340M40 322.4H340"/>
+        </g>
+        <path d="M40 192.8H340M190 20V344" stroke="var(--ink-3)" stroke-width="1.2"/>
+        <polygon points="90,322.4 240,41.6 190,41.6 140,63.2" fill="var(--accent)" fill-opacity=".12" stroke="var(--accent)" stroke-dasharray="4 3" stroke-width="1.2"/>
+        <g font-size="10">
+          <text x="40" y="360" text-anchor="middle">−3</text><text x="90" y="360" text-anchor="middle">−2</text><text x="140" y="360" text-anchor="middle">−1</text><text x="190" y="360" text-anchor="middle">0</text><text x="240" y="360" text-anchor="middle">1</text><text x="290" y="360" text-anchor="middle">2</text><text x="340" y="360" text-anchor="middle">3</text>
+          <text x="32" y="66.7" text-anchor="end">6</text><text x="32" y="131.5" text-anchor="end">3</text><text x="32" y="196.3" text-anchor="end">0</text><text x="32" y="261" text-anchor="end">−3</text><text x="32" y="325.9" text-anchor="end">−6</text>
+          <text x="340" y="376" text-anchor="end">x₁</text>
+        </g>
+        <!-- ghost of the likely intended point -->
+        <circle cx="90" cy="63.2" r="6.5" fill="none" stroke="var(--ink-3)" stroke-dasharray="3 2" stroke-width="1.5"/>
+        <text x="58" y="50" font-size="10">(−2,6)?</text>
+        <!-- positives -->
+        <g fill="var(--pos)" stroke="var(--surface-2)" stroke-width="2">
+          <circle cx="140" cy="63.2" r="6.5"/><circle cx="190" cy="84.8" r="6.5"/><circle cx="240" cy="41.6" r="6.5"/><circle cx="190" cy="41.6" r="6.5"/><circle cx="90" cy="322.4" r="6.5"/>
+        </g>
+        <circle cx="90" cy="322.4" r="12" fill="none" stroke="var(--p-high)" stroke-width="2"/>
+        <text x="106" y="326" font-size="10" style="fill:var(--p-high)">(−2,−6) as printed</text>
+        <!-- negatives -->
+        <g fill="var(--surface)" stroke="var(--neg)" stroke-width="2">
+          <rect x="134" y="186.8" width="12" height="12" rx="2"/><rect x="184" y="122" width="12" height="12" rx="2"/><rect x="234" y="186.8" width="12" height="12" rx="2"/><rect x="84" y="208.4" width="12" height="12" rx="2"/><rect x="284" y="208.4" width="12" height="12" rx="2"/>
+        </g>
+        <circle cx="140" cy="192.8" r="12" fill="none" stroke="var(--p-high)" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <text x="196" y="118" font-size="10">(0,3)</text>
+        <text x="196" y="88" font-size="10">(0,5)</text>
+      </svg>
+      <div class="legend"><span><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="var(--pos)"/></svg>Positive (Class 1)</span><span><svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2" fill="var(--surface)" stroke="var(--neg)" stroke-width="2"/></svg>Negative (Class 2)</span></div>
+      <p class="figcap">Shaded area: the region the five printed positive points span. The negative point (−1, 0), circled, falls inside it, which is why the printed data cannot be split by one line.</p>
+    </div>
+  </article>
+
+  <!-- Q4 -->
+  <article class="qcard" id="q4">
+    <div class="qtext">
+      <div class="qhead"><span class="qnum">Q4</span><h3>Random Forest roles and AdaBoost weight update</h3><span class="tag">[6][CO05][BTL3]</span><span class="chip"><span class="sw" style="background:var(--u3)"></span>Unit III</span><a class="sollink" href="unit-3.html#t50">Full solution: Topics 47 &amp; 50 →</a></div>
+      <ul class="qparts">
+        <li><span>(a)</span><span>Spam filter built as a Random Forest: name the base learner and the meta-model and how they combine</span><span>2 marks</span></li>
+        <li><span>(b)</span><span>New normalised weights for round 2 with ε = 0.33, and which samples gain influence</span><span>4 marks</span></li>
+      </ul>
+      <div class="formula">α = ½ ln((1 − ε)/ε) &nbsp;·&nbsp; wᵢ ← wᵢ · e^(±α) / Z</div>
+      <div class="kv">
+        <div><span class="k">Method</span><span>Compute α, multiply misclassified weights by e^(+α) and correct ones by e^(−α), add them up to get Z, then divide every weight by Z.</span></div>
+        <div><span class="k">Watch</span><span>The sign is the usual slip: misclassified samples get e^(+α). Z is the sum of the un-normalised weights, not 1. Check the new weights add to 1. ε = 0.33 is the rounded value of 2/6; use the value given.</span></div>
+      </div>
+    </div>
+    <div class="qfig">
+      <span class="eyebrow">Round 1: six samples, equal weights</span>
+      <div class="samples" aria-label="Samples A to F each with weight one sixth; D and F are misclassified">
+        <div class="right"><b>A</b>1/6<i>correct</i></div>
+        <div class="right"><b>B</b>1/6<i>correct</i></div>
+        <div class="right"><b>C</b>1/6<i>correct</i></div>
+        <div class="wrong"><b>D</b>1/6<i>wrong</i></div>
+        <div class="right"><b>E</b>1/6<i>correct</i></div>
+        <div class="wrong"><b>F</b>1/6<i>wrong</i></div>
+      </div>
+      <p class="figcap">The weak learner misclassifies D and F. Their weights will rise in round 2 and the other four will fall.</p>
+    </div>
+  </article>
+
+  <!-- Q5 -->
+  <article class="qcard" id="q5">
+    <div class="qtext">
+      <div class="qhead"><span class="qnum">Q5</span><h3>Logistic regression: odds and odds ratio</h3><span class="tag">[6][CO03][BTL3]</span><span class="chip"><span class="sw" style="background:var(--u1)"></span>Unit I</span><a class="sollink" href="unit-1.html#t17">Full solution: Topic 17 →</a></div>
+      <ul class="qparts">
+        <li><span>(a)</span><span>Odds of meeting targets for &gt;40 h and ≤40 h groups</span><span>2 marks</span></li>
+        <li><span>(b)</span><span>Odds ratio (&gt;40 h vs ≤40 h)</span><span>2 marks</span></li>
+        <li><span>(c)</span><span>Logistic regression model with hours (≤40 vs &gt;40) as predictor</span><span>2 marks</span></li>
+      </ul>
+      <div class="formula">odds = p/(1−p) = met/not met &nbsp;·&nbsp; OR = odds₁/odds₀ &nbsp;·&nbsp; ln(p/(1−p)) = β₀ + β₁x</div>
+      <div class="kv">
+        <div><span class="k">Method</span><span>Odds come straight from the counts. Code x = 1 for &gt;40 h and x = 0 for ≤40 h, so β₀ = ln(odds₀) and β₁ = ln(OR). Then write p = 1/(1 + e^−(β₀+β₁x)).</span></div>
+        <div><span class="k">Watch</span><span>Odds are not probabilities: 42/8, not 42/50. State the coding of x, or the model in (c) has no meaning.</span></div>
+      </div>
+      <div class="redpen">
+        <strong>Inconsistency in the paper</strong>
+        <span>The question says 50 employees, but the table adds up to 100. No answer changes, because odds use the counts within each row.</span>
+      </div>
+    </div>
+    <div class="qfig">
+      <span class="eyebrow">Given data</span>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Hours / week</th><th>Met (1)</th><th>Not met (0)</th><th>Row total</th></tr></thead>
+        <tbody>
+          <tr><td>&gt; 40</td><td>42</td><td>8</td><td>50</td></tr>
+          <tr><td>≤ 40</td><td>30</td><td>20</td><td>50</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </article>
+
+  <!-- Q6 -->
+  <article class="qcard" id="q6">
+    <div class="qtext">
+      <div class="qhead"><span class="qnum">Q6</span><h3>K-means and hierarchical clustering</h3><span class="tag">[6][CO05][BTL4]</span><span class="chip"><span class="sw" style="background:var(--u3)"></span>Unit III</span><a class="sollink" href="unit-3.html#t43">Full solution: Topics 43 &amp; 45 →</a></div>
+      <ul class="qparts">
+        <li><span>(a)</span><span>One K-means iteration from C1 = [1,7], C2 = [5,8], C3 = [1,1]: clusters and updated centroids</span><span>3 marks</span></li>
+        <li><span>(b)</span><span>Agglomerative clustering, single linkage, Manhattan distance, with dendrogram</span><span>3 marks</span></li>
+      </ul>
+      <div class="formula">centroid = (mean of x, mean of y) &nbsp;·&nbsp; single link D(A,B) = min d(a,b) &nbsp;·&nbsp; d = |x₁−x₂| + |y₁−y₂|</div>
+      <div class="kv">
+        <div><span class="k">Method</span><span>(a) Distance table, point to each centre; assign each point to its nearest centre; average each group. (b) Manhattan distance matrix; merge the closest pair; update distances with the minimum; repeat; draw the merges at their heights.</span></div>
+        <div><span class="k">Watch</span><span>One iteration only in (a). In (b) the paper asks for Manhattan, not Euclidean, and single linkage uses the closest pair of points, not the centroids.</span></div>
+      </div>
+    </div>
+    <div class="qfig">
+      <span class="eyebrow">(a) Points and initial centres</span>
+      <svg viewBox="0 0 360 290" role="img" aria-label="Six points for K-means; the initial centres C1, C2 and C3 sit on P1, P2 and P3">
+        <g stroke="var(--grid)" stroke-width="1">
+          <path d="M40 20V260M82.9 20V260M125.7 20V260M168.6 20V260M211.4 20V260M254.3 20V260M297.1 20V260M340 20V260"/>
+          <path d="M40 233.3H340M40 180H340M40 126.7H340M40 73.3H340M40 20H340"/>
+        </g>
+        <path d="M40 260H340M40 20V260" stroke="var(--ink-3)" stroke-width="1.2"/>
+        <g font-size="10">
+          <text x="40" y="276" text-anchor="middle">0</text><text x="82.9" y="276" text-anchor="middle">1</text><text x="125.7" y="276" text-anchor="middle">2</text><text x="168.6" y="276" text-anchor="middle">3</text><text x="211.4" y="276" text-anchor="middle">4</text><text x="254.3" y="276" text-anchor="middle">5</text><text x="297.1" y="276" text-anchor="middle">6</text><text x="340" y="276" text-anchor="middle">7</text>
+          <text x="32" y="236.8" text-anchor="end">1</text><text x="32" y="183.5" text-anchor="end">3</text><text x="32" y="130.2" text-anchor="end">5</text><text x="32" y="76.8" text-anchor="end">7</text><text x="32" y="23.5" text-anchor="end">9</text>
+        </g>
+        <g fill="var(--ink)" stroke="var(--surface-2)" stroke-width="2">
+          <circle cx="82.9" cy="73.3" r="5.5"/><circle cx="254.3" cy="46.7" r="5.5"/><circle cx="82.9" cy="233.3" r="5.5"/><circle cx="125.7" cy="46.7" r="5.5"/><circle cx="297.1" cy="73.3" r="5.5"/><circle cx="125.7" cy="206.7" r="5.5"/>
+        </g>
+        <g fill="none" stroke="var(--accent)" stroke-width="2">
+          <circle cx="82.9" cy="73.3" r="11"/><circle cx="254.3" cy="46.7" r="11"/><circle cx="82.9" cy="233.3" r="11"/>
+        </g>
+        <g font-size="10">
+          <text x="58" y="96">P1 · C1</text><text x="230" y="70">P2 · C2</text><text x="58" y="256">P3 · C3</text>
+          <text x="134" y="43">P4 (2,8)</text><text x="262" y="96">P5 (6,7)</text><text x="134" y="203">P6 (2,2)</text>
+        </g>
+      </svg>
+      <span class="eyebrow">(b) Four points for single linkage</span>
+      <svg viewBox="0 0 300 250" role="img" aria-label="Four points: P1 at 2,3 and P2 at 3,3 close together; P3 at 6,6 and P4 at 8,8 further up">
+        <g stroke="var(--grid)" stroke-width="1">
+          <path d="M36 16V228M91.1 16V228M146.2 16V228M201.3 16V228M256.4 16V228"/>
+          <path d="M36 157.3H284M36 86.6H284M36 16H284"/>
+        </g>
+        <path d="M36 228H284M36 16V228" stroke="var(--ink-3)" stroke-width="1.2"/>
+        <g font-size="10">
+          <text x="36" y="243" text-anchor="middle">0</text><text x="91.1" y="243" text-anchor="middle">2</text><text x="146.2" y="243" text-anchor="middle">4</text><text x="201.3" y="243" text-anchor="middle">6</text><text x="256.4" y="243" text-anchor="middle">8</text>
+          <text x="28" y="160.8" text-anchor="end">3</text><text x="28" y="90" text-anchor="end">6</text><text x="28" y="19.5" text-anchor="end">9</text>
+        </g>
+        <g fill="var(--ink)" stroke="var(--surface-2)" stroke-width="2">
+          <circle cx="91.1" cy="157.3" r="5.5"/><circle cx="118.7" cy="157.3" r="5.5"/><circle cx="201.3" cy="86.6" r="5.5"/><circle cx="256.4" cy="39.5" r="5.5"/>
+        </g>
+        <g font-size="10"><text x="70" y="180">P1</text><text x="112" y="180">P2</text><text x="210" y="90">P3</text><text x="232" y="36" text-anchor="end">P4</text></g>
+      </svg>
+    </div>
+  </article>
+
+  <!-- Q7 -->
+  <article class="qcard" id="q7">
+    <div class="qtext">
+      <div class="qhead"><span class="qnum">Q7</span><h3>Hidden Markov Model and Markov chain</h3><span class="tag">[6][CO04][BTL3]</span><span class="chip"><span class="sw" style="background:var(--u2)"></span>Unit II</span><a class="sollink" href="unit-2.html#t32">Full solution: Topics 32 &amp; 33 →</a></div>
+      <ul class="qparts">
+        <li><span>(a)</span><span>Speech recognition as an HMM: hidden states, observations, how they relate</span><span>2 marks</span></li>
+        <li><span>(b)</span><span>Probability of the sequence {Sunny, Cloudy, Rainy, Rainy}, and interpret it</span><span>4 marks</span></li>
+      </ul>
+      <div class="formula">P(q₁, q₂, …, q_T) = π(q₁) · a(q₁→q₂) · a(q₂→q₃) · … · a(q_{T−1}→q_T)</div>
+      <div class="kv">
+        <div><span class="k">Method</span><span>(a) Hidden states are the phonemes or words; observations are the acoustic feature vectors; emission probabilities link them. (b) Start probability times one transition for each step, read row → column from the matrix.</span></div>
+        <div><span class="k">Watch</span><span>Do not drop π(Sunny). Read the matrix as from-row to-column. This is a plain Markov chain, so there are no emission probabilities in (b). A small answer is expected; say what it means.</span></div>
+      </div>
+    </div>
+    <div class="qfig">
+      <span class="eyebrow">Transition diagram for (b)</span>
+      <svg viewBox="0 0 460 330" role="img" aria-label="Markov chain with states Sunny, Cloudy and Rainy. Self-loops: Sunny 0.6, Cloudy 0.4, Rainy 0.4. Sunny to Cloudy 0.3, Cloudy to Sunny 0.4, Sunny to Rainy 0.1, Rainy to Sunny 0.3, Cloudy to Rainy 0.2, Rainy to Cloudy 0.3. Initial probabilities 0.5, 0.3, 0.2.">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker>
+        </defs>
+        <g transform="translate(20,10)" fill="none" stroke="var(--ink-2)" stroke-width="1.6" marker-end="url(#arr)">
+          <path d="M122 222Q210 262 298 222"/>
+          <path d="M298 198Q210 178 122 198"/>
+          <path d="M118 189Q169 156 194 101"/>
+          <path d="M182 91Q131 124 106 179"/>
+          <path d="M302 189Q251 156 226 101"/>
+          <path d="M238 91Q289 124 314 179"/>
+          <path d="M60 195C20 175 20 245 60 225"/>
+          <path d="M360 195C400 175 400 245 360 225"/>
+          <path d="M195 42C175 2 245 2 225 42"/>
+        </g>
+        <g transform="translate(20,10)">
+          <circle cx="90" cy="210" r="34" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.8"/>
+          <circle cx="330" cy="210" r="34" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.8"/>
+          <circle cx="210" cy="70" r="34" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.8"/>
+          <g font-size="12" text-anchor="middle" style="font-weight:600">
+            <text x="90" y="214" style="fill:var(--ink)">Sunny</text>
+            <text x="330" y="214" style="fill:var(--ink)">Cloudy</text>
+            <text x="210" y="74" style="fill:var(--ink)">Rainy</text>
+          </g>
+          <g font-size="11" text-anchor="middle">
+            <text x="210" y="262">0.3</text>
+            <text x="210" y="176">0.4</text>
+            <text x="176" y="166">0.1</text>
+            <text x="120" y="118">0.3</text>
+            <text x="244" y="166">0.2</text>
+            <text x="300" y="118">0.3</text>
+            <text x="14" y="214" text-anchor="end">0.6</text>
+            <text x="406" y="214" text-anchor="start">0.4</text>
+            <text x="252" y="24" text-anchor="start">0.4</text>
+          </g>
+          <g font-size="10" text-anchor="middle" style="fill:var(--accent)">
+            <text x="90" y="262" style="fill:var(--accent)">π = 0.5</text>
+            <text x="330" y="262" style="fill:var(--accent)">π = 0.3</text>
+            <text x="150" y="30" style="fill:var(--accent)">π = 0.2</text>
+          </g>
+        </g>
+      </svg>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>From \ To</th><th>Sunny</th><th>Cloudy</th><th>Rainy</th></tr></thead>
+        <tbody>
+          <tr><td>Sunny</td><td>0.6</td><td>0.3</td><td>0.1</td></tr>
+          <tr><td>Cloudy</td><td>0.4</td><td>0.4</td><td>0.2</td></tr>
+          <tr><td>Rainy</td><td>0.3</td><td>0.3</td><td>0.4</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </article>
+
+  <!-- Q8 -->
+  <article class="qcard" id="q8">
+    <div class="qtext">
+      <div class="qhead"><span class="qnum">Q8</span><h3>Perceptron for the NAND gate</h3><span class="tag">[6][CO04][BTL4]</span><span class="chip"><span class="sw" style="background:var(--u2)"></span>Unit II</span><a class="sollink" href="unit-2.html#t37">Full solution: Topic 37 →</a></div>
+      <ul class="qparts">
+        <li><span>(a)</span><span>First iteration: net input y and output o for all four patterns</span><span>3 marks</span></li>
+        <li><span>(b)</span><span>Which pattern, if any, is misclassified</span><span>1 mark</span></li>
+        <li><span>(c)</span><span>Apply the update rule and give the new weights and bias</span><span>2 marks</span></li>
+      </ul>
+      <div class="formula">y = w₁x₁ + w₂x₂ + b &nbsp;·&nbsp; o = 1 if y ≥ 0 else 0 &nbsp;·&nbsp; wᵢ ← wᵢ + η(t − o)xᵢ, &nbsp;b ← b + η(t − o)</div>
+      <div class="kv">
+        <div><span class="k">Method</span><span>Tabulate x₁, x₂, y, o and target t for all four rows. Compare o with t. Update only on the rows where they differ.</span></div>
+        <div><span class="k">Watch</span><span>The activation fires at y ≥ 0, so a net input of exactly 0 gives output 1. When x₁ or x₂ is 0, its weight does not change. Update the bias too.</span></div>
+      </div>
+    </div>
+    <div class="qfig">
+      <span class="eyebrow">The perceptron in the question</span>
+      <svg viewBox="0 0 460 230" role="img" aria-label="Perceptron: inputs x1 with weight minus 3, x2 with weight minus 1, and bias 1.0 feed a summing node, then a step function, then output o">
+        <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink-2)"/></marker></defs>
+        <g stroke="var(--ink-2)" stroke-width="1.6" fill="none" marker-end="url(#arr2)">
+          <path d="M62 50L204 106"/><path d="M62 120L198 120"/><path d="M62 190L204 134"/>
+          <path d="M262 120L298 120"/><path d="M382 120L410 120"/>
+        </g>
+        <g fill="var(--surface)" stroke="var(--ink)" stroke-width="1.8">
+          <circle cx="42" cy="50" r="20"/><circle cx="42" cy="120" r="20"/><circle cx="42" cy="190" r="20" stroke-dasharray="4 3"/>
+          <circle cx="232" cy="120" r="30"/>
+          <rect x="300" y="92" width="80" height="56" rx="6"/>
+          <circle cx="432" cy="120" r="20"/>
+        </g>
+        <path d="M314 132H340V106H366" fill="none" stroke="var(--accent)" stroke-width="2"/>
+        <g text-anchor="middle" font-size="13" style="font-weight:600">
+          <text x="42" y="55" style="fill:var(--ink)">x₁</text><text x="42" y="125" style="fill:var(--ink)">x₂</text><text x="42" y="195" style="fill:var(--ink)">1</text>
+          <text x="232" y="126" font-size="20" style="fill:var(--ink)">Σ</text><text x="432" y="125" style="fill:var(--ink)">o</text>
+        </g>
+        <g font-size="11">
+          <text x="120" y="66">w₁ = −3</text><text x="112" y="113">w₂ = −1</text><text x="116" y="186">b = 1.0</text>
+          <text x="232" y="170" text-anchor="middle">y = net input</text>
+          <text x="340" y="166" text-anchor="middle">step: y ≥ 0 → 1</text>
+          <text x="232" y="214" text-anchor="middle">η = 1</text>
+        </g>
+      </svg>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>x₁</th><th>x₂</th><th>NAND target t</th></tr></thead>
+        <tbody><tr><td>0</td><td>0</td><td>1</td></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>0</td></tr></tbody>
+      </table></div>
+    </div>
+  </article>
+
+  <div class="panel">
+    <h3>Likely next time: syllabus topics this paper did not test</h3>
+    <p class="prose muted">Every one of these has a lecture and a worked example in your folder, so each is a ready-made question.</p>
+    <ul class="plain cols-2" style="display:grid">
+      <li>PCA or LDA numerical (covariance, eigenvalues, projection)</li>
+      <li>Confusion matrix → accuracy, precision, recall, F1</li>
+      <li>Naive Bayes with Laplace smoothing</li>
+      <li>Linear regression by least squares or gradient descent</li>
+      <li>Gini index instead of entropy on a Q1-style table</li>
+      <li>One forward and backward pass through a small MLP</li>
+      <li>Forward or Viterbi on a two-state HMM</li>
+      <li>MLE, Bayesian estimation or EM</li>
+      <li>Reinforcement learning terms, Q-values, exploration vs exploitation</li>
+      <li>Non-linear SVM with a mapping function φ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ MATERIALS ============ -->
+<section id="materials">
+  <div class="sec-head">
+    <span class="eyebrow">Part 3</span>
+    <h2>Your course folder, sorted by unit</h2>
+    <p class="prose muted">Every file in ML_theory, matched to the syllabus. Lessons follow these files' terms and methods first and use outside sources only to fill gaps.</p>
+  </div>
+  <div class="panel">
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Unit / topic</th><th>Files</th><th>Coverage</th></tr></thead>
+      <tbody>
+        <tr><td><b>I-A</b> Introduction to ML</td><td>Intro_ML.pdf (165 slides, Dr. M. Anbazhagan) · entire_Machine Learning.pptx · ML_pipeline.pptx · ML_model_from_scratch.pdf · Overfitting-and-Underfitting.pdf · Bias_variance.pptx</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>I-B</b> Dimensionality reduction</td><td>Dimensionality_Reduction.pdf (PCA, LDA, SVD, SFS/SBS) · LDA-1.pdf (handwritten derivation and numerical) · Curse_of_dimensionality.pptx (picture slides)</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>I-C</b> KNN</td><td>Classification.pdf (T-shirt-size example, with and without scaling) · KNN_classifier.pptx (picture slides)</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>I-D</b> Regression</td><td>Regression.pdf (OLS, gradient descent, Lasso/Ridge, logistic) · Gradient-Descent.pdf · gradient_descent_4_epochs.pdf · Logistic_regression_Assignment.docx</td><td><span class="src src-P">Odds ratio thin</span></td></tr>
+        <tr><td><b>I-E</b> Performance metrics</td><td>Intro_ML.pdf, slides 133–165</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>II-A</b> Decision trees</td><td>Decision Tree.pptx (Play-Golf ID3 and four more examples) · Regression.pdf (Gini, CART)</td><td><span class="src src-P">Pruning thin</span></td></tr>
+        <tr><td><b>II-B</b> SVM</td><td>SVM ML.pdf (25 infographic slides) · Classification.pdf (α method, linear and non-linear)</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>II-C</b> Naive Bayes</td><td>Naive_Bayes.pdf (Ham/Spam word counts, Laplace smoothing) · Naive Bayes.pptx · Classification.pdf</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>II-D/E</b> Markov and HMM</td><td>MLP.pdf, slides 13–19 (Markov chain, TPM, A/B/π, umbrella example)</td><td><span class="src src-P">Basics only</span></td></tr>
+        <tr><td><b>II-F</b> Neural networks</td><td>Perceptron_Neural_Networks.pdf · MLP.pdf (backpropagation)</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>II-G</b> Parameter estimation</td><td>None</td><td><span class="src src-X">Missing</span></td></tr>
+        <tr><td><b>III-A</b> Clustering</td><td>Clustering (2).pdf (K-means A1–A8, elbow, WCSS) · clustering.pdf (linkages) · hierarchical_clustering_solution.pdf</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>III-B</b> Ensembles</td><td>Ensemble_Learning_PowerPoint_Compatible.pptx · Regression.pdf (bagging, RF, stacking)</td><td><span class="src src-M">Good</span></td></tr>
+        <tr><td><b>III-C</b> Reinforcement learning</td><td>23CSE301_ML_RL.pdf (MDP, Bellman, value iteration, MC, TD, Q-learning, ε-greedy)</td><td><span class="src src-M">Good</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="notes">
+    <div class="note"><span class="k">Duplicates</span><span>Intro_ML.pdf and Introduction_to_ML.pdf are byte-for-byte the same file.</span></div>
+    <div class="note"><span class="k">Picture-only</span><span>Curse_of_dimensionality, KNN_classifier and semi_supervised_learning decks, and most examples in Decision Tree.pptx and Naive Bayes.pptx, are images with no text. LDA-1.pdf is a handwritten scan. These get read slide by slide in their lessons.</span></div>
+    <div class="note"><span class="k">Left out</span><span>Lab cheat sheet, Capstone guidelines, WEEK_5_PCA_KNN.docx and the PCA notebook are programming material. The exam is theory-only.</span></div>
+    <div class="note"><span class="k">Outside syllabus</span><span>23CSE301_ML_RecSys.pdf and semi_supervised_learning.pptx are not on your syllabus list. They get a brief mention only.</span></div>
+  </div>
+</section>
+
+<!-- ============ COVERAGE ============ -->
+<section id="coverage">
+  <div class="sec-head">
+    <span class="eyebrow">Part 4</span>
+    <h2>How much of the syllabus your notes cover</h2>
+    <p class="prose muted">The 52 subtopics in the checklist, counted by where their teaching material comes from.</p>
+  </div>
+  <div class="panel">
+    <div class="legend">
+      <span><span class="sw c-in"></span>In your materials</span>
+      <span><span class="sw c-part"></span>Partly covered</span>
+      <span><span class="sw c-miss" style="width:14px;height:14px"></span>Missing, taught from outside sources</span>
+    </div>
+    <div class="cov-list" id="cov-bars"></div>
+  </div>
+  <div class="cols-2">
+    <div class="panel">
+      <h3>No course material at all</h3>
+      <ul class="plain">
+        <li>Explainability, algorithmic bias, data and algorithmic privacy</li>
+        <li>Forward, Viterbi and Baum–Welch algorithms for HMMs</li>
+        <li>Maximum likelihood estimation, Bayesian estimation, Expectation–Maximization</li>
+      </ul>
+      <p class="figcap">Taught from textbooks and university notes, with every external problem linked to its source.</p>
+    </div>
+    <div class="panel">
+      <h3>Covered only thinly</h3>
+      <ul class="plain">
+        <li>Tree pruning (definition only)</li>
+        <li>Ward's method (named once)</li>
+        <li>Soft-margin SVM mathematics</li>
+        <li>Odds ratio in logistic regression</li>
+        <li>Loss functions as a single topic</li>
+        <li>Class and decision boundaries</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section id="checklist">
+  <div class="sec-head">
+    <span class="eyebrow">Part 5</span>
+    <h2>Syllabus checklist and priorities</h2>
+    <p class="prose muted">Every subtopic, its priority and the reason for it, and the files it is taught from. Click a topic to open its full lesson with three solved examples.</p>
+  </div>
+  <div class="progress">
+    <span id="done-count" class="mono"></span>
+    <span class="chip"><span class="dot d-high"></span>Very important — tested in Oct 2025 or needed to solve it</span>
+    <span class="chip"><span class="dot d-mid"></span>Important — syllabus topic likely to be examined</span>
+    <span class="chip"><span class="dot d-low"></span>Additional — background or short answer</span>
+  </div>
+  <div class="progress">
+    <span class="src src-M">In materials</span><span class="src src-P">Partial</span><span class="src src-X">Missing</span>
+    <span class="muted" style="font-size:.88rem">Source of the teaching material</span>
+  </div>
+  <div id="units" style="display:grid;gap:14px"></div>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section id="plan">
+  <div class="sec-head">
+    <span class="eyebrow">Part 6</span>
+    <h2>How the course runs</h2>
+    <p class="prose muted">One topic at a time, in this order. Each lesson ends with exam questions, a quick revision sheet, and a pause until you reply.</p>
+  </div>
+  <div class="panel">
+    <ol class="steps">
+      <li class="done"><span>Analyse every file in ML_theory</span><span class="state">done</span></li>
+      <li class="done"><span>Build the syllabus coverage checklist</span><span class="state">done</span></li>
+      <li class="done"><span>Map priorities from the October 2025 paper</span><span class="state">done</span></li>
+      <li class="now"><span>Teach Unit I, starting with I-A Introduction to Machine Learning</span><span class="state">next</span></li>
+      <li><span>Teach Unit II</span><span class="state">pending</span></li>
+      <li><span>Teach Unit III</span><span class="state">pending</span></li>
+      <li><span>Complete revision of all three units</span><span class="state">pending</span></li>
+      <li><span>Full 50-mark mock end-semester exam</span><span class="state">pending</span></li>
+      <li><span>Evaluate your answers and list weak areas</span><span class="state">pending</span></li>
+    </ol>
+  </div>
+  <div class="sec-head" style="margin-top:6px">
+    <h3>What to type after each lesson</h3>
+  </div>
+  <div class="cmds">
+    <div class="cmd"><b>NEXT</b><span>Move to the next syllabus topic.</span></div>
+    <div class="cmd"><b>EXPLAIN AGAIN</b><span>Re-teach the same topic from scratch, a different way.</span></div>
+    <div class="cmd"><b>MORE EXAMPLES</b><span>Extra numerical and application problems.</span></div>
+    <div class="cmd"><b>PRACTICE</b><span>Questions without answers, for you to solve.</span></div>
+    <div class="cmd"><b>SOLVE</b><span>Full step-by-step solutions.</span></div>
+    <div class="cmd"><b>REVISION</b><span>Short exam-oriented notes.</span></div>
+    <div class="cmd"><b>TEST ME</b><span>A timed exam on the topic.</span></div>
+  </div>
+</section>
+
+<footer>
+  Built from the files in your ML_theory folder and the October 2025 23CSE301 end-semester paper. All 52 topics, with 156 solved examples, are on the Unit I, II and III pages.
+</footer>
+</div>
+
+<div class="tooltip" id="tip" hidden></div>
+
+<script>
+(function(){
+  var UNIT = {I:{name:"Unit I",color:"var(--u1)"}, II:{name:"Unit II",color:"var(--u2)"}, III:{name:"Unit III",color:"var(--u3)"}};
+  var Q = [
+    {q:"Q1",m:6,u:"II",t:"ID3, entropy, information gain"},
+    {q:"Q2",m:6,u:"I", t:"Regularization (λ) and KNN distance metrics"},
+    {q:"Q3",m:8,u:"II",t:"SVM support vectors and maximum marginal hyperplane"},
+    {q:"Q4",m:6,u:"III",t:"Random Forest roles and AdaBoost weights"},
+    {q:"Q5",m:6,u:"I", t:"Logistic regression, odds and odds ratio"},
+    {q:"Q6",m:6,u:"III",t:"K-means and single-linkage clustering"},
+    {q:"Q7",m:6,u:"II",t:"HMM concepts and Markov chain probability"},
+    {q:"Q8",m:6,u:"II",t:"Perceptron for NAND, weight update"}
+  ];
+  // legend with unit totals
+  var totals = {I:0,II:0,III:0}; Q.forEach(function(x){totals[x.u]+=x.m;});
+  var lg = document.getElementById("unit-legend");
+  ["I","II","III"].forEach(function(u){
+    var s=document.createElement("span");
+    s.innerHTML='<span class="sw" style="background:'+UNIT[u].color+'"></span>'+UNIT[u].name+' · <b style="color:var(--ink)">'+totals[u]+' marks</b>';
+    lg.appendChild(s);
+  });
+  var bar=document.getElementById("blueprint"), labs=document.getElementById("blueprint-labels");
+  Q.forEach(function(x){
+    var d=document.createElement("div"); d.className="seg"; d.style.flex=x.m+" 1 0"; d.style.background=UNIT[x.u].color;
+    d.tabIndex=0; d.setAttribute("aria-label",x.q+", "+x.m+" marks, "+UNIT[x.u].name+": "+x.t);
+    d.dataset.tip="<b>"+x.q+" · "+x.m+" marks</b><br>"+UNIT[x.u].name+"<br>"+x.t;
+    bar.appendChild(d);
+    var l=document.createElement("div"); l.style.flex=x.m+" 1 0"; l.innerHTML="<b>"+x.q+"</b>"+x.m; labs.appendChild(l);
+  });
+  function hbars(id, rows, max){
+    var el=document.getElementById(id);
+    rows.forEach(function(r){
+      var row=document.createElement("div"); row.className="hrow";
+      row.innerHTML='<span class="lab">'+r[0]+'</span><span class="track"><span class="fill" style="display:block;width:'+(r[1]/max*100)+'%"></span></span><span class="val">'+r[1]+'</span>';
+      el.appendChild(row);
+    });
+  }
+  hbars("co-bars",[["CO4",32],["CO5",12],["CO3",6],["CO1",0],["CO2",0]],32);
+  hbars("btl-bars",[["BTL4",26],["BTL3",18],["BTL2",6],["BTL1",0],["BTL5",0]],32);
+
+  // tooltip
+  var tip=document.getElementById("tip");
+  function show(e){var t=e.currentTarget; tip.innerHTML=t.dataset.tip; tip.hidden=false; place(e);}
+  function place(e){
+    var x,y;
+    if(e.clientX!==undefined && e.type!=="focus"){x=e.clientX;y=e.clientY;}
+    else{var r=e.currentTarget.getBoundingClientRect();x=r.left+r.width/2;y=r.top;}
+    var w=tip.offsetWidth, h=tip.offsetHeight;
+    var left=Math.min(Math.max(8,x-w/2),window.innerWidth-w-8), top=y-h-12; if(top<8) top=y+20;
+    tip.style.left=left+"px"; tip.style.top=top+"px";
+  }
+  function hide(){tip.hidden=true;}
+  document.querySelectorAll(".seg").forEach(function(s){
+    s.addEventListener("mouseenter",show); s.addEventListener("mousemove",place); s.addEventListener("mouseleave",hide);
+    s.addEventListener("focus",show); s.addEventListener("blur",hide);
+  });
+
+  // checklist data: [title, priority H/M/L, source M/P/X, files, reason, done]
+  var D = [
+   {unit:"Unit I", name:"Introduction and Fundamentals", color:"var(--u1)", subs:[
+    {h:"A · Introduction to Machine Learning", items:[
+     ["What ML is; types of ML (supervised, unsupervised, semi-supervised, reinforcement)","M","M","Intro_ML.pdf · entire_Machine Learning.pptx","Standard 2–4 mark definition and comparison question. Not in the Oct 2025 paper."],
+     ["Features and feature representation","M","M","ML_model_from_scratch.pdf · ML_pipeline.pptx","Every numerical starts from feature vectors and scaling; also asked as short theory."],
+     ["Class boundaries and decision boundaries","M","P","Classification.pdf · SVM ML.pdf","Needed to explain the effect of K in KNN and the SVM boundary; only drawn in passing in the notes."],
+     ["Training, validation and testing; cross-validation","M","M","Intro_ML.pdf · Bias_variance.pptx","A common 2-mark comparison, including why a model is never tested on its training data."],
+     ["Generalization; underfitting, good fit, overfitting","H","M","Overfitting-and-Underfitting.pdf · Intro_ML.pdf","Q2(a) asks how λ moves a model between underfitting and overfitting."],
+     ["Loss and cost functions (MSE, MAE, cross-entropy)","M","P","Regression.pdf · Gradient-Descent.pdf","Used by regression, logistic regression and backpropagation; no lecture defines them together."],
+     ["Explainability in ML","L","X","Outside sources","Syllabus item with no lecture material; expect at most a short definition."],
+     ["Algorithmic bias","L","X","Outside sources","Syllabus item with no lecture material; expect at most a short answer."],
+     ["Data privacy and algorithmic privacy","L","X","Outside sources","Syllabus item with no lecture material; expect at most a short answer."]
+    ]},
+    {h:"B · Dimensionality Reduction", items:[
+     ["Curse of dimensionality","M","M","Curse_of_dimensionality.pptx · Dimensionality_Reduction.pdf","Has its own lecture deck; a classic 4-mark theory question."],
+     ["Principal Component Analysis (five steps, eigen-decomposition)","M","M","Dimensionality_Reduction.pdf","A by-hand covariance and eigenvalue numerical is a likely new Unit I question."],
+     ["Linear Discriminant Analysis (Fisher criterion, S_W, S_B)","M","M","LDA-1.pdf","The instructor wrote a full handwritten derivation and numerical, a strong sign it can be examined."],
+     ["Feature selection vs extraction; forward, backward and bidirectional selection","M","P","Dimensionality_Reduction.pdf","Named in the syllabus; the notes give one slide each, so expect theory with a short trace."]
+    ]},
+    {h:"C · Classification: K-Nearest Neighbour", items:[
+     ["KNN algorithm, choosing K, effect of K","H","M","Classification.pdf · KNN_classifier.pptx","Q2(b) tests KNN directly."],
+     ["Euclidean, Manhattan and Minkowski distance; feature scaling","H","M","Classification.pdf","Q2(b) asks how the metric changes the result; Q6(b) uses Manhattan distance."]
+    ]},
+    {h:"D · Regression", items:[
+     ["Linear regression: least squares and gradient descent","M","M","Regression.pdf · gradient_descent_4_epochs.pdf · Gradient-Descent.pdf","Two solved gradient-descent handouts exist; a numerical is likely in a future paper."],
+     ["Logistic regression: sigmoid, odds, log-odds, odds ratio","H","P","Regression.pdf · Logistic_regression_Assignment.docx","Q5 (6 marks). The odds ratio is barely covered in the notes."],
+     ["Regularization: LASSO (L1), Ridge (L2), effect of λ","H","M","Regression.pdf","Q2(a)."],
+     ["Bias–variance trade-off","H","M","Bias_variance.pptx · Intro_ML.pdf","Q2(a) asks for it by name."]
+    ]},
+    {h:"E · Performance Metrics", items:[
+     ["Confusion matrix, accuracy, precision, recall, F1, specificity","M","M","Intro_ML.pdf","Easy to set as a numerical; not in Oct 2025, so a good candidate for next time."],
+     ["ROC curve and AUC","M","M","Intro_ML.pdf","Usually paired with the confusion matrix as a theory part."],
+     ["RMSE, MAPE, R² (with MAE and MSE)","M","M","Intro_ML.pdf","Named in the syllabus; a quick numerical from a small table."]
+    ]}
+   ]},
+   {unit:"Unit II", name:"Supervised Learning", color:"var(--u2)", subs:[
+    {h:"A · Decision Trees", items:[
+     ["Tree structure, entropy, information gain, ID3","H","M","Decision Tree.pptx · Regression.pdf","Q1 (6 marks)."],
+     ["Gini index (CART) and gain ratio (C4.5)","M","M","Decision Tree.pptx · Regression.pdf","The natural variation of Q1: same table, Gini instead of entropy."],
+     ["Tree construction and pruning","M","P","Decision Tree.pptx","Q1(d) asks for the final tree; pruning has only a definition in the notes."]
+    ]},
+    {h:"B · Support Vector Machines", items:[
+     ["Hyperplane, maximum marginal hyperplane, margin, support vectors","H","M","SVM ML.pdf · Classification.pdf","Q3 (8 marks, the largest question)."],
+     ["SVM numerical: augmented-vector α method and geometric method","H","M","Classification.pdf · SVM ML.pdf","Q3(b) is worth 6 marks."],
+     ["Hard margin vs soft margin (C, slack ξ)","M","M","SVM ML.pdf","An easy theory variation of Q3(a)."],
+     ["Non-linear SVM, kernel trick; linear, polynomial, RBF, sigmoid kernels","M","M","Classification.pdf · SVM ML.pdf","The notes include a non-linear α-method numerical."]
+    ]},
+    {h:"C · Naive Bayes", items:[
+     ["Bayes theorem; prior, likelihood, posterior; conditional independence","M","M","Naive_Bayes.pdf · Naive Bayes.pptx","Not in Oct 2025, but has its own lecture and a full numerical."],
+     ["Gaussian, Multinomial, Bernoulli Naive Bayes; Laplace smoothing","M","M","Naive_Bayes.pdf","The Ham/Spam word-count example with smoothing is exam-shaped."]
+    ]},
+    {h:"D · Markov Models", items:[
+     ["Markov property, states, initial and transition probabilities, sequence probability","H","M","MLP.pdf (slides 13–15)","Q7(b) (4 marks)."]
+    ]},
+    {h:"E · Hidden Markov Models", items:[
+     ["Hidden states, observations, A, B, π; Markov model vs HMM; applications","H","M","MLP.pdf (slides 16–19)","Q7(a) (2 marks)."],
+     ["Evaluation problem: Forward algorithm","M","X","Outside sources","The next step after Q7; computable by hand on a two-state model."],
+     ["Decoding problem: Viterbi algorithm","M","X","Outside sources","The next step after Q7; computable by hand on a two-state model."],
+     ["Learning problem: Baum–Welch algorithm","L","X","Outside sources","Too long to compute by hand in two hours; expect only the idea."]
+    ]},
+    {h:"F · Artificial Neural Networks", items:[
+     ["Biological vs artificial neuron; perceptron, step function, learning rule, logic gates","H","M","Perceptron_Neural_Networks.pdf","Q8 (6 marks)."],
+     ["Linear separability and the XOR limitation","M","M","Perceptron_Neural_Networks.pdf · MLP.pdf","The standard follow-up to Q8."],
+     ["MLP: layers, forward propagation, backpropagation, gradient descent, activations","M","M","MLP.pdf","One forward and backward pass is a feasible 6-mark numerical."]
+    ]},
+    {h:"G · Parameter Estimation", items:[
+     ["Maximum likelihood estimation: likelihood, log-likelihood","M","X","Outside sources","CO3 (parameter estimation) carried 6 marks in Oct 2025."],
+     ["Bayesian estimation: prior and posterior; MLE vs Bayesian","M","X","Outside sources","Part of CO3; a classic comparison question."],
+     ["Expectation–Maximization: E-step, M-step, applications","M","X","Outside sources","Usually examined as steps or a small two-coin or mixture trace."]
+    ]}
+   ]},
+   {unit:"Unit III", name:"Unsupervised and Ensemble Learning", color:"var(--u3)", subs:[
+    {h:"A · Clustering", items:[
+     ["K-means: initial centroids, assignment, update, convergence","H","M","Clustering (2).pdf","Q6(a)."],
+     ["Elbow method, WCSS, cluster evaluation","M","M","Clustering (2).pdf","An easy add-on to any K-means numerical."],
+     ["Hierarchical clustering: agglomerative, divisive; single, complete, average linkage; dendrogram; distance matrix","H","M","clustering.pdf · hierarchical_clustering_solution.pdf","Q6(b)."],
+     ["Ward's method","L","P","entire_Machine Learning.pptx","Named once; heavier arithmetic than the other linkages."]
+    ]},
+    {h:"B · Ensemble Learning", items:[
+     ["Base, weak and strong learners; meta-model; voting and averaging","H","M","Ensemble_Learning_PowerPoint_Compatible.pptx","Q4(a)."],
+     ["Bagging: bootstrap sampling, parallel training, aggregation, variance","M","M","Ensemble_Learning_PowerPoint_Compatible.pptx · Regression.pdf","Pairs with boosting in comparison questions."],
+     ["Random Forest: bootstrap rows, random features, majority vote","H","M","Ensemble_Learning_PowerPoint_Compatible.pptx · Regression.pdf","Q4(a)."],
+     ["Boosting and AdaBoost: error, α, weight update, normalization, final prediction","H","M","Ensemble_Learning_PowerPoint_Compatible.pptx","Q4(b) (4 marks)."]
+    ]},
+    {h:"C · Reinforcement Learning", items:[
+     ["Agent, environment, state, action, reward, policy, value function, Q-value","M","M","23CSE301_ML_RL.pdf","A self-study module with worked examples; likely a theory question."],
+     ["Exploration vs exploitation; applications","M","M","23CSE301_ML_RL.pdf","A short-answer staple."]
+    ]}
+   ]}
+  ];
+  var PR={H:["d-high","Very important"],M:["d-mid","Important"],L:["d-low","Additional"]};
+  var SR={M:"In materials",P:"Partial",X:"Missing"};
+  var host=document.getElementById("units"), total=0, done=0, cov=[]; var gi=0;
+  D.forEach(function(u,ui){
+    var c={M:0,P:0,X:0}, high=0, n=0;
+    var det=document.createElement("details"); det.className="unit"; det.open=(ui===0);
+    var body='<div class="sub">';
+    u.subs.forEach(function(s){
+      body+='<h4>'+s.h+'</h4>';
+      s.items.forEach(function(it){
+        n++; total++; c[it[2]]++; if(it[1]==="H") high++; if(it[5]) done++;
+        gi++; var tid='t'+(gi<10?'0':'')+gi;
+        body+='<div class="item"><span class="box" aria-label="'+(it[5]?"done":"not started")+'"></span><div>'+
+          '<div class="t"><a href="unit-'+(ui+1)+'.html#'+tid+'">'+String(gi).padStart(2,'0')+' · '+it[0]+'</a></div>'+
+          '<div class="meta"><span class="chip"><span class="dot '+PR[it[1]][0]+'"></span>'+PR[it[1]][1]+'</span><span class="src src-'+it[2]+'">'+SR[it[2]]+'</span><span class="files">'+it[3]+'</span></div>'+
+          '<div class="why">'+it[4]+'</div></div></div>';
+      });
+    });
+    body+='</div>';
+    det.innerHTML='<summary><span class="sw" style="background:'+u.color+'"></span><h3>'+u.unit+' — '+u.name+'</h3><span class="muted mono">'+n+' subtopics · '+high+' very important</span></summary>'+body;
+    host.appendChild(det);
+    cov.push({u:u.unit,c:c,n:n});
+  });
+  document.getElementById("done-count").textContent=done+" of "+total+" subtopics done";
+  var cb=document.getElementById("cov-bars");
+  cov.forEach(function(r){
+    var row=document.createElement("div"); row.className="cov-row";
+    var segs='';
+    [["M","c-in","in materials"],["P","c-part","partly covered"],["X","c-miss","missing"]].forEach(function(k){
+      if(r.c[k[0]]>0) segs+='<div class="'+k[1]+'" style="flex:'+r.c[k[0]]+' 1 0" title="'+r.c[k[0]]+' '+k[2]+'">'+r.c[k[0]]+'</div>';
+    });
+    row.innerHTML='<span class="lab">'+r.u+'<br><span style="color:var(--ink-3)">'+r.n+' topics</span></span><div class="cov-bar" role="img" aria-label="'+r.u+': '+r.c.M+' in materials, '+r.c.P+' partly covered, '+r.c.X+' missing">'+segs+'</div>';
+    cb.appendChild(row);
+  });
+})();
+</script>
+</body>
+</html>
